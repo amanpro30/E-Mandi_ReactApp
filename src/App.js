@@ -1,21 +1,14 @@
 import React from "react";
+import Layout from "./components/Layout/Layout";
 import "./App.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <div className="App"></div>
-      <div className="App__Aside"></div>
-      <div className="App__Form"> </div>
-        <div className="PageSwitcher"></div>
-          <a href="#" className="PageSwitcher__Item > SignIn </a>
-          // <a href="#" className="PageSwitcher__Item PageSwitcher__Item--Active" >
-          //   SignUp
-          // </a>
-        
-        
-     
-    
-  
+    <div className="App">
+      <Layout>{/* <Home >         */}</Layout>
+    </div>
   );
 }
 
