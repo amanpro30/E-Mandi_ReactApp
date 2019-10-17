@@ -1,23 +1,21 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="App"></div>
+      <div className="App__Aside"></div>
+      <div className="App__Form"> </div>
+        <div className="PageSwitcher"></div>
+          <a href="#" className="PageSwitcher__Item > SignIn </a>
+          // <a href="#" className="PageSwitcher__Item PageSwitcher__Item--Active" >
+          //   SignUp
+          // </a>
+        
+        
+     
+    
+  
   );
 }
 
