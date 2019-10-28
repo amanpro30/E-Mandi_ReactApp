@@ -33,7 +33,7 @@ const Signup = (props) => (
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="required" for="user_vatin">VAT</label><br />
+            <label class="required" for="user_vatin">Aadhaar Number</label><br />
             <input class="form-control" type="text" name="user[vatin]" id="user_vatin" />
           </div>
 
@@ -44,59 +44,29 @@ const Signup = (props) => (
         </div>
 
         <div class="row ">
-          <div class="col-md-12 form-group">
-            <label class="required" for="user_fiscal_address">Fiscal Address</label><br />
-            <input class="form-control" required="required" type="text" name="user[fiscal_address]" id="user_fiscal_address" />
+          <div class="col-md-6 form-group">
+          <label for="user_email">Email</label>
+            <input autofocus="autofocus" class="form-control" required="required" type="email" value="" name="user[email]" id="user_email" />
           </div>
-        </div>
-
-        <div class="row">
           <div class="col-md-6 form-group">
             <label for="user_country">Country</label>
             <input class="form-control" required="required" type="text" name="user[country]" id="country" />
-          
-        </div>
-
-         <div class="row">
-          <div class="col-md-12 form-group">
-            <label for="user_preferred_language">Preferred Language</label><br />
-            
-
           </div>
         </div>
-
+        
         <div class="row">
-          <div class="col-md-12 form-group">
-            <label for="user_email">Email</label>
-            <input autofocus="autofocus" class="form-control" required="required" type="email" value="" name="user[email]" id="user_email" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 form-group">
+          <div class="col-md-6 form-group">
             <label for="user_password">Password</label>
               <em>(6 characters minimum)</em>
             <input autocomplete="off" class="form-control" required="required" type="password" name="user[password]" id="user_password" />
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 form-group">
+          <div class="col-md-6 form-group">
             <label for="user_password_confirmation">Password Confirmation</label>
             <input autocomplete="off" class="form-control" required="required" type="password" name="user[password_confirmation]" id="user_password_confirmation" />
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-12">
-            <label class="subtitle">
-              <sup>* </sup> Vat only required in some countries
-            </label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-10">
             <div class="form-check">
               <label class="form-check-label">
                 <input name="user[terms_and_conditions]" type="hidden" value="0" /><input class="form-check-input" required="required" type="checkbox" value="1" name="user[terms_and_conditions]" id="user_terms_and_conditions" />
@@ -107,11 +77,12 @@ const Signup = (props) => (
         </div>
         
         <div class="row">
-          <div class="col-md-10">
+          <div class="col-md-4 offset-md-4">
             <input type="submit" name="commit" value="Sign Up" class="btn btn-solid btn--full" data-disable-with="Sign Up" />
           </div>
         </div>
-      </div>
+        
+      
       </form>
       </div>
     </div>
