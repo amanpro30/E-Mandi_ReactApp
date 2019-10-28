@@ -4,8 +4,8 @@ import UserFriendly from '../../../assets/images/userfriendly.png';
 import Transparency from '../../../assets/images/transparency.png';
 import Fairtrade from '../../../assets/images/fairtrade.png';
 import FoodTrace from '../../../assets/images/foodtraceability.png';
-import { classes } from 'istanbul-lib-coverage';
-import classes1 from './Block3.css'  ;
+// import { classes } from 'istanbul-lib-coverage';
+// import classes1 from './Block3.css'  ;
 const Block3 = (props) => (
     <div class="container-features">
   <div class="container">
