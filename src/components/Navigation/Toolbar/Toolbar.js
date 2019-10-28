@@ -22,10 +22,10 @@ const toolbar =() => {
   return(
   <Aux>  
   <Navbar style={style1} bg="dark" variant="dark">
-  <Navbar.Brand style={style1} href="#home">Navbar</Navbar.Brand>
+  <Navbar.Brand style={style1} href="/">E Mandi</Navbar.Brand>
   <Nav className="ml-auto">
     <Nav.Link style={style1} href="/">Home</Nav.Link>
-    <Nav.Link href="#features" className="mr-sm-2">Features</Nav.Link>
+    <Nav.Link href="#marketplace" className="mr-sm-2">Market</Nav.Link>
     <Nav.Link href="#pricing">Pricing</Nav.Link>
     <Nav.Link  href="/login">LogIn</Nav.Link>
     <Nav.Link href="/signup" >SignUp</Nav.Link>

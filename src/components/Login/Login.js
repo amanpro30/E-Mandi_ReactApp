@@ -30,7 +30,7 @@ const Login = (props) => (
 
           <a href="password/new.html">Forgot your password?</a><br />
 
-          <a href="sign_up.html">Not registered yet? Sign up</a><br />
+          <a href="/signup">Not registered yet? Sign up</a><br />
 
           <a href="confirmation/new.html">Didn&#39;t receive confirmation instructions?</a><br />
           <br /><br /><br />
