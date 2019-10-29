@@ -9,13 +9,14 @@ import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstr
 // import classes3 from './Toolbar.css';
 import Login from '../../Login/Login'
 import Aux from '../../../hoc/Aux'
+import { connect } from 'react-redux';
 
-const toolbar =() => {
+const toolbar =(props) => {
    
   const style1={
-
     fontSize: '25px',
   }
+  
   
 
   
@@ -25,11 +26,17 @@ const toolbar =() => {
   <Navbar.Brand style={style1} href="#home">Navbar</Navbar.Brand>
   <Nav className="ml-auto">
     <Nav.Link style={style1} href="/">Home</Nav.Link>
-    <Nav.Link href="#features" className="mr-sm-2">Features</Nav.Link>
+    <Nav.Link href="/login">Market Place</Nav.Link>
     <Nav.Link href="#pricing">Pricing</Nav.Link>
-    <Nav.Link  href="/login">LogIn</Nav.Link>
-    <Nav.Link href="/signup" >SignUp</Nav.Link>
-    
+    {/* {
+      props.isAuthenticated == false && */}
+      <Nav.Link  href="/login">LogIn</Nav.Link> 
+      <Nav.Link href="/signup">SignUp</Nav.Link>
+{/*     
+    {
+      props.isAuthenticated == false &&
+      <Nav.Link  href="/login">LogOut</Nav.Link>
+    } */}
   </Nav>
 </Navbar>
 
@@ -38,4 +45,16 @@ const toolbar =() => {
 
 };
 
-export default toolbar;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated:state.isAuthenticated,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logOut: () => dispatch({type: 'LOGOUT'}),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(toolbar);

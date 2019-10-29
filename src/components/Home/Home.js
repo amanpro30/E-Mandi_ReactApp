@@ -6,6 +6,7 @@ import Block3 from '../Home/Blocks/Block3';
 import Aux from '../../hoc/Aux';
 import Layout from '../Layout/Layout'
 
+
 const Home = (props) => (
     <Aux>
         <Layout>
@@ -16,5 +17,18 @@ const Home = (props) => (
         </Layout>
     </Aux>
 );
+
+// const mapStateToProps = state => {
+//     return {
+//         isAuthenticated:state.isAuthenticated,
+//     };
+// };
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         logIn: () => dispatch({type: 'LOGIN'}),
+//         logOut: () => dispatch({type: 'LOGOUT'}),
+//     };
+// }
 
 export default Home;
