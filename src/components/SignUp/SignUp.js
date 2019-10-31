@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import axios from "axios";
 import Layout from '../Layout/Layout'
 
 const Signup = (props) => (
@@ -7,7 +7,7 @@ const Signup = (props) => (
         <div class="row">
     <div class="col-md-8 offset-md-2 user-registration__col" >
       <h2>Sign Up</h2>
-        <p>If you are already registered <a class="link-green" href="sign_in.html">Login here</a>
+        <p>If you are already registered <a class="link-green" href="/login">Login here</a>
         </p>
 
       <form class="new_user" id="new_user" action="https://agrimp.com/users" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Z5LFR6zJe+0d2jFzmvolSWd88X+2Uiu3+KxFxNLj2Yi5z61Eqm4qPQ82nz5cw6PVw7iegJS8E6YbmaY8Xkvfyw==" />
@@ -96,7 +96,7 @@ const Signup = (props) => (
             <input type="submit" name="commit" value="Sign Up" class="btn btn-solid btn--full" data-disable-with="Sign Up" />
           </div>
         </div>
-        
+        <br />
       
       </form>
       </div>
