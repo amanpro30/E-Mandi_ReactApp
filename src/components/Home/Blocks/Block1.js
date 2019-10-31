@@ -18,7 +18,7 @@ const Block1 = (props) => {
                 <p style={style_block}>As a seller, post offers for the agricultural crop you are looking to sell, and gain immediate access to credit-verified buyers. Or simply react to an existing buyer’s bid and start your transaction.</p>
                 <div class="row get-started-btn">
                     <div class="col-xs-12 col-md-6 left">
-                        <a class="btn" href="users/sign_up.html">Register as a seller</a>
+                        <a class="btn" href="/login">Register as a seller</a>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@ const Block1 = (props) => {
                 <p style={style_block}>As a buyer, post bids for the agricultural crop you are looking to buy. Communicate to the market what you are looking for, and get rapid reactions from interested farmers or sellers.</p>
                 <div class="row get-started-btn">
                     <div class="col-xs-12 col-md-6 left">
-                        <a class="btn" href="users/sign_up.html">Register as a buyer</a>
+                        <a class="btn" href="/login">Register as a buyer</a>
                     </div>
                 </div>
             </div>

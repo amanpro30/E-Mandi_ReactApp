@@ -15,13 +15,14 @@ const toolbar =() => {
   const style1={
 
     fontSize: '25px',
+    
   }
   
 
   
   return(
   <Aux>  
-  <Navbar style={style1} bg="dark" variant="dark">
+  <Navbar style={{ fontSize: '25px',backgroundColor: '#B1BBAD'}} bg="dark" variant="dark">
   <Navbar.Brand style={style1} href="/">E Mandi</Navbar.Brand>
   <Nav className="ml-auto">
     <Nav.Link style={style1} href="/">Home</Nav.Link>
