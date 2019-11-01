@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import Layout from '../Layout/Layout'
 
 const Login = (props) => (

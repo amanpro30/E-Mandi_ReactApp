@@ -1,13 +1,9 @@
-import React, {Component} from 'react';
-// import classes from './Toolbar.css';
-// import Logo from '../../Logo/Logo';
-// import NavigationItems from '../NavigationItems/NavigationItems';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
+import {Navbar, Nav} from 'react-bootstrap';
 // import classes3 from './Toolbar.css';
-import Login from '../../Login/Login'
 import Aux from '../../../hoc/Aux'
 
 const toolbar =() => {

@@ -19,7 +19,7 @@ const Footer = () => {
         <div class="col-xs-6 col-md-4 offset-md-1">
           <h4 class="list-title">About E-Mandi </h4>
           <ul class="list-unstyled">
-            <li><a target="_blank" href="#">Our Company</a></li>
+            <li><a rel="noopener noreferrer" target="_blank" href="#">Our Company</a></li>
             <li><a href="#">Our People</a></li>
             <li><a href="#">FAQ&#39;s</a></li>
             <li><a href="#">Terms &amp; Conditions</a></li>
@@ -31,15 +31,15 @@ const Footer = () => {
     	    <ul class="list-unstyled">
     	      <li>
     	        <img class="footer-image" src={fb} alt="Facebook logo" />
-    	        <a href="https://www.facebook.com/E-Mandi" target="_blank"> E-Mandi </a>
+    	        <a href="https://www.facebook.com/E-Mandi" rel="noopener noreferrer" target="_blank"> E-Mandi </a>
     	      </li>
             <li>
               <img class="footer-image" src={twitter} alt="Twitter logo" />
-              <a href="https://twitter.com/E-Mandi" target="_blank"> @EMandi </a>
+              <a href="https://twitter.com/E-Mandi" rel="noopener noreferrer" target="_blank"> @EMandi </a>
             </li>
             <li>
               <img class="footer-image" src={linkedin} alt="Linkedin" />
-              <a href="https://www.linkedin.com/company/E-Mandi/" target="_blank"> E-Mandi</a>
+              <a href="https://www.linkedin.com/company/E-Mandi/" rel="noopener noreferrer" target="_blank"> E-Mandi</a>
             </li>
             <li>
     	        <img class="footer-image" src={youtube} alt="Youtube logotype" />

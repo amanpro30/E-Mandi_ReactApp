@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import Layout from '../Layout/Layout'
 
 const Signup = (props) => (
@@ -45,15 +44,30 @@ const Signup = (props) => (
 
         <div class="row ">
           <div class="col-md-6 form-group">
-          <label for="user_email">Email</label>
-            <input autofocus="autofocus" class="form-control" required="required" type="email" value="" name="user[email]" id="user_email" />
+          <label for="user_house_no">House No.</label>
+            <input autofocus="autofocus" class="form-control" required="required" type="text" value="" name="user[house_no]" id="user_house_no" />
           </div>
           <div class="col-md-6 form-group">
-            <label for="user_country">Country</label>
-            <input class="form-control" required="required" type="text" name="user[country]" id="country" />
+            <label for="user_street">Street</label>
+            <input class="form-control" required="required" type="text" name="user[street]" id="street" />
           </div>
         </div>
-        
+        <div class="row ">
+          <div class="col-md-6 form-group">
+            <label for="user_district">District</label>
+            <input class="form-control" required="required" type="text" name="user[district]" id="district" />
+          </div>
+          <div class="col-md-6 form-group">
+            <label for="user_state">State</label>
+            <input autofocus="autofocus" class="form-control" required="required" type="text" value="" name="user[state]" id="user_state" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label for="user_email">E-Mail</label>
+            <input class="form-control" required="required" type="email" name="user[email]" id="user_email" />
+          </div>
+        </div>        
         <div class="row">
           <div class="col-md-6 form-group">
             <label for="user_password">Password</label>
