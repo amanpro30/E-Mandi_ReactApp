@@ -10,6 +10,7 @@ import Login from '../src/components/Login/Login'
 import Signup from '../src/components/SignUp/SignUp'
 import ProfileAccount from '../src/components/Profile/Profile_account'
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
+import ProfileBank from '../src/components/Profile/Profile_bank'
   
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
           <Route exact path = "/signup" component = {Signup} />
           <Route exact path = "/profile" component = {ProfileAccount} />
           <Route exact path = "/personal" component = {ProfilePersonal} />
-          <Route exact path = "/bank" component = {ProfileAccount} />
+          <Route exact path = "/bank" component = {ProfileBank} />
           <Route exact path = "/portfolio" component = {ProfileAccount} />
           <Route exact path = "/404" component = {NotFoundPage} />
           
