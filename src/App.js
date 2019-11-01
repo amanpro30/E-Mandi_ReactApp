@@ -1,67 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import Layout from './components/Layout/Layout';
+import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Nav from './components/login/Nav';
-import LoginForm from './components/login/LoginForm';
-import SignupForm from './components/login/SignupForm';
-import './App.css';
-import axios from 'axios';
-axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import NotFoundPage from '../src/components/NotFoundPage/NotFoundPage';
+import Home from '../src/components/Home/Home'
+import Login from '../src/components/Login/Login'
+import Signup from '../src/components/SignUp/SignUp'
+import ProfileAccount from '../src/components/Profile/Profile_account'
+import ProfilePersonal from '../src/components/Profile/Profile_personal'
+import ProfileBank from '../src/components/Profile/Profile_bank'
+  
 
-
-
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayed_form: '',
-      logged_in: localStorage.getItem('token') ? true : false,
-      username: ''
-    };
-  }
-
-  handle_logout = () => {
-    localStorage.removeItem('token');
-    this.setState({ logged_in: false, username: '' });
-  };
-
-  display_form = form => {
-    this.setState({
-      displayed_form: form
-    });
-  };
-
-  render() {
-    let form;
-    switch (this.state.displayed_form) {
-      case 'login':
-        form = <LoginForm handle_login={this.handle_login} />;
-        break;
-      case 'signup':
-        form = <SignupForm handle_signup={this.handle_signup} />;
-        break;
-      default:
-        form = null;
-    }
-
-    return (
+function App() {
+  return (
+    <BrowserRouter>
       <div className="App">
-        <Nav
-          logged_in={this.state.logged_in}
-          display_form={this.display_form}
-          handle_logout={this.handle_logout}
-        />
-        {form}
-        <h3>
-          {this.state.logged_in
-            ? `Hello, ${this.state.username}`
-            : 'Please Log In'}
-        </h3>
+        <Switch>
+          <Route exact path = "/" component = {Home} />
+          <Route exact path = "/login" component = {Login} />
+          <Route exact path = "/signup" component = {Signup} />
+          <Route exact path = "/profile" component = {ProfileAccount} />
+          <Route exact path = "/personal" component = {ProfilePersonal} />
+          <Route exact path = "/bank" component = {ProfileBank} />
+          <Route exact path = "/portfolio" component = {ProfileAccount} />
+          <Route exact path = "/404" component = {NotFoundPage} />
+          
+          <Redirect to = "/404" />
+        </Switch>
       </div>
-    );
-  }
+    </BrowserRouter>
+  );
 }
 
 export default App;
