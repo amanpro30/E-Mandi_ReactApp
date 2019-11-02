@@ -5,7 +5,6 @@ import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 import Footer from '../Navigation/Footer/Footer';
 
 
-
 const layout = (props) => (
     <Aux>
         <Toolbar />
