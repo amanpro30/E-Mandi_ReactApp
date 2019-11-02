@@ -1,5 +1,5 @@
 
-import React, { useState, setShow, Component  } from 'react';
+import React, {Component} from 'react';
 import { Modal, Button } from 'react-bootstrap'
 import Aux from '../../hoc/Aux'
 

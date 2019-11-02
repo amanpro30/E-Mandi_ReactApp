@@ -1,7 +1,6 @@
 import React from 'react';
 import DefaultProfImg from '../../assets/images/profdef.png';
-import Aux from '../../hoc/Aux';
-import Layout from '../Layout/Layout';
+
 
 const ProfileSideBar = (props) => {
     return(

@@ -1,10 +1,18 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
+
 const initialState = {
-    token: null,
+    token: localStorage.token,
     error: null,
     loading: false,
+    username: localStorage.username,
+    isAuthenticated : localStorage.token ? true : false,
+    // token: localStorage.userJWT, 
+    // email: localStorage.userE, 
+    // id: localStorage.userId, 
+    // surname: localStorage.surname,
+
 }
 
 const authStart = (state,action) => {
@@ -15,10 +23,13 @@ const authStart = (state,action) => {
 }
 
 const authSuccess = (state, action) => {
+    console.log('authSuccess1')
     return updateObject(state, {
         token: action.token,
         error: null,
         loading: false,
+        username: action.username,
+        isAuthenticated: true,
     });
 }
 
@@ -32,6 +43,8 @@ const authFail = (state, action) => {
 const authLogout = (state, action) => {
     return updateObject(state, {
         token: null,
+        username : '',
+        isAuthenticated: false,
     })
 }
 

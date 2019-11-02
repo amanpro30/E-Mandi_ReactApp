@@ -29,7 +29,7 @@ function Slideshow() {
         <img
           className="d-block w-100"
           src={grain2_img}
-          // alt="First slide"
+          alt="First slide"
           style = {imgStyle}
         />
         <Carousel.Caption>
@@ -41,7 +41,7 @@ function Slideshow() {
         <img
           className="d-block w-100"
           src={farmers_img}
-          // alt="Second slide"
+          alt="Second slide"
           style = {imgStyle}
         />
 

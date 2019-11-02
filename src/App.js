@@ -1,9 +1,8 @@
 import React from 'react';
-// import Layout from './components/Layout/Layout';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NotFoundPage from '../src/components/NotFoundPage/NotFoundPage';
 import Home from '../src/components/Home/Home'
 import Login from '../src/components/Login/Login'

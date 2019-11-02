@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import Layout from '../Layout/Layout'
-import PropTypes from 'prop-types';
 import axios from "axios";
 import Aux from '../../hoc/Aux'
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/auth'
 
 class Login extends React.Component{
   state = {
@@ -27,21 +27,6 @@ class Login extends React.Component{
     }
   }
 
-
-  handle_login = (e, data) => {
-    e.preventDefault();
-    axios.post(`http://localhost:8000/token-auth/`, data)
-      .then(res => {
-        localStorage.setItem('token', res.data.token);
-        window.location.href = "/";
-        this.setState({
-        logged_in: true,
-        displayed_form: '',
-        username: res.data.username
-      });
-    })
-  };
-
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -60,7 +45,7 @@ class Login extends React.Component{
             <div class="user-session__form">
               <div>
                 <h2>Login</h2>
-                <form class="new_user" id="new_user" accept-charset="UTF-8" method="post" onSubmit={e => this.handle_login(e, this.state)} >
+                <form class="new_user" id="new_user" accept-charset="UTF-8" method="post" onSubmit={e => this.props.onLogin(e, this.state)} >
                   <div class="form-group">
                     <label for="username">UserName:</label>
                     <input autofocus="autofocus" class="form-control" type="text" name="username" value={this.state.username} onChange={this.handle_change} />
@@ -87,4 +72,10 @@ class Login extends React.Component{
   }
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin : (e, data) => dispatch(actions.authLogin(e, data))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login);
