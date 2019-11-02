@@ -11,7 +11,8 @@ import Signup from '../src/components/SignUp/SignUp'
 import ProfileAccount from '../src/components/Profile/Profile_account'
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
 import ProfileBank from '../src/components/Profile/Profile_bank'
-  
+import NewMarketOrder from './components/Marketplace/Newoffer/NewMarketOrder';
+import MarketPlace from './components/Marketplace/MarketPlace'  
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
           <Route exact path = "/personal" component = {ProfilePersonal} />
           <Route exact path = "/bank" component = {ProfileBank} />
           <Route exact path = "/portfolio" component = {ProfileAccount} />
+          <Route exact path = "/NewMarketOrder" component = {NewMarketOrder} />
+          <Route exact path = "/MarketPlace" component = {MarketPlace} />
           <Route exact path = "/404" component = {NotFoundPage} />
           
           <Redirect to = "/404" />
