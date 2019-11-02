@@ -11,15 +11,23 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import {Provider} from 'react-redux';
 import homeReducer from './store/reducers/home_reducers';
+import authReducer from './store/reducers/auth_reducers';
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
     home: homeReducer,
+    auth: authReducer,  
 })
 
-const store = createStore(rootReducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducer,
+    composeEnhancers(applyMiddleware(thunk)),
+    );
+
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

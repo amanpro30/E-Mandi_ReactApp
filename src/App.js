@@ -9,7 +9,7 @@ import Home from '../src/components/Home/Home'
 import Login from '../src/components/Login/Login'
 import Signup from '../src/components/SignUp/SignUp'
 import ProfileAccount from '../src/components/Profile/Profile_account'
-  
+import Example from '../src/components/Test/Test'
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
           <Route exact path = "/bank" component = {ProfileAccount} />
           <Route exact path = "/portfolio" component = {ProfileAccount} />
           <Route exact path = "/404" component = {NotFoundPage} />
-          
+          <Route exact path = "/test" component = {Example} />
           <Redirect to = "/404" />
         </Switch>
       </div>
