@@ -1,5 +1,4 @@
 import React from 'react';
-// import Layout from './components/Layout/Layout';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +8,7 @@ import Home from '../src/components/Home/Home'
 import Login from '../src/components/Login/Login'
 import Signup from '../src/components/SignUp/SignUp'
 import ProfileAccount from '../src/components/Profile/Profile_account'
+import Example from '../src/components/Test/Test'
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
 import ProfileBank from '../src/components/Profile/Profile_bank'
 import MarketPlace from './components/Marketplace/MarketPlace'  
@@ -28,7 +28,7 @@ function App() {
           <Route exact path = "/MarketPlace" component = {MarketPlace} />
           <Route exact path = "/paypal" component ={PaypalButton} />
           <Route exact path = "/404" component = {NotFoundPage} />
-          
+          <Route exact path = "/test" component = {Example} />
           <Redirect to = "/404" />
         </Switch>
       </div>

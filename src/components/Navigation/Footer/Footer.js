@@ -13,50 +13,50 @@ import mail from '../../../assets/logos/mail_icon-4260a55e62b163f2a269cbac2b5f77
 const Footer = () => {
   return (
     <footer className={classes.footer}>
-	<div class="footer-row-top">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-6 col-md-4 offset-md-1">
-          <h4 class="list-title">About E-Mandi </h4>
-          <ul class="list-unstyled">
-            <li><a rel="noopener noreferrer" target="_blank" href="#">Our Company</a></li>
-            <li><a href="#">Our People</a></li>
-            <li><a href="#">FAQ&#39;s</a></li>
-            <li><a href="#">Terms &amp; Conditions</a></li>
-            <li><a target="#" href="privacy.html">Privacy Policy</a></li>
+	<div className="footer-row-top">
+    <div className="container">
+      <div className="row">
+        <div className="col-xs-6 col-md-4 offset-md-1">
+          <h4 className="list-title">About E-Mandi </h4>
+          <ul className="list-unstyled">
+            <li><a target="_blank" href=" ">Our Company</a></li>
+            <li><a href=" ">Our People</a></li>
+            <li><a href=" ">FAQ&#39;s</a></li>
+            <li><a href=" ">Terms &amp; Conditions</a></li>
+            <li><a target=" " href="privacy.html">Privacy Policy</a></li>
           </ul>
         </div>
-    	  <div class="col-xs-6 col-md-4">
-         <h4 class="list-title">Follow Us </h4>
-    	    <ul class="list-unstyled">
+    	  <div className="col-xs-6 col-md-4">
+         <h4 className="list-title">Follow Us </h4>
+    	    <ul className="list-unstyled">
     	      <li>
-    	        <img class="footer-image" src={fb} alt="Facebook logo" />
+    	        <img className="footer-image" src={fb} alt="Facebook logo" />
     	        <a href="https://www.facebook.com/E-Mandi" rel="noopener noreferrer" target="_blank"> E-Mandi </a>
     	      </li>
             <li>
-              <img class="footer-image" src={twitter} alt="Twitter logo" />
+              <img className="footer-image" src={twitter} alt="Twitter logo" />
               <a href="https://twitter.com/E-Mandi" rel="noopener noreferrer" target="_blank"> @EMandi </a>
             </li>
             <li>
-              <img class="footer-image" src={linkedin} alt="Linkedin" />
+              <img className="footer-image" src={linkedin} alt="Linkedin" />
               <a href="https://www.linkedin.com/company/E-Mandi/" rel="noopener noreferrer" target="_blank"> E-Mandi</a>
             </li>
             <li>
-    	        <img class="footer-image" src={youtube} alt="Youtube logotype" />
-              <a href="#" target="_blank"> E-Mandi </a>
+    	        <img className="footer-image" src={youtube} alt="Youtube logotype" />
+              <a href=" " target="_blank"> E-Mandi </a>
     	      </li>
     	    </ul>
     	  </div>
-        <div class="col-xs-6 col-md-3">
-        <h4 class="list-title">Contact us </h4>
-          <ul class="list-unstyled">
-            <li class="img-li">
+        <div className="col-xs-6 col-md-3">
+        <h4 className="list-title">Contact us </h4>
+          <ul className="list-unstyled">
+            <li className="img-li">
                 <img src={phone} alt="Phone icon" />
-                <a class="strong" href="callto:+91 9999999999">+91 9999999999</a>
+                <a className="strong" href="callto:+91 9999999999">+91 9999999999</a>
               </li>
-              <li class="img-li">
+              <li className="img-li">
                 <img src={mail} alt="Mail icon" />
-                <a href="#"> <span class="__cf_email__" data-cfemail="93fafdf5fcd3f2f4e1fafee3bdf0fcfe">[email&#160;protected]</span> </a>
+                <a href=" "> <span className="__cf_email__" data-cfemail="93fafdf5fcd3f2f4e1fafee3bdf0fcfe">[email&#160;protected]</span> </a>
               </li>
           </ul>
         </div>

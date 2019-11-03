@@ -21,7 +21,7 @@ const ProfileAccount = (props) => {
                     <div class="row row--field">
                         <div class="col-md-4">
                             <label class="input-picture" for="user_profile_picture">
-                            <img src="/assets/icons/photo-142975824a4cb52e519f87ef80e6c3abbda9de545771be5a8e918611d7721254.png" />
+                            <img src="/assets/icons/photo-142975824a4cb52e519f87ef80e6c3abbda9de545771be5a8e918611d7721254.png" alt='imagew'/>
                             Click to add Photo
                             <input accept="image/*" type="file" name="user[profile_picture]" id="user_profile_picture" />
                             </label>    

@@ -1,106 +1,161 @@
 import React from 'react';
 import Layout from '../Layout/Layout'
+import * as actions from '../../store/actions/auth'
+import {connect} from 'react-redux';
 
-const Signup = (props) => (
-  <Layout>    
-        <div class="row">
-    <div class="col-md-8 offset-md-2 user-registration__col" >
-      <h2>Sign Up</h2>
-        <p>If you are already registered <a class="link-green" href="/login">Login here</a>
-        </p>
+class Signup extends React.Component {
+  state = {
+    username: '',
+    password: '',
+    email: '',
+    first_name: '',
+    last_name: '',
+    profile: {
+      phone: '',
+      state: '',
+      city: '',
+      street: '',
+      aadharcard: '',
+      pincode: '',
+      company: '',
+    },
+  };
 
-      <form class="new_user" id="new_user" action="https://agrimp.com/users" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Z5LFR6zJe+0d2jFzmvolSWd88X+2Uiu3+KxFxNLj2Yi5z61Eqm4qPQ82nz5cw6PVw7iegJS8E6YbmaY8Xkvfyw==" />
-        <ul class="error_explanation"></ul>
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label for="user_first_name">First Name</label>
-            <input class="form-control" required="required" type="text" name="user[first_name]" id="user_first_name" />
-          </div>
+  handle_change = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+    });
+  };
 
-          <div class="col-md-6 form-group">
-            <label for="user_last_name">Last Name</label>
-            <input class="form-control" required="required" type="text" name="user[last_name]" id="user_last_name" />
+  handle_change1 = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState['profile'][name] = value;
+      return newState;
+    });
+  };
+
+
+
+  render() {
+    return (
+      <Layout>
+        <div className="row">
+          <div className="col-md-8 offset-md-2 user-registration__col" >
+            <h2>Sign Up</h2>
+            <p>If you are already registered <a className="link-green" href="/login">Login here</a>
+            </p>
+            <form className="new_user" id="new_user" onSubmit={e => this.props.onSignup(e, this.state)} acceptCharset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Z5LFR6zJe+0d2jFzmvolSWd88X+2Uiu3+KxFxNLj2Yi5z61Eqm4qPQ82nz5cw6PVw7iegJS8E6YbmaY8Xkvfyw==" />
+              <ul className="error_explanation"></ul>
+              <div className="row">
+                <div className="col-md-8 form-group">
+                  <label htmlFor="username">UserName</label>
+                  <input className="form-control" required="required" type="text" name="username" value={this.state.username} onChange={this.handle_change} />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 form-group">
+                  <label htmlFor="first_name">First Name</label>
+                  <input className="form-control" required="required" type="text" name="first_name" value={this.state.first_name} onChange={this.handle_change} />
+                </div>
+                <div className="col-md-6 form-group">
+                  <label htmlFor="last_name">Last Name</label>
+                  <input className="form-control" required="required" name="last_name" value={this.state.last_name} onChange={this.handle_change}/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 form-group">
+                  <label htmlFor="password">Password</label>
+                  <input className="form-control" required="required" type="password" name="password" value={this.state.password} onChange={this.handle_change}/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 form-group">
+                  <label htmlFor="user_company">Company</label>
+                  <input className="form-control" required="required" type="text" name="company" value={this.state.profile.company} onChange={this.handle_change1} />
+                </div>
+                <div className="col-md-6 form-group">
+                  <label htmlFor="email">E-Mail</label>
+                  <input className="form-control" required="required" type="email" name="email" value={this.state.email} onChange={this.handle_change} />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 form-group">
+                  <label className="required" htmlFor="aadharcard">Aadhaar Number</label><br />
+                  <input className="form-control" type="text" name="aadharcard" value={this.state.profile.aadharcard} onChange={this.handle_change1} />
+                </div>
+                <div className="col-md-6 form-group">
+                  <label className="required" htmlFor="phone">Mobile number</label><br />
+                  <input className="form-control" required="required" type="text" name="phone" value={this.state.profile.phone} onChange={this.handle_change1} />
+                </div>
+              </div>
+              <div className="row ">
+                <div className="col-md-12 form-group">
+                  <label htmlFor="street">Street</label>
+                  <input className="form-control" required="required" type="text" name="street" value={this.state.profile.street} onChange={this.handle_change1} />
+                </div>
+              </div>
+              <div className="row ">
+                <div className="col-md-6 form-group">
+                  <label htmlFor="city">District</label>
+                  <input className="form-control" required="required" type="text" name="city" value={this.state.profile.city} onChange={this.handle_change1} />
+                </div>
+                <div className="col-md-6 form-group">
+                  <label htmlFor="state">State</label>
+                  <input className="form-control" required="required" type="text" name="state" value={this.state.profile.state} onChange={this.handle_change1} />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 form-group">
+                  <label htmlFor="pincode">pincode</label>
+                  <input className="form-control" required="required" type="text" name="pincode" value={this.state.profile.pincode} onChange={this.handle_change1}/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="form-check">
+                    <label className="form-check-label">
+                      <input name="user[terms_and_conditions]" type="hidden" value="0" /><input className="form-check-input" required="required" type="checkbox" value="1" name="user[terms_and_conditions]" id="user_terms_and_conditions" />
+                      <span>I agree with the <a target="_blank" className="link-green" href="../terms-conditions/agri-marketplace.html"><span className="translation_missing" title="translation missing: en.devise.registrations.new.agri_marketplace_terms">Agri Marketplace Terms</span></a> and <a target="_blank" className="link-green" href="../privacy.html">Privacy Policy</a></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-4 offset-md-4">
+                  <input type="submit" name="commit" value="Sign Up" className="btn btn-solid btn--full" data-disable-with="Sign Up" />
+                </div>
+              </div>
+              <br />
+            </form>
           </div>
         </div>
+      </Layout>
+    )
+  }
+};
 
-        <div class="row">
-          <div class="col-md-12 form-group">
-            <label for="user_company">Company</label>
-            <input class="form-control" required="required" type="text" name="user[company]" id="user_company" />
-          </div>
-        </div>
+// Signup.propTypes = {
+//   handle_signup: PropTypes.func.isRequired
+// };
 
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label class="required" for="user_vatin">Aadhaar Number</label><br />
-            <input class="form-control" type="text" name="user[vatin]" id="user_vatin" />
-          </div>
+const mapStateToProps = state => {
+  return {
+    // username: state.auth.username,
+    logged_in: state.auth.isAuthenticated,
+  }
+}
 
-          <div class="col-md-6 form-group">
-            <label class="required" for="user_mobile_number">Mobile number</label><br />
-            <input class="form-control" required="required" id="phone-number" type="text" name="user[phone_number]" />
-          </div>
-        </div>
+const mapDispatchToProps = dispatch => {
+  return {
+    onSignup : (e, data) => dispatch(actions.authSignup(e, data))
+  }
+}
 
-        <div class="row ">
-          <div class="col-md-6 form-group">
-          <label for="user_house_no">House No.</label>
-            <input autofocus="autofocus" class="form-control" required="required" type="text" value="" name="user[house_no]" id="user_house_no" />
-          </div>
-          <div class="col-md-6 form-group">
-            <label for="user_street">Street</label>
-            <input class="form-control" required="required" type="text" name="user[street]" id="street" />
-          </div>
-        </div>
-        <div class="row ">
-          <div class="col-md-6 form-group">
-            <label for="user_district">District</label>
-            <input class="form-control" required="required" type="text" name="user[district]" id="district" />
-          </div>
-          <div class="col-md-6 form-group">
-            <label for="user_state">State</label>
-            <input autofocus="autofocus" class="form-control" required="required" type="text" value="" name="user[state]" id="user_state" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 form-group">
-            <label for="user_email">E-Mail</label>
-            <input class="form-control" required="required" type="email" name="user[email]" id="user_email" />
-          </div>
-        </div>        
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label for="user_password">Password</label>
-              <em>(6 characters minimum)</em>
-            <input autocomplete="off" class="form-control" required="required" type="password" name="user[password]" id="user_password" />
-          </div>
-          <div class="col-md-6 form-group">
-            <label for="user_password_confirmation">Password Confirmation</label>
-            <input autocomplete="off" class="form-control" required="required" type="password" name="user[password_confirmation]" id="user_password_confirmation" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-check">
-              <label class="form-check-label">
-                <input name="user[terms_and_conditions]" type="hidden" value="0" /><input class="form-check-input" required="required" type="checkbox" value="1" name="user[terms_and_conditions]" id="user_terms_and_conditions" />
-                <span>I agree with the <a target="_blank" class="link-green" href="../terms-conditions/agri-marketplace.html"><span class="translation_missing" title="translation missing: en.devise.registrations.new.agri_marketplace_terms">Agri Marketplace Terms</span></a> and <a target="_blank" class="link-green" href="../privacy.html">Privacy Policy</a></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-4 offset-md-4">
-            <input type="submit" name="commit" value="Sign Up" class="btn btn-solid btn--full" data-disable-with="Sign Up" />
-          </div>
-        </div>
-        <br />
-      
-      </form>
-      </div>
-    </div>
-    </Layout>   
-);
-
-export default Signup;
+export default connect(mapStateToProps,mapDispatchToProps)(Signup);
