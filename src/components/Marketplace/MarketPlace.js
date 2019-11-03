@@ -32,10 +32,16 @@ class MarketPlace extends Component {
             <Aux>
                 <Layout>
  {/* ########################################################################################################                    */}
-                    <Button variant="primary" onClick={this.handleShow_Market}>
+ <div className="content">
+     <div className ="container products-index container__filter">
+     <div className="products-index__search-container">
+    
+  
+       
+                    <Button className="col-md-4 " variant="primary" onClick={this.handleShow_Market}>
                         Market Order
                     </Button>
-                    <Button variant="primary" onClick={this.handleShow_Futures}>
+                    <Button className="col-md-4 "  variant="primary" onClick={this.handleShow_Futures}>
                         Futures Order
                     </Button>
 
@@ -182,6 +188,9 @@ class MarketPlace extends Component {
 
                        
                     </Modal>
+                    </div>
+                </div>
+            </div>      
                 </Layout>
             </Aux>
 
