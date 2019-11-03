@@ -1,12 +1,8 @@
 import React, {useState} from "react";
-// import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBView, MDBContainer } from
-// "mdbreact";
 import Carousel from 'react-bootstrap/Carousel';
-// import classes from './Slideshow.css';
 import grain2_img from '../../assets/images/grains2.jpg';
 import farmers_img from '../../assets/images/farmer.jpg';
-// import mandi_img from '../../assets/images/mandi.jpg';
-// import tractor from '../../assets/images/tractor.jpg';
+
 
 
 function Slideshow() {
@@ -29,7 +25,7 @@ function Slideshow() {
         <img
           className="d-block w-100"
           src={grain2_img}
-          // alt="First slide"
+          alt="First slide"
           style = {imgStyle}
         />
         <Carousel.Caption>
@@ -41,7 +37,7 @@ function Slideshow() {
         <img
           className="d-block w-100"
           src={farmers_img}
-          // alt="Second slide"
+          alt="Second slide"
           style = {imgStyle}
         />
 
