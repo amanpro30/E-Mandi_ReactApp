@@ -37,6 +37,10 @@ const toolbar = () => {
           </Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
           <Nav.Link href="/profile">Profile</Nav.Link>
+          <Nav.Link href="#features" className="mr-sm-2">
+            Features
+          </Nav.Link>
+          <Nav.Link href="#pricing">Pricing</Nav.Link>
           <Nav.Link href="/login">LogIn</Nav.Link>
           <Nav.Link href="/signup">SignUp</Nav.Link>
         </Nav>
