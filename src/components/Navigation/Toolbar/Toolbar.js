@@ -21,7 +21,7 @@ const toolbar =(props) => {
   <Navbar.Brand style={style1} href="/">E Mandi</Navbar.Brand>
   <Nav className="ml-auto">
     <Nav.Link style={style1} href="/">Home</Nav.Link>
-    <Nav.Link href="#marketplace" className="mr-sm-2">Market</Nav.Link>
+    <Nav.Link href="/marketplace" className="mr-sm-2">Market</Nav.Link>
     <Nav.Link href="#pricing">Pricing</Nav.Link>
     {
       props.islogged ?

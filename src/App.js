@@ -25,7 +25,7 @@ function App() {
           <Route exact path = "/personal" component = {ProfilePersonal} />
           <Route exact path = "/bank" component = {ProfileBank} />
           <Route exact path = "/portfolio" component = {ProfileAccount} />
-          <Route exact path = "/MarketPlace" component = {MarketPlace} />
+          <Route exact path = "/marketplace" component = {MarketPlace} />
           <Route exact path = "/404" component = {NotFoundPage} />
           <Route exact path = "/test" component = {Example} />
           <Redirect to = "/404" />
