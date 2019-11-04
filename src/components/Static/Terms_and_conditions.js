@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
 import Layout from "../Layout/Layout";
 
 const Terms_and_conditions = props => (
@@ -315,7 +314,7 @@ const Terms_and_conditions = props => (
             If any provision of these Terms and Conditions is found to be unlawful, invalid or unenforceable, in whole or in part, under any law, such provision or part thereof shall to this extent be understood as not forming part of these Terms and Conditions, and the legality, validity and enforceability of the remaining provisions shall not be affected. In this case, the part of the illegal, invalid or unenforceable provision shall be replaced by a (part of a) provision that is legal, valid and enforceable and that has, to the greatest extent possible, a similar effect to the provision or its illegal, invalid or unenforceable part, taking into account the contents and purpose of these Terms and Conditions. 
             </li>
             <li className="termsConditions-list-item">
-            These Terms and Conditions contain the entire agreement between Agri EM and the User. Agri EM reserves the right to, at any time, alter these Terms and Conditions in any way. Whenever changes are made to the applicable Terms and Conditions, Users shall be presented, when accessing the E-Mandi platform, a notice informing them of such fact and a request for acceptance of the new Terms and Conditions. Without this acceptance, Users shall not be able to continue to access and use the E-Mandi platform. Any notices of modification of these Terms and Conditions shall also be published on the website: <a href="https://agrimp.com" className="link-green" target="_blank">www.agrimp.com</a>. Changes made to the Terms and Conditions shall not be retroactive and shall not take effect within a period of less than fourteen (14) days after their publication. Changes to the Terms and Conditions that result from (i) modifications or new features of the E-Mandi platform, or (ii) legal impositions, which shall produce immediate effects, are excepted.
+            These Terms and Conditions contain the entire agreement between Agri EM and the User. Agri EM reserves the right to, at any time, alter these Terms and Conditions in any way. Whenever changes are made to the applicable Terms and Conditions, Users shall be presented, when accessing the E-Mandi platform, a notice informing them of such fact and a request for acceptance of the new Terms and Conditions. Without this acceptance, Users shall not be able to continue to access and use the E-Mandi platform. 
             </li>
             <li className="termsConditions-list-item">
             The present Terms and Conditions, as well as any dispute inherent to Agri MP, shall be subject to the Portuguese law and the courts of the district of Lisbon are hereby designated as competent.
@@ -324,10 +323,10 @@ const Terms_and_conditions = props => (
             <li className="termsConditions-list-title">OUR CONTACTS</li>
             <ul className="termsConditions-listNumeric">
             <div>
-            Web page: <a href="#" className="link-green" target="_blank">www.emandi.com</a>
+            Web page: <a href="www.emandi.com" className="link-green" target="_blank">www.emandi.com</a>
             </div>
             <div>
-            Email: <a href="#" className="link-green">info@emandi.com</a>
+            Email: <a href="info@emandi.com" className="link-green">info@emandi.com</a>
             </div>
             <div>Tel.: +91 9999999999</div>
             </ul>

@@ -16,6 +16,7 @@ import Ourpeople from "./components/Static/Ourpeople";
 import Faqs from "./components/Static/Faqs";
 import Terms_and_conditions from "./components/Static/Terms_and_conditions";
 import Privacy_policy from "./components/Static/Privacy_policy";
+import MarketPlace1 from "./components/Marketplace/MarketPlace1";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route exact path="/terms" component={Terms_and_conditions} />
           <Route exact path="/privacy_policy" component={Privacy_policy} />
           <Route exact path="/MarketPlace" component={MarketPlace} />
+          <Route exact path="/MarketPlace1" component={MarketPlace1} />
 
           <Route exact path="/test" component={Example} />
           <Redirect to="/404" />

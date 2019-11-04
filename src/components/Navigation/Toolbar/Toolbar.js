@@ -8,33 +8,37 @@ import * as actions from "../../../store/actions/auth";
 
 const toolbar = props => {
   const style1 = {
-    fontSize: "25px"
+    fontSize: "25px",
+    background: "dimgray"
   };
-  return(
-  <Aux>  
-  <Navbar style={style1} bg="dark" variant="dark">
-  <Navbar.Brand style={style1} href="/">E Mandi</Navbar.Brand>
-  <Nav className="ml-auto">
-    <Nav.Link style={style1} href="/">Home</Nav.Link>
-    <Nav.Link href="/marketplace" className="mr-sm-2">Market</Nav.Link>
-    <Nav.Link href="#pricing">Pricing</Nav.Link>
-    {
-      props.islogged ?
-    <Nav.Link href="/profile">Profile</Nav.Link>
-    :<Nav.Link href="/signup" >SignUp</Nav.Link>
-    }
-    {
-     props.islogged ?
-     <Nav.Link  href="/logout" onClick={() => props.onLogOut()}><button>LogOut</button></Nav.Link>
-     :<Nav.Link  href="/login">LogIn</Nav.Link>
-    }
-  </Nav>
-</Navbar>
-
-</Aux>
-  )
-
-
+  return (
+    <Aux>
+      <Navbar style={style1} variant="dark">
+        <Navbar.Brand style={{ fontSize: "30px" }} href="/">
+          E Mandi
+        </Navbar.Brand>
+        <Nav className="ml-auto">
+          <Nav.Link style={{ fontSize: "25px" }} href="/">
+            Home
+          </Nav.Link>
+          <Nav.Link href="/marketplace">Market</Nav.Link>
+          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          {props.islogged ? (
+            <Nav.Link href="/profile">Profile</Nav.Link>
+          ) : (
+            <Nav.Link href="/signup">SignUp</Nav.Link>
+          )}
+          {props.islogged ? (
+            <Nav.Link href="/logout" onClick={() => props.onLogOut()}>
+              <button>LogOut</button>
+            </Nav.Link>
+          ) : (
+            <Nav.Link href="/login">LogIn</Nav.Link>
+          )}
+        </Nav>
+      </Navbar>
+    </Aux>
+  );
 };
 
 const mapStateToProps = state => {
