@@ -18,8 +18,22 @@ class Signup extends React.Component {
       aadharcard: "",
       pincode: "",
       company: ""
-    }
-  };
+    },
+    aadharErrorL:" ",
+    aadharErrorN:" ",
+    mobileErrorL:" ",
+    mobileErrorN:" ",
+    pinErrorL:" ",
+    pinErrorN:" ",
+    password_confirm:"",
+    passwordError:" ",
+    firstNameError:"",
+    lastNameError:"",
+    districtError:"",
+    stateError:"",
+    emailError:"",
+  } 
+  
 
   handle_change = e => {
     const name = e.target.name;
@@ -29,6 +43,54 @@ class Signup extends React.Component {
       newState[name] = value;
       return newState;
     });
+    let err=" ";
+    let password=this.state.password
+    if(name==='password_confirm'){
+      if(value!==" " && value!==password){
+        err=<strong style={{color:"red"}} >Pasword and Confirm Password Must Match</strong>
+      }
+      
+    
+    
+    this.setState({passwordError:err});
+    }
+    
+    
+    if(name==='first_name'){
+      if(value!==" " && !value.match(/^[a-zA-Z]+$/)){
+        err=<strong style={{color:"red"}} >Invalid Name</strong>
+      }
+      
+    
+    
+    this.setState({firstNameError:err});
+    }
+    if(name==='last_name'){
+      if(value!==" " && !value.match(/^[a-zA-Z]+$/)){
+        err=<strong style={{color:"red"}} >Invalid Name</strong>
+      }
+      
+    
+    
+    this.setState({lastNameError:err});
+    }
+
+    if(name==='email'){
+      if(value!==" " ){
+        let lastAtPos = value.lastIndexOf('@');
+           let lastDotPos = value.lastIndexOf('.');
+
+           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && value.indexOf('@@') === -1 && lastDotPos > 2 && (value.length - lastDotPos) > 2)) {
+              
+            err=<strong style={{color:"red"}} >Invalid Email</strong>
+      }
+      }
+      
+    
+    
+    this.setState({emailError:err});
+    }
+
   };
 
   handle_change1 = e => {
@@ -39,6 +101,63 @@ class Signup extends React.Component {
       newState["profile"][name] = value;
       return newState;
     });
+
+    let err=" ";
+    let err1=" ";
+    if(name==='aadharcard'){
+      if(value!==" " && !Number(value)){
+        err=<strong style={{color:"red"}} >Aadhar must be a number</strong>
+      }
+      if(value.length!==12){
+        err1=<strong style={{color:"red"}} > Length must be 12 </strong>
+      }
+      this.setState({aadharErrorL:err, aadharErrorN:err1});
+    }
+    
+    
+
+    if(name==='phone'){
+      if(value!==" " && !Number(value)){
+        err=<strong style={{color:"red"}} >Mobile no. must be a number</strong>
+      }
+      if(value.length!==10){
+        err1=<strong style={{color:"red"}} > Length must be 10 </strong>
+      }
+      this.setState({mobileErrorL:err, mobileErrorN:err1});
+    }
+    
+    
+
+    if(name==='pincode'){
+      if(value!==" " && !Number(value)){
+        err=<strong style={{color:"red"}} >Pincode must be a number</strong>
+      }
+      if(value.length!==6){
+        err1=<strong style={{color:"red"}} > Length must be 6 </strong>
+      }
+      this.setState({pincodeErrorL:err, pincodeErrorN:err1});
+    }
+
+    if(name==='city'){
+      if(value!==" " && !value.match(/^[a-zA-Z]+$/)){
+        err=<strong style={{color:"red"}} >Invalid District Name</strong>
+      }
+      
+    
+    
+    this.setState({districtError:err});
+    }
+    if(name==='state'){
+      if(value!==" " && !value.match(/^[a-zA-Z]+$/)){
+        err=<strong style={{color:"red"}} >Invalid State Name</strong>
+      }
+      
+    
+    
+    this.setState({stateError:err});
+    }
+    
+    
   };
 
   render() {
@@ -68,7 +187,7 @@ class Signup extends React.Component {
               />
               <ul className="error_explanation"></ul>
               <div className="row">
-                <div className="col-md-8 form-group">
+                <div className="col-md-6 form-group">
                   <label htmlFor="username">
                     <strong>UserName</strong>
                   </label>
@@ -87,6 +206,7 @@ class Signup extends React.Component {
                   <label htmlFor="first_name">
                     <strong>First Name</strong>
                   </label>
+                  &nbsp;&nbsp;{this.state.firstNameError}
                   <input
                     className="form-control"
                     required="required"
@@ -100,6 +220,7 @@ class Signup extends React.Component {
                   <label htmlFor="last_name">
                     <strong>Last Name</strong>
                   </label>
+                  &nbsp;{this.state.lastNameError}
                   <input
                     className="form-control"
                     required="required"
@@ -123,6 +244,20 @@ class Signup extends React.Component {
                     onChange={this.handle_change}
                   />
                 </div>
+                <div className="col-md-6 form-group">
+                  <label htmlFor="password">
+                    <strong>Confirm Password</strong>
+                  </label>
+                  &nbsp;{this.state.passwordError}
+                  <input
+                    className="form-control"
+                    required="required"
+                    type="password"
+                    name="password_confirm"
+                    value={this.state.password_confirm}
+                    onChange={this.handle_change}
+                  />
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-6 form-group">
@@ -142,6 +277,7 @@ class Signup extends React.Component {
                   <label htmlFor="email">
                     <strong>E-Mail</strong>
                   </label>
+                  &nbsp;&nbsp;{this.state.emailError}
                   <input
                     className="form-control"
                     required="required"
@@ -155,9 +291,10 @@ class Signup extends React.Component {
               <div className="row">
                 <div className="col-md-6 form-group">
                   <label className="required" htmlFor="aadharcard">
-                    <strong>Aadhaar Number</strong>
+                    <strong>Aadhaar Number</strong> 
                   </label>
-                  <br />
+                  &nbsp;&nbsp;{this.state.aadharErrorL}&nbsp;{this.state.aadharErrorN}
+                  
                   <input
                     className="form-control"
                     type="text"
@@ -170,6 +307,7 @@ class Signup extends React.Component {
                   <label className="required" htmlFor="phone">
                     <strong>Mobile number</strong>
                   </label>
+                  &nbsp;&nbsp;{this.state.mobileErrorL}&nbsp;{this.state.mobileErrorN}
                   <br />
                   <input
                     className="form-control"
@@ -201,6 +339,7 @@ class Signup extends React.Component {
                   <label htmlFor="city">
                     <strong>District</strong>
                   </label>
+                  &nbsp;&nbsp;{this.state.districtError}
                   <input
                     className="form-control"
                     required="required"
@@ -214,6 +353,7 @@ class Signup extends React.Component {
                   <label htmlFor="state">
                     <strong>State</strong>
                   </label>
+                  &nbsp;&nbsp;{this.state.stateError}
                   <input
                     className="form-control"
                     required="required"
@@ -229,6 +369,8 @@ class Signup extends React.Component {
                   <label htmlFor="pincode">
                     <strong>Pincode</strong>
                   </label>
+                  &nbsp;{this.state.pincodeErrorL}&nbsp;{this.state.pincodeErrorN}
+
                   <input
                     className="form-control"
                     required="required"

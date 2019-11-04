@@ -38,16 +38,16 @@ class MarketPlace extends Component {
                 style={{ marginLeft: 45 }}
                 class="col-md-4 products-index__col"
               >
-                <h3 class="product-filter_header">Characteristics</h3>
-
-                <div class="product-filter">
+                <h3 class="product-filter_header" style={{marginBottom:'13px'}}>Watch List</h3>
+                
+                <div class="product-filter" style={{border:'3px' , borderStyle:'groove', marginBottam:'20px' ,height:'100%'}}>
                   <div class="row form-filter_product">
-                    <div class="col-sm-2 col-md-3 col-lg-2"></div>
-                    <div class="col-sm-6 col-md-9 col-lg-10">
+                    <div class="col-sm-6 col-md-10 col-lg-10">
                       <h4>Rice</h4>
                     </div>
                   </div>
                 </div>
+                <br />
               </div>
               <div class="col-md-7 products-index__col">
                 <div class="row">
@@ -71,7 +71,7 @@ class MarketPlace extends Component {
                   </div>
                 </div>
 
-                <div class="products-index__top-filter">
+                <div class="products-index__top-filter"  style={{border:'3px' , borderStyle:'groove'}}>
                   <div class="row">
                     <div class="col-xs-3 products-index__top-filter__count">
                       Results
@@ -96,7 +96,7 @@ class MarketPlace extends Component {
                   </div>
                 </div>
 
-                <div class="products-index__list">
+                <div class="products-index__list"  style={{border:'2px' ,borderStyle:'groove'}}>
                   <div class="products-index__list__header hidden-sm-down">
                     <div class="row">
                       <div class="col-md-4">
@@ -145,6 +145,8 @@ class MarketPlace extends Component {
                   </div>
                 </div>
                 <Order />
+                <Order />
+                <br/>
               </div>
             </div>
           </div>
