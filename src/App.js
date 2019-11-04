@@ -12,7 +12,6 @@ import Example from '../src/components/Test/Test'
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
 import ProfileBank from '../src/components/Profile/Profile_bank'
 import MarketPlace from './components/Marketplace/MarketPlace'  
-import PaypalButton from './components/Paypal/PaypalButton'
 function App() {
   return (
     <BrowserRouter>
@@ -26,7 +25,6 @@ function App() {
           <Route exact path = "/bank" component = {ProfileBank} />
           <Route exact path = "/portfolio" component = {ProfileAccount} />
           <Route exact path = "/MarketPlace" component = {MarketPlace} />
-          <Route exact path = "/paypal" component ={PaypalButton} />
           <Route exact path = "/404" component = {NotFoundPage} />
           <Route exact path = "/test" component = {Example} />
           <Redirect to = "/404" />
