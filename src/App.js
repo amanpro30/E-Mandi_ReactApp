@@ -18,6 +18,9 @@ import Terms_and_conditions from "./components/Static/Terms_and_conditions";
 import Privacy_policy from "./components/Static/Privacy_policy";
 import MarketPlace1 from "./components/Marketplace/MarketPlace1";
 
+import ProfilePersonal from "../src/components/Profile/Profile_personal";
+import ProfileBank from "../src/components/Profile/Profile_bank";
+import PaypalButton from "./components/Paypal/PaypalButton";
 function App() {
   return (
     <BrowserRouter>
@@ -27,10 +30,7 @@ function App() {
           <Route exact path="/market" component={Market} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/profile" component={ProfileAccount} />
-          <Route exact path="/personal" component={ProfileAccount} />
-          <Route exact path="/bank" component={ProfileAccount} />
-          <Route exact path="/portfolio" component={ProfileAccount} />
+
           <Route exact path="/404" component={NotFoundPage} />
           <Route exact path="/company" component={Ourcompany} />
           <Route exact path="/people" component={Ourpeople} />
@@ -41,6 +41,17 @@ function App() {
           <Route exact path="/MarketPlace1" component={MarketPlace1} />
 
           <Route exact path="/test" component={Example} />
+
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/profile" component={ProfileAccount} />
+          <Route exact path="/personal" component={ProfilePersonal} />
+          <Route exact path="/bank" component={ProfileBank} />
+          <Route exact path="/portfolio" component={ProfileAccount} />
+          <Route exact path="/MarketPlace" component={MarketPlace} />
+          <Route exact path="/paypal" component={PaypalButton} />
+
           <Redirect to="/404" />
         </Switch>
       </div>
