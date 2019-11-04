@@ -1,28 +1,28 @@
-import React from 'react';
-import Layout from '../Layout/Layout'
+import React from "react";
+import Layout from "../Layout/Layout";
 import axios from "axios";
-import Aux from '../../hoc/Aux'
-import {connect} from 'react-redux';
-import * as actions from '../../store/actions/auth'
+import Aux from "../../hoc/Aux";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/auth";
 
-class Login extends React.Component{
+class Login extends React.Component {
   state = {
-    username: '',
-    password: '',
-    logged_in: localStorage.getItem('token') ? true : false,
-
+    username: "",
+    password: "",
+    logged_in: localStorage.getItem("token") ? true : false
   };
 
   componentDidMount() {
     if (this.state.logged_in) {
-      axios.get(`http://localhost:8000/accounts/current_user`,  {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('token')}`
-        }
-      })
-       
+      axios
+        .get(`http://localhost:8000/accounts/current_user`, {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem("token")}`
+          }
+        })
+
         .then(res => {
-         console.log( this.setState({ username: res.username }));
+          console.log(this.setState({ username: res.username }));
         });
     }
   }
@@ -41,41 +41,82 @@ class Login extends React.Component{
     return (
       <Aux>
         <Layout>
-          <br /><br /><br />
-            <div class="user-session__form">
-              <div>
-                <h2>Login</h2>
-                <form class="new_user" id="new_user" accept-charset="UTF-8" method="post" onSubmit={e => this.props.onLogin(e, this.state)} >
-                  <div class="form-group">
-                    <label for="username">UserName:</label>
-                    <input autofocus="autofocus" class="form-control" type="text" name="username" value={this.state.username} onChange={this.handle_change} />
-                  </div>
-                  <div class="form-group">
-                    <label for="password:">Password:</label>
-                    <input class="form-control" type="password" name="password" value={this.state.password} onChange={this.handle_change}/>
-                  </div>
-                  <div class="actions">
-                    <input type="submit" name="commit" value="Login" class="btn btn-solid btn--full" data-disable-with="Login" />
-                  </div>
-                </form>
-              </div>
+          <br />
+          <br />
+          <br />
+          <div class="user-session__form">
+            <div>
+              <h2>Login</h2>
+              <form
+                class="new_user"
+                id="new_user"
+                accept-charset="UTF-8"
+                method="post"
+                onSubmit={e => this.props.onLogin(e, this.state)}
+              >
+                <div class="form-group">
+                  <label for="username">
+                    <strong>UserName:</strong>
+                  </label>
+                  <input
+                    autofocus="autofocus"
+                    class="form-control"
+                    type="text"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handle_change}
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password:">
+                    <strong>Password:</strong>
+                  </label>
+                  <input
+                    class="form-control"
+                    type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handle_change}
+                  />
+                </div>
+                <div class="actions">
+                  <input
+                    type="submit"
+                    name="commit"
+                    value="Login"
+                    class="btn btn-solid btn--full"
+                    data-disable-with="Login"
+                  />
+                </div>
+              </form>
+            </div>
             <div class="user-session__links">
-              <a href="password/new.html">Forgot your password?</a><br />
-              <a href="/signup">Not registered yet? Sign up</a><br />
-              <a href="confirmation/new.html">Didn&#39;t receive confirmation instructions?</a><br />
-              <br /><br /><br />
+              <a href="password/new.html">Forgot your password?</a>
+              <br />
+              <a href="/signup">Not registered yet? Sign up</a>
+              <br />
+              <a href="confirmation/new.html">
+                Didn&#39;t receive confirmation instructions?
+              </a>
+              <br />
+              <br />
+              <br />
+              <br />
             </div>
           </div>
         </Layout>
       </Aux>
     );
   }
-};
+}
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogin : (e, data) => dispatch(actions.authLogin(e, data))
-  }
-}
+    onLogin: (e, data) => dispatch(actions.authLogin(e, data))
+  };
+};
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);
