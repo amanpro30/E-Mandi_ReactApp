@@ -7,7 +7,7 @@ import Home from "../src/components/Home/Home";
 import Login from "../src/components/Login/Login";
 import Signup from "../src/components/SignUp/SignUp";
 import ProfileAccount from "../src/components/Profile/Profile_account";
-import Example from "../src/components/Test/Test";
+import Test from "../src/components/Test/Test";
 import MarketPlace from "./components/Marketplace/MarketPlace";
 import NotFoundPage from "../src/components/NotFoundPage/NotFoundPage";
 import Market from "./components/Market/market";
@@ -19,6 +19,16 @@ import Privacy_policy from "./components/Static/Privacy_policy";
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
 import ProfileBank from '../src/components/Profile/Profile_bank'
 import PaypalButton from './components/Paypal/PaypalButton'
+
+
+const CLIENT = {
+  sandbox: process.env.REACT_APP_sandbox,
+  production: process.env.REACT_APP_production
+};
+
+const ENV = process.env.NODE_ENV === "development" ? "sandbox" : "production";
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -37,7 +47,7 @@ function App() {
           <Route exact path="/privacy_policy" component={Privacy_policy} />
           <Route exact path="/MarketPlace" component={MarketPlace} />
 
-          <Route exact path="/test" component={Example} />
+          <Route exact path="/test" render={(props) => <Test {...props} client={CLIENT} env={ENV} commit={true} />}/>
           
           <Route exact path = "/" component = {Home} />
           <Route exact path = "/login" component = {Login} />
