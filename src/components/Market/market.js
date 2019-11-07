@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
 import Layout from "../Layout/Layout";
 import digital from "../../assets/images1/digital-white.png";
 import agreement from "../../assets/images1/agreement-white.png";

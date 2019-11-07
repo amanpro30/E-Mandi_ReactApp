@@ -44,7 +44,7 @@ export const checkAuthTimeout = expirationTime => {
     return dispatch => {
         setTimeout(() => {
             dispatch(logout());
-        }, expirationTime * 1000)
+        }, expirationTime * 10000)
     }
     
 }
@@ -71,14 +71,15 @@ export const authSignup = (e, data) => {
 export const authLogin = (e, data) => {
     return dispatch => {
     dispatch(authStart());
+    
     e.preventDefault();
     axios.post(`http://localhost:8000/token-auth/`, data)
       .then(res => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('expirationDate', res.data.expirationDate);
+        
         localStorage.setItem('username', res.data.user.username);
-        console.log(res.data.expirationDate);
-        console.log(res.data.username);
+        console.log('mkc')
         dispatch(authSuccess(res.data.token, res.data.username));
         dispatch(checkAuthTimeout(3600));
         window.location.href = "/";

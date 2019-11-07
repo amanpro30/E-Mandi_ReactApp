@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
 import Layout from "../Layout/Layout";
 
 const Privacy_policy = props => (
@@ -179,13 +178,7 @@ const Privacy_policy = props => (
             operations resulting from the use of the platform, the elements
             contained in the User account and its payment data, as well as
             information concerning the purchase and sale transactions made by
-            the User. For more information, please refer to the chapter on
-            collection and processing of personal data, of the terms and
-            conditions of use of the Lemon Way platform available in{" "}
-            <a href="#" class="link-green" target="_blank">
-              https://www.lemonway.com/en/terms-of-service/
-            </a>
-            .
+            the User.
           </p>
           <p>
             We may furthermore provide the personal data collected to our

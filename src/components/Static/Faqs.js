@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
 import Layout from "../Layout/Layout";
 
 const Faqs = props => (
@@ -379,16 +378,6 @@ const Faqs = props => (
                   have any imposed quantity restrictions.
                 </p>
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-xs-12">
-              <a className="btn slide_faq">
-                <span id="show-more-faq-text">Show more</span>
-                <span id="show-less-faq-text" className="center">
-                  Show less
-                </span>
-              </a>
             </div>
           </div>
         </div>

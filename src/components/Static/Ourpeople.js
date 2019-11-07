@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
 import Layout from "../Layout/Layout";
 import ajay from "../../assets/images/ajay.jpg";
 import rohit from "../../assets/images/rohit1.jpg";

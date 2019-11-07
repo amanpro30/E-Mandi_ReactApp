@@ -1,8 +1,6 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
 import Layout from "../Layout/Layout";
 import Laptop_Graphic_agrimp_crop from "../../assets/images/Laptop_Graphic_agrimp_crop.png";
-import { MDBCarouselIndicator } from "mdbreact";
 import mandi from "../../assets/images/mandi.jpg";
 
 const Ourcompany = props => (
@@ -91,6 +89,7 @@ const Ourcompany = props => (
             <div class="resp-container">
               <iframe
                 class="resp-iframe"
+                title="myFrame"
                 src="https://www.youtube.com/embed/FAvIa27RcyU?rel=0"
                 frameborder="0"
                 allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
