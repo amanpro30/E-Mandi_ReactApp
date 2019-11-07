@@ -11,6 +11,7 @@ export const authStart = () => {
 export const authSuccess = (token, username) => {
     console.log('authsuccess');
     console.log(username);
+    localStorage.removeItem('error_description_login');
     return {
 
         type: actionTypes.AUTH_SUCCESS,
@@ -19,10 +20,19 @@ export const authSuccess = (token, username) => {
     }
 }
 
-export const authFail = error => {
+export const authFail = (err) => {
+    console.log('authFail');
+    console.log(err.response.data);
+    if(err.response.data['non_field_errors']){
+        localStorage.setItem('error_description_login',err.response.data['non_field_errors']['0']);
+    }
+    if(err.err.response.data['non_field_errors']){
+        localStorage.setItem('error_description_username',err.response.data['username']['0']);
+    }
+    
     return {
         type: actionTypes.AUTH_FAIL,
-        error: error,
+        error: err,
     }
 }
 
@@ -83,6 +93,10 @@ export const authLogin = (e, data) => {
         dispatch(checkAuthTimeout(3600));
         window.location.href = "/";
       })
-      .catch(err => {dispatch(authFail(err))});
+      .catch(err => {dispatch(authFail(err))
+        window.location.href = "/login";
+    });
+
+      
     }
 }

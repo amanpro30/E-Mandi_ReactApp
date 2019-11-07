@@ -20,7 +20,7 @@ function Slideshow() {
   }
 
   return (
-    <Carousel activeIndex={index} direction={direction} onSelect={handleSelect} indicators={false}>
+    <Carousel activeIndex={index} direction={direction} onSelect={handleSelect} indicators={true} controls={true}>
       <Carousel.Item>
         <img
           className="d-block w-100"

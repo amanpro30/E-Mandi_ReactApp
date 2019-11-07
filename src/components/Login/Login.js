@@ -9,7 +9,9 @@ class Login extends React.Component {
   state = {
     username: "",
     password: "",
-    logged_in: localStorage.getItem("token") ? true : false
+    logged_in: localStorage.getItem("token") ? true : false,
+    error_description: localStorage.getItem("error_description_login")
+
   };
 
   componentDidMount() {
@@ -44,6 +46,7 @@ class Login extends React.Component {
           <br />
           <br />
           <br />
+          <h2> {this.state.error_description}</h2>
           <div class="user-session__form">
             <div>
               <h2>Login</h2>
