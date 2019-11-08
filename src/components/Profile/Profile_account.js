@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Aux from '../../hoc/Aux';
 import Layout from '../Layout/Layout';
 import ProfileSideBar from '../Profile/Profile_sidebar';
 
-const ProfileAccount = (props) => {
+
+
+class ProfileAccount extends Component {
+    
+    render(){
     return(
         <Aux>
             <Layout>
@@ -59,6 +63,7 @@ const ProfileAccount = (props) => {
             </Layout>
         </Aux>
     );
+    }
 };
 
 

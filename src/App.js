@@ -19,8 +19,7 @@ import Faqs from "./components/Static/Faqs";
 import Terms_and_conditions from "./components/Static/Terms_and_conditions";
 import Privacy_policy from "./components/Static/Privacy_policy";
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
-
-
+import Portfolio from '../src/components/Portfolio/Portfolio'
 
 const CLIENT = {
   sandbox: process.env.REACT_APP_sandbox,
@@ -41,7 +40,6 @@ function App() {
           <Route exact path = "/profile" component = {ProfileAccount} />
           <Route exact path = "/personal" component = {ProfilePersonal} />
           <Route exact path = "/bank" component = {ProfileBank} />
-          <Route exact path = "/portfolio" component = {ProfileAccount} />
           <Route exact path = "/MarketPlace" component = {MarketPlace} />
           <Route exact path = "/404" component = {NotFoundPage} />
           <Route exact path = "/test" component = {Example} />
@@ -60,9 +58,10 @@ function App() {
           <Route exact path = "/profile" component = {ProfileAccount} />
           <Route exact path = "/personal" component = {ProfilePersonal} />
           <Route exact path = "/bank" component = {ProfileBank} />
-          <Route exact path = "/portfolio" component = {ProfileAccount} />
           <Route exact path = "/MarketPlace" component = {MarketPlace} />
           <Route exact path="/test" component={Example} />
+          <Route exact path="/portfolio" component={Portfolio} />
+
           <Redirect to="/404" />
         </Switch>
       </div>
