@@ -1,3 +1,4 @@
+import Test from "../src/components/Test/Test";
 import React from 'react';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -17,8 +18,18 @@ import Ourpeople from "./components/Static/Ourpeople";
 import Faqs from "./components/Static/Faqs";
 import Terms_and_conditions from "./components/Static/Terms_and_conditions";
 import Privacy_policy from "./components/Static/Privacy_policy";
-import MarketPlace1 from "./components/Marketplace/MarketPlace1";
-import ProfilePersonal from "../src/components/Profile/Profile_personal";
+import ProfilePersonal from '../src/components/Profile/Profile_personal'
+
+
+
+const CLIENT = {
+  sandbox: process.env.REACT_APP_sandbox,
+  production: process.env.REACT_APP_production
+};
+
+const ENV = process.env.NODE_ENV === "development" ? "sandbox" : "production";
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -42,7 +53,15 @@ function App() {
           <Route exact path="/terms" component={Terms_and_conditions} />
           <Route exact path="/privacy_policy" component={Privacy_policy} />
           <Route exact path="/MarketPlace" component={MarketPlace} />
-          <Route exact path="/MarketPlace1" component={MarketPlace1} />
+          <Route exact path="/test" render={(props) => <Test {...props} client={CLIENT} env={ENV} commit={true} />}/>
+          <Route exact path = "/" component = {Home} />
+          <Route exact path = "/login" component = {Login} />
+          <Route exact path = "/signup" component = {Signup} />
+          <Route exact path = "/profile" component = {ProfileAccount} />
+          <Route exact path = "/personal" component = {ProfilePersonal} />
+          <Route exact path = "/bank" component = {ProfileBank} />
+          <Route exact path = "/portfolio" component = {ProfileAccount} />
+          <Route exact path = "/MarketPlace" component = {MarketPlace} />
           <Route exact path="/test" component={Example} />
           <Redirect to="/404" />
         </Switch>

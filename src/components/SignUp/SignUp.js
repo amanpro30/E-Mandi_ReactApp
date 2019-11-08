@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 class Signup extends React.Component {
   state = {
+    data:{
     username: "",
     password: "",
     email: "",
@@ -19,6 +20,7 @@ class Signup extends React.Component {
       pincode: "",
       company: ""
     },
+  },
     aadharErrorL:" ",
     aadharErrorN:" ",
     mobileErrorL:" ",
@@ -32,28 +34,24 @@ class Signup extends React.Component {
     districtError:"",
     stateError:"",
     emailError:"",
+    error_description: ""
   } 
   
+  componentDidMount(){
+    this.setState({error_description:localStorage.getItem("error_description_username")});
+    localStorage.removeItem('error_description_username');
+  }
 
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState(prevstate => {
       const newState = { ...prevstate };
-      newState[name] = value;
+      newState["data"][name] = value;
       return newState;
     });
-    let err=" ";
-    let password=this.state.password
-    if(name==='password_confirm'){
-      if(value!==" " && value!==password){
-        err=<strong style={{color:"red"}} >Pasword and Confirm Password Must Match</strong>
-      }
-      
-    
-    
-    this.setState({passwordError:err});
-    }
+    let err="";
+
     
     
     if(name==='first_name'){
@@ -92,13 +90,32 @@ class Signup extends React.Component {
     }
 
   };
-
+  handle_change2 = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+    });
+    let err=" ";
+    let password=this.state.data.password
+    if(name==='password_confirm'){
+      if(value!==" " && value!==password){
+        err=<strong style={{color:"red"}} >Pasword and Confirm Password Must Match</strong>
+      }
+      
+    
+    
+    this.setState({passwordError:err});
+    }
+  }
   handle_change1 = e => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState(prevstate => {
       const newState = { ...prevstate };
-      newState["profile"][name] = value;
+      newState["data"]["profile"][name] = value;
       return newState;
     });
 
@@ -175,7 +192,7 @@ class Signup extends React.Component {
             <form
               className="new_user"
               id="new_user"
-              onSubmit={e => this.props.onSignup(e, this.state)}
+              onSubmit={e => this.props.onSignup(e, this.state.data)}
               acceptCharset="UTF-8"
               method="post"
             >
@@ -191,12 +208,13 @@ class Signup extends React.Component {
                   <label htmlFor="username">
                     <strong>UserName</strong>
                   </label>
+                  &nbsp;&nbsp;{this.state.error_description}
                   <input
                     className="form-control"
                     required="required"
                     type="text"
                     name="username"
-                    value={this.state.username}
+                    value={this.state.data.username}
                     onChange={this.handle_change}
                   />
                 </div>
@@ -212,7 +230,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="first_name"
-                    value={this.state.first_name}
+                    value={this.state.data.first_name}
                     onChange={this.handle_change}
                   />
                 </div>
@@ -225,7 +243,7 @@ class Signup extends React.Component {
                     className="form-control"
                     required="required"
                     name="last_name"
-                    value={this.state.last_name}
+                    value={this.state.data.last_name}
                     onChange={this.handle_change}
                   />
                 </div>
@@ -240,7 +258,7 @@ class Signup extends React.Component {
                     required="required"
                     type="password"
                     name="password"
-                    value={this.state.password}
+                    value={this.state.data.password}
                     onChange={this.handle_change}
                   />
                 </div>
@@ -255,7 +273,7 @@ class Signup extends React.Component {
                     type="password"
                     name="password_confirm"
                     value={this.state.password_confirm}
-                    onChange={this.handle_change}
+                    onChange={this.handle_change2}
                   />
                 </div>
               </div>
@@ -269,7 +287,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="company"
-                    value={this.state.profile.company}
+                    value={this.state.data.profile.company}
                     onChange={this.handle_change1}
                   />
                 </div>
@@ -283,7 +301,7 @@ class Signup extends React.Component {
                     required="required"
                     type="email"
                     name="email"
-                    value={this.state.email}
+                    value={this.state.data.email}
                     onChange={this.handle_change}
                   />
                 </div>
@@ -299,7 +317,7 @@ class Signup extends React.Component {
                     className="form-control"
                     type="text"
                     name="aadharcard"
-                    value={this.state.profile.aadharcard}
+                    value={this.state.data.profile.aadharcard}
                     onChange={this.handle_change1}
                   />
                 </div>
@@ -314,7 +332,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="phone"
-                    value={this.state.profile.phone}
+                    value={this.state.data.profile.phone}
                     onChange={this.handle_change1}
                   />
                 </div>
@@ -329,7 +347,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="street"
-                    value={this.state.profile.street}
+                    value={this.state.data.profile.street}
                     onChange={this.handle_change1}
                   />
                 </div>
@@ -345,7 +363,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="city"
-                    value={this.state.profile.city}
+                    value={this.state.data.profile.city}
                     onChange={this.handle_change1}
                   />
                 </div>
@@ -359,7 +377,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="state"
-                    value={this.state.profile.state}
+                    value={this.state.data.profile.state}
                     onChange={this.handle_change1}
                   />
                 </div>
@@ -376,7 +394,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="pincode"
-                    value={this.state.profile.pincode}
+                    value={this.state.data.profile.pincode}
                     onChange={this.handle_change1}
                   />
                 </div>
@@ -431,7 +449,7 @@ class Signup extends React.Component {
                     type="submit"
                     name="commit"
                     value="Sign Up"
-                    className="btn btn-solid btn--full"
+                    className="btn btn-secondary btn--full"
                     data-disable-with="Sign Up"
                   />
                 </div>

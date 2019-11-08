@@ -5,11 +5,15 @@ import { Form, Col, Button } from "react-bootstrap";
 import { Input } from "reactstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
+import axios from "axios";
+
+
 class MarketPlace extends Component {
   handleClose_Market = () => {
     this.setState({ show_Market: false });
     console.log(this.state.show_Market);
   };
+
   handleShow_Market = () => {
     this.setState({ show_Market: true });
     console.log(this.state.show_Market);
@@ -24,8 +28,54 @@ class MarketPlace extends Component {
   };
   state = {
     show_Market: false,
-    show_Futures: false
-  };
+    show_Futures: false,
+    orderData: "",
+    order: {
+      CropName:"",
+      CropVariety:"",
+      Quantity:"",
+      OrderDate:"",
+      ClosingDate:"",
+      ProductionMode:"",
+      BasePrice:"",
+      OrderStatus:"",
+      }
+    };
+  
+    headers = {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: `JWT ${localStorage.getItem('token')}`,
+    }
+
+  OrderCreate = (e, data) => {
+    e.preventDefault();
+    console.log('coming')
+    axios.post(`http://localhost:8000/order/marketorder/`, data,{
+        headers: this.headers})
+    .then(res => {
+    })
+  };  
+
+  handle_change = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState['order'][name] = value;
+      return newState;
+    })};
+
+    headers = {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: `JWT ${localStorage.getItem('token')}`,
+    }
+
+    componentDidMount(){
+    var self=this;  
+    axios.get('http://localhost:8000/order/myorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data});})
+    }
 
   render() {
     return (
@@ -56,14 +106,14 @@ class MarketPlace extends Component {
                   </div>
                   <div class="col-md-6 text-xs-right">
                     <button
-                      class="btn btn-solid"
+                      class="btn btn-secondary"
                       onClick={this.handleShow_Market}
                     >
                       New Market Order
                     </button>
                     &nbsp;&nbsp;
                     <button
-                      class="btn btn-solid"
+                      class="btn btn-secondary"
                       onClick={this.handleShow_Futures}
                     >
                       New Futures Order
@@ -144,8 +194,9 @@ class MarketPlace extends Component {
                     </div>
                   </div>
                 </div>
-                <Order />
-                <Order />
+                
+                {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} />})}
+                
                 <br/>
               </div>
             </div>
@@ -163,20 +214,20 @@ class MarketPlace extends Component {
             </Modal.Header>
             <div style={{ background: "#D6D3D2" }}>
               <div style={{ margin: "50px", width: "80%" }}>
-                <Form>
+                <Form onSubmit={e => this.OrderCreate(e, this.state.order)}>
                   <Form.Row>
-                    <Form.Group as={Col} controlId="formGridCropName">
+                    <Form.Group as={Col} controlId="formGridCropName" >
                       <Form.Label style={{ align: "left" }}>
                         <strong>Crop Name</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Crop Name" />
+                      <Form.Control placeholder="Enter Crop Name" name="CropName" value={this.state.order.CropName} onChange={this.handle_change}/>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridCropVariety">
                       <Form.Label>
                         <strong>Crop Variety</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Crop Variety" />
+                      <Form.Control placeholder="Enter Crop Variety" name="CropVariety" value={this.state.order.CropVariety} onChange={this.handle_change}/>
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
@@ -185,17 +236,17 @@ class MarketPlace extends Component {
                         <strong>Production Mode</strong>
                       </Form.Label>
 
-                      <Input type="select" name="select" id="exampleSelect">
-                        <option>Organic</option>
-                        <option>Conventional</option>
-                        <option>Hybrid</option>
-                      </Input>
+                      <Form.Control as="select" id="exampleSelect" name="ProductionMode" value={this.state.order.ProductionMode} onChange={this.handle_change}>
+                        <option value="organic">Organic</option>
+                        <option value="conventional">Conventional</option>
+                        <option value="hybrid" >Hybrid</option>
+                      </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridQuantity">
                       <Form.Label>
                         <strong>Quantity (kg)</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Quantity" />
+                      <Form.Control placeholder="Enter Quantity" name= "Quantity" value={this.state.order.Quantity} onChange={this.handle_change}/>
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
@@ -203,13 +254,13 @@ class MarketPlace extends Component {
                       <Form.Label>
                         <strong>Expected Closing Date</strong>
                       </Form.Label>
-                      <Form.Control type="date" />
+                      <Form.Control type="date" name= "ClosingDate" value={this.state.order.ClosingDate} onChange={this.handle_change}/>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
                         <strong>Base Price (per kg)</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Base Price" />
+                      <Form.Control placeholder="Enter Base Price" name= "BasePrice" value={this.state.order.BasePrice} onChange={this.handle_change}/>
                     </Form.Group>
                   </Form.Row>
 

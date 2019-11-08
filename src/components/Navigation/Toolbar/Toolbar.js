@@ -13,9 +13,10 @@ const toolbar = props => {
   };
   return (
     <Aux>
-      <Navbar style={style1} variant="dark">
-        <Navbar.Brand style={{ fontSize: "30px" }} href="/">
-          E Mandi
+      <div>
+      <Navbar style={style1} variant="dark" >
+        <Navbar.Brand style={{ fontSize: "30px", color:'black' }} href="/">
+          <h2 style={{color:'black'}}>E Mandi</h2>
         </Navbar.Brand>
         <Nav className="ml-auto">
           <Nav.Link style={{ fontSize: "25px" }} href="/">
@@ -30,13 +31,14 @@ const toolbar = props => {
           )}
           {props.islogged ? (
             <Nav.Link href="/logout" onClick={() => props.onLogOut()}>
-              <button>LogOut</button>
+              <h2 style={{color:'black'}}>LogOut</h2>
             </Nav.Link>
           ) : (
-            <Nav.Link href="/login">LogIn</Nav.Link>
+            <Nav.Link href="/login"><h2 style={{color:'black'}}>LogIn</h2></Nav.Link>
           )}
         </Nav>
       </Navbar>
+      </div>
     </Aux>
   );
 };

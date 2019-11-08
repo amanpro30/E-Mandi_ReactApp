@@ -1,10 +1,50 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Aux from '../../hoc/Aux';
 import Layout from '../Layout/Layout';
 import ProfileSideBar from '../Profile/Profile_sidebar';
+import { connect } from "react-redux";
+import axios from "axios";
 
-const ProfilePersonal = (props) => {
+class ProfilePersonal extends Component {
+    state = {
+        username: this.props.username,
+        profile:{
+        phone: "",
+        state: "",
+        city: "",
+        street: "",
+        aadharcard: "",
+        pincode: "",
+        company: ""
+    }
+    }
+    headers = {
+        "Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `JWT ${localStorage.getItem('token')}`,
+    }
+    ProfileUpdate = (e, data) => {
+        e.preventDefault();
+        console.log('coming')
+        axios.put(`http://localhost:8000/accounts/profile1/`+this.props.username+`/`, data,{
+            headers: this.headers})
+        .then(res => {
+        })
+    };
+    
+    handle_change = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState(prevstate => {
+          const newState = { ...prevstate };
+          newState['profile'][name] = value;
+          return newState;
+        })};
+
+    render(){
+    
     return(
+
         <Aux>
             <Layout>
                 <div class = "content">
@@ -12,7 +52,9 @@ const ProfilePersonal = (props) => {
                         <div class = "row">
                             <ProfileSideBar />
                             <div class="col-md-8 user-layout__col">
-                <form class="edit_user" id="edit_user_1072" enctype="multipart/form-data" action="/users/1072" accept-charset="UTF-8" method="post">
+                <form class="edit_user" id="edit_user_1072" onSubmit={e => this.ProfileUpdate(e, this.state)}
+            acceptCharset="UTF-8"
+              method="post">
                     <div class="row">
                         <div class="col-md-12">
                         <h2 class="bid-list__header user_menu_title">Personal Information</h2>
@@ -22,49 +64,53 @@ const ProfilePersonal = (props) => {
                     <div class="row row--field">
                         <div class="col-md-6">
                             <label for="user_company">Company</label>
-                            <input class="form-control" type="text" value=" " name="user[company]" id="user_company" />
+                            <input class="form-control" type="text" value={this.state.profile.company} name="company" id="user_company" onChange={this.handle_change} />
                         </div>
                         <div class="col-md-6">
-                            <label for="user_">Country</label>
-                            <input class="form-control" type="text" value=" " name="user[]" id="user_" />
+                            <label for="user_">Aadhar Number</label>
+                            <input class="form-control" type="text" value={this.state.profile.aadharcard} name="aadharcard" id="user_" onChange={this.handle_change}/>
                         </div>
                     </div>
                     <div class="row row--field">
                         <div class="col-md-6">
                         <label for="user_mobile">Mobile Number</label>
-                        <input class="form-control" type="number" value=" " name="user[mobile]" id="user_mobile" />
+                        <input class="form-control" type="number" value={this.state.profile.phone} name="phone" id="user_mobile" onChange={this.handle_change}/>
                         </div>
                         <div class="col-md-6">
                             <label for="user_pin_code">Pin Code</label>
-                            <input class="form-control" type="text" value=" " name="user[pin_code]" id="user_pin_code" />
+                            <input class="form-control" type="text" value={this.state.profile.pincode} name="pincode" id="user_pin_code" onChange={this.handle_change}/>
                         </div>
                         
                     </div>
                     <div class="row row--field">
-                        <div class="col-md-6">
-                            <label for="user_house_no">House No</label>
-                            <input class="form-control" type="text" value=" " name="user[house_no]" id="user_house_no" />
-                        </div>
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-12">
                             <label for="user_street">Street</label>
-                            <input class="form-control" type="text" value=" " name="user[street]" id="user_street" />
+                            <input class="form-control" type="text" value={this.state.profile.street} name="street" id="user_street" onChange={this.handle_change}/>
                         </div>
                     </div>
                     <div class="row row--field">
                         <div class="col-md-6">
                             <label for="user_district">District</label>
-                            <input class="form-control" type="text" value=" " name="user[district]" id="user_district" />
+                            <input class="form-control" type="text" value={this.state.profile.city} name="city" id="user_district" onChange={this.handle_change}/>
                         </div>
                         <div class="col-md-6">
                             <label for="user_state">State</label>
-                            <input class="form-control" type="text" value=" " name="user[state]" id="user_state" />
+                            
+                            <input class="form-control" type="text" value={this.state.profile.state} name="state" id="user_state" onChange={this.handle_change}/>
                         </div>
                     </div>
                     
                     <div class="row row__save">
                         
                         <div class="col-md-4">
-                            <input type="submit" name="commit" value="Save" class="btn btn-solid btn--large btn_user_update" data-disable-with="Save" />
+                            <input
+                            type="submit"
+                            name="commit"
+                            value="Sign Up"
+                            className="btn btn-secondary btn--full"
+                            data-disable-with="Sign Up"
+                            />
                         </div>
                     </div>
                 </form>
@@ -75,7 +121,14 @@ const ProfilePersonal = (props) => {
             </Layout>
         </Aux>
     );
+    }
+        
 };
 
+const mapStateToProps = state => {
+    return{
+        username: state.auth.username
+    }
+}
 
-export default ProfilePersonal;
+export default connect(mapStateToProps,null)(ProfilePersonal);

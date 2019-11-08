@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 class Order extends Component {
+
+  
   render() {
     return (
       <Aux>
@@ -10,7 +12,7 @@ class Order extends Component {
             class=" row products-index__order__row"
           >
             <div class="col-xs-12 col-md-12  product-order-detail">
-                <p style={{align:'left'}}>Japonica / Long A, Paddy, Teti</p>
+                <p style={{align:'left'}}>{this.props.CropName}</p>
                 
 
               <div class="col-xs-12 col-md-9 flex-on-them">
@@ -38,6 +40,16 @@ class Order extends Component {
             </div>
           </div>
         </div>
+
+        {/* {
+          
+          this.state.orderData.length !== 0 ?
+          Object.values(this.state.orderData[0]).map(function(name, index){
+            return <li key={index}>{name}</li>;
+          })
+          
+          :<div>No Orders Placed Yet</div>
+        } */}
       </Aux>
     );
   }

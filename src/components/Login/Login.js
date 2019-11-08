@@ -6,13 +6,34 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/auth";
 
 class Login extends React.Component {
-  state = {
-    username: "",
-    password: "",
-    logged_in: localStorage.getItem("token") ? true : false,
-    error_description: localStorage.getItem("error_description_login")
+  constructor(props) {
+    super(props);
+    this.state = { username: "",
+      password: "",
+      logged_in: this.props.isAuthenticated,
+      error_description: localStorage.getItem("error_description_login")};
 
-  };
+    this.handle_change = this.handle_change.bind(this);
+    
+  }
+
+  handle_change(event) {
+    console.log('mkc')
+    this.setState({value: event.target.value});
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+    });
+  }
+  // }
+  // state = {
+  //   username: "",
+  //   password: "",
+  //   logged_in: this.props.isAuthenticated,
+  // };
 
   componentDidMount() {
     if (this.state.logged_in) {
@@ -29,15 +50,15 @@ class Login extends React.Component {
     }
   }
 
-  handle_change = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState(prevstate => {
-      const newState = { ...prevstate };
-      newState[name] = value;
-      return newState;
-    });
-  };
+  // handle_change = e => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   this.setState(prevstate => {
+  //     const newState = { ...prevstate };
+  //     newState[name] = value;
+  //     return newState;
+  //   });
+  // };
 
   render() {
     return (
@@ -66,7 +87,7 @@ class Login extends React.Component {
                     class="form-control"
                     type="text"
                     name="username"
-                    value={this.state.username}
+                    // value={this.state.username}
                     onChange={this.handle_change}
                   />
                 </div>
@@ -78,7 +99,7 @@ class Login extends React.Component {
                     class="form-control"
                     type="password"
                     name="password"
-                    value={this.state.password}
+                    // value={this.state.password}
                     onChange={this.handle_change}
                   />
                 </div>
@@ -87,7 +108,7 @@ class Login extends React.Component {
                     type="submit"
                     name="commit"
                     value="Login"
-                    class="btn btn-solid btn--full"
+                    class="btn btn-secondary btn--full"
                     data-disable-with="Login"
                   />
                 </div>
@@ -113,6 +134,12 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return{
+    isAuthenticated: state.auth.isAuthenticated,
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     onLogin: (e, data) => dispatch(actions.authLogin(e, data))
@@ -120,6 +147,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);
