@@ -1,12 +1,8 @@
 import React, {useState} from "react";
-// import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBView, MDBContainer } from
-// "mdbreact";
 import Carousel from 'react-bootstrap/Carousel';
-// import classes from './Slideshow.css';
 import grain2_img from '../../assets/images/grains2.jpg';
 import farmers_img from '../../assets/images/farmer.jpg';
-// import mandi_img from '../../assets/images/mandi.jpg';
-// import tractor from '../../assets/images/tractor.jpg';
+
 
 
 function Slideshow() {
@@ -24,7 +20,7 @@ function Slideshow() {
   }
 
   return (
-    <Carousel activeIndex={index} direction={direction} onSelect={handleSelect} indicators={false}>
+    <Carousel activeIndex={index} direction={direction} onSelect={handleSelect} indicators={true} controls={true}>
       <Carousel.Item>
         <img
           className="d-block w-100"
