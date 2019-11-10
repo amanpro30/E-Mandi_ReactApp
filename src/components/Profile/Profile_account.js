@@ -2,11 +2,43 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/Aux';
 import Layout from '../Layout/Layout';
 import ProfileSideBar from '../Profile/Profile_sidebar';
-
+import axios from 'axios';
 
 
 class ProfileAccount extends Component {
+    state = {
+        username:"",
+        email:"",
+        first_name:"",
+        last_name:""
+    }
     
+    headers = {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: `JWT ${localStorage.getItem('token')}`,
+        
+    }
+    
+    componentDidMount(){
+        var self=this;  
+        axios.get('http://localhost:8000/accounts/userprofile/',{headers:this.headers}).then(res => {self.setState({first_name:res.data[0]['first_name'],last_name:res.data[0]['last_name'],email:res.data[0]['email'],username:res.data[0]['username']})})
+    }
+
+    handle_change = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState(prevstate => {
+          const newState = { ...prevstate };
+          newState[name] = value;
+          return newState;
+    })};
+
+    onSignup =(e,email) => {
+        e.preventDefault();
+        axios.put('http://localhost:8000/accounts/userprofile/'+this.state.username+'/',{email},{headers:this.headers}).then(res=>{});
+    }
+
     render(){
     return(
         <Aux>
@@ -16,7 +48,7 @@ class ProfileAccount extends Component {
                         <div class = "row">
                             <ProfileSideBar />
                             <div class="col-md-8 user-layout__col">
-                <form class="edit_user" id="edit_user_1072" enctype="multipart/form-data" action="/users/1072" accept-charset="UTF-8" method="post">
+                <form class="edit_user" id="edit_user_1072" accept-charset="UTF-8" onSubmit={e => this.onSignup(e, this.state.email)} method="post">
                     <div class="row">
                         <div class="col-md-12">
                         <h2 class="bid-list__header user_menu_title">Account Information</h2>
@@ -33,20 +65,25 @@ class ProfileAccount extends Component {
                     </div>
                     <div class="row row--field">
                         <div class="col-md-6">
-                            <label for="user_first_name">First Name</label>
-                            <input class="form-control" type="text" value="aman" name="user[first_name]" id="user_first_name" />
+                        <label for="user_email">User Name</label>
+                        <input class="form-control" type="text" value={this.state.username} name="user[email]" id="user_email" />
                         </div>
                         <div class="col-md-6">
-                            <label for="user_last_name">Last Name</label>
-                            <input class="form-control" type="text" value="kumar" name="user[last_name]" id="user_last_name" />
+                        <label for="user_email">Email</label>
+                        <input class="form-control" type="email" value={this.state.email} name="email" id="user_email" onChange={this.handle_change}/>
                         </div>
                     </div>
                     <div class="row row--field">
                         <div class="col-md-6">
-                        <label for="user_email">Email</label>
-                        <input class="form-control" type="email" value="akspj30@gmail.com" name="user[email]" id="user_email" />
+                            <label for="user_first_name">First Name</label>
+                            <input class="form-control" type="text" value={this.state.first_name} name="user[first_name]" id="user_first_name" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="user_last_name">Last Name</label>
+                            <input class="form-control" type="text" value={this.state.last_name} name="user[last_name]" id="user_last_name" />
                         </div>
                     </div>
+
                     <div class="row row__save">
                         <div class="col-md-4">
                         <a class="btn btn-transparent btn--large alert" href="/users/edit">Change Password</a>

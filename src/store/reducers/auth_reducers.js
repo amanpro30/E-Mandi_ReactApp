@@ -8,11 +8,6 @@ const initialState = {
     loading: false,
     username: localStorage.username,
     isAuthenticated : localStorage.token ? true : false,
-    // token: localStorage.userJWT, 
-    // email: localStorage.userE, 
-    // id: localStorage.userId, 
-    // surname: localStorage.surname,
-
 }
 
 const authStart = (state,action) => {

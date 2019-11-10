@@ -18,7 +18,7 @@ class Portfolio extends Component {
     componentDidMount(){
         var self=this;  
         axios.get('http://localhost:8000/order/myorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data});})
-        }
+    }
 
     render(){
     return(

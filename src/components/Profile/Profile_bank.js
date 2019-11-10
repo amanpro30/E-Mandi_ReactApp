@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import Layout from '../Layout/Layout';
 import ProfileSideBar from '../Profile/Profile_sidebar';
+import axios from 'axios';
 
-const ProfileBank = (props) => {
+class ProfileBank extends Component {
+
+  state = {
+    bankData : "",
+}
+
+headers = {
+  "Content-Type": "application/json",
+  accept: "application/json",
+  Authorization: `JWT ${localStorage.getItem('token')}`,
+    
+}
+
+componentDidMount(){
+    var self=this;  
+    axios.get('http://localhost:8000/transaction/bank',{headers:this.headers}).then(res => {self.setState({bankData:res.data});console.log(this.state.bankData)})
+}
+
+  render(){  
     return(
         <Aux>
             <Layout>
@@ -103,6 +122,7 @@ const ProfileBank = (props) => {
             </Layout>
         </Aux>
     );
+  }
 };
 
 
