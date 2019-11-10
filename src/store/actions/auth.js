@@ -1,7 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from "axios";
-import { Redirect } from 'react-router';
-import React from "react";
+
 
 export const authStart = () => {
     console.log('authstart');
