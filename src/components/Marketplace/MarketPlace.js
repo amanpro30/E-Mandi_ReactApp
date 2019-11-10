@@ -74,7 +74,7 @@ class MarketPlace extends Component {
 
     componentDidMount(){
     var self=this;  
-    axios.get('http://localhost:8000/order/myorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data});})
+    axios.get('http://localhost:8000/order/otherorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data});})
     }
 
   render() {

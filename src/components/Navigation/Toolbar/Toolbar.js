@@ -23,6 +23,7 @@ const toolbar = props => {
             Home
           </Nav.Link>
           <Nav.Link href="/marketplace">Market</Nav.Link>
+          <Nav.Link href="/portfolio">Portfolio</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
           {props.islogged ? (
             <Nav.Link href="/profile">Profile</Nav.Link>
