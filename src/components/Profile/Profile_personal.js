@@ -45,7 +45,7 @@ class ProfilePersonal extends Component {
 
     componentDidMount(){
         var self=this;  
-        axios.get('http://localhost:8000/accounts/userprofile/',{headers:this.headers}).then(res => {self.setState({first_name:res.data[0]['first_name'],last_name:res.data[0]['last_name'],email:res.data[0]['email'],username:res.data[0]['username']})})
+        axios.get('http://localhost:8000/accounts/profile-get/',{headers:this.headers}).then(res => {self.setState({profile:res.data[0]});console.log(res.data[0]['aadharcard'])})
     }
 
     render() {
