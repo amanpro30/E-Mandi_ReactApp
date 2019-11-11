@@ -51,6 +51,7 @@ class MarketPlace extends Component {
   OrderCreate = (e, data) => {
     e.preventDefault();
     console.log('coming')
+    this.handleClose_Market()
     axios.post(`http://localhost:8000/order/marketorder/`, data,{
         headers: this.headers})
     .then(res => {
