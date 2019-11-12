@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 import Layout from "../Layout/Layout";
 import { Form, Col, Button } from "react-bootstrap";
-import { Input } from "reactstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
@@ -155,13 +154,14 @@ class MarketPlace extends Component {
                           <span
                             class="translation_missing"
                             title="translation missing: en.products.filter.commodities"
+                            style={{fontSize:'20px' ,fontWeight:"bold"}}
                           >
-                            Commodities
+                            Commodity
                           </span>
                         </label>
                       </div>
                       <div class="col-md-4">
-                        <label>
+                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
                           Bids by Buyers
                           <span class="products-index__list-info">
                             (Currency per weight unit)
@@ -169,8 +169,8 @@ class MarketPlace extends Component {
                         </label>
                       </div>
                       <div class="col-md-4">
-                        <label>
-                          Offers by Sellers
+                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
+                          Make Your Bid
                           <span class="products-index__list-info">
                             (Currency per weight unit)
                           </span>
@@ -196,7 +196,7 @@ class MarketPlace extends Component {
                   </div>
                 </div>
                 
-                {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} />})}
+                {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate}/>})}
                 
                 <br/>
               </div>
@@ -238,9 +238,10 @@ class MarketPlace extends Component {
                       </Form.Label>
 
                       <Form.Control as="select" id="exampleSelect" name="ProductionMode" value={this.state.order.ProductionMode} onChange={this.handle_change}>
-                        <option value="organic">Organic</option>
-                        <option value="conventional">Conventional</option>
-                        <option value="hybrid" >Hybrid</option>
+                        <option value=" ">Select </option>
+                        <option value="Organic">Organic</option>
+                        <option value="Conventional">Conventional</option>
+                        <option value="Hybrid" >Hybrid</option>
                       </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridQuantity">
@@ -319,11 +320,13 @@ class MarketPlace extends Component {
                         <strong>Production Mode</strong>
                       </Form.Label>
 
-                      <Input type="select" name="select" id="exampleSelect">
-                        <option>Organic</option>
-                        <option>Conventional</option>
-                        <option>Hybrid</option>
-                      </Input>
+
+                      <Form.Control as="select" id="exampleSelect" name="ProductionMode">
+                        <option value=" ">Select </option>
+                        <option value="organic">Organic</option>
+                        <option value="conventional">Conventional</option>
+                        <option value="hybrid" >Hybrid</option>
+                      </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridQuantity">
                       <Form.Label>
