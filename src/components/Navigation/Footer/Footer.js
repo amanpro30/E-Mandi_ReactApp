@@ -12,12 +12,12 @@ import phone from "../../../assets/logos/phone_icon-d27d3ccfa4eebf5fa5c7419e3def
 import mail from "../../../assets/logos/mail_icon-4260a55e62b163f2a269cbac2b5f77089abcede1089547cc928bab6785c6902d.svg";
 const Footer = () => {
   return (
-    <footer className={classes.footer}>
-      <div className="footer-row-top">
+    <footer class="fixed-bottam" className={classes.footer} style={{backgroundColor:'#343a40'}}>
+      <div className="footer-row-top" style={{backgroundColor:'#343a40' ,color:'#fff'}}>
         <div className="container">
           <div className="row">
             <div className="col-xs-6 col-md-4 offset-md-1">
-              <h4 className="list-title">About E-Mandi </h4>
+              <h4 className="list-title" style={{color:'#fff'}} >About E-Mandi </h4>
               <ul className="list-unstyled">
                 <li>
                   <a  href="/company">
@@ -120,6 +120,16 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+  //   <footer class="navbar navbar-expand-sm navbar-dark bg-dark text-center p-4 navbar-bottom w-100" style={{position:"relative",bottom:"0", color:'black'}}>
+  //   <div class="container">
+  //     <div class="row">
+  //       <div class="col">
+  //         <p>Copyright ©
+  //           <span id="year">2019</span> Smart HealthCare</p>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </footer>
   );
 };
 

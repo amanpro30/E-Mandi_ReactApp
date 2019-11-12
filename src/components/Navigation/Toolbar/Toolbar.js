@@ -14,7 +14,7 @@ const toolbar = props => {
   return (
     <Aux>
       <div>
-      <Navbar style={style1} variant="dark" >
+      {/* <Navbar style={style1} variant="dark" >
         <Navbar.Brand style={{ fontSize: "30px", color:'black' }} href="/">
           <h2 style={{color:'black'}}>E Mandi</h2>
         </Navbar.Brand>
@@ -38,7 +38,44 @@ const toolbar = props => {
             <Nav.Link href="/login"><h2 style={{color:'black'}}>LogIn</h2></Nav.Link>
           )}
         </Nav>
-      </Navbar>
+      </Navbar> */}
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top" style={{height:"55px"}}>
+    <div class="container">
+      <a href="/" class="navbar-brand"><b>E Mandi</b></a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/marketplace">Market</a>
+          </li>
+          <li class="nav-item">
+            <a href="/how_we_work/" class="nav-link">How we work</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact/" class="nav-link">Contact</a>
+          </li>
+          
+          
+          <li class="nav-item">
+            <a href="/login/" class="nav-link">Login</a>
+          </li>
+           <li class="nav-item">
+            <a href="/rmp/login/" class="nav-link">Rmp Login</a>
+          </li>
+          
+         
+          <li class="nav-item">
+            <a href="/shoponline/" class="nav-link">Shop Medicines</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
       </div>
     </Aux>
   );
