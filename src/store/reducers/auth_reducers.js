@@ -7,7 +7,8 @@ const initialState = {
     error: null,
     loading: false,
     username: localStorage.username,
-    balance: localStorage.balance,
+    accountbalance: localStorage.accountbalance,
+    availablebalance:localStorage.availablebalance,
     isAuthenticated : localStorage.token ? true : false,
 }
 
@@ -48,7 +49,8 @@ const authLogout = (state, action) => {
 
 const balUpdate = (state, action) => {
     return updateObject(state, {
-        balance: action.balance,
+        availablebalance: action.availablebalance,
+        accountbalance: action.accountbalance,
     })
 }
 

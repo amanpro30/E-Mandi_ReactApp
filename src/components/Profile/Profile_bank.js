@@ -16,8 +16,8 @@ class ProfileBank extends Component {
       "Ifsc": "",
       "AccountNumber": ""
     },
-    availableBal:this.props.availableBal,
-    accountingBal:this.props.accountingBal,
+    availablebalance:localStorage.getItem('accountbalance'),
+    accountbalance:localStorage.getItem('accountbalance'),
     amount:0,
 }
 
@@ -61,7 +61,8 @@ handle_change2 = e => {
 
 componentDidMount(){
     var self=this;  
-    axios.get('http://localhost:8000/transaction/bank',{headers:this.headers}).then(res => {self.setState({bank:res.data[0]});})
+    axios.get('http://localhost:8000/transaction/bank',{headers:this.headers}).then(res => {self.setState({bank:res.data[0]});});
+    // axios.get('http://localhost:8000/transaction/balance/',{headers:this.headers}).then(res=>{console.log('res');console.log(res['data'][0]['balance']);});
 }
 
   render(){  
@@ -92,7 +93,7 @@ componentDidMount(){
                                       </p>
                                   </div>
                                   <br />
-                                  ₹ {this.state.availableBal}      
+                                  ₹ {this.state.availablebalance}      
                               </div>    
 
                         <div class="col-md-4">
@@ -109,7 +110,7 @@ componentDidMount(){
                               </p>
                           </div>
                                 <br />
-                                ₹ {this.state.accountingBal}
+                                ₹ {this.state.accountbalance}
                                 
                                 
                               </div>
@@ -180,7 +181,8 @@ componentDidMount(){
 const mapStateToProps = state =>{
   return{
     username:state.auth.username,
-    availableBal:state.auth.balance,
+    availablebalance:state.auth.availablebalance,
+    accountBal:state.auth.accountbalance,
   }
 }
 

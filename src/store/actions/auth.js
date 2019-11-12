@@ -49,10 +49,11 @@ export const logout = () => {
     };
 }
 
-export const BalanceUpdate = (balance) => {
+export const BalanceUpdate = (availablebalance,accountbalance) => {
     return{
         type: actionTypes.BAL_UPDATE,
-        balance: balance,
+        availablebalance: availablebalance,
+        accountbalance:accountbalance,
     }
 }
 
@@ -80,23 +81,26 @@ export const authSignup = (e, data) => {
         dispatch(authSuccess(res.data.token, res.data.username));
         dispatch(checkAuthTimeout(3600));
         window.location.href = "/";
+        axios.get(`http://localhost:8000/transaction/balance/`,
+        {headers: 
+            {"Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `JWT ${localStorage.getItem('token')}`,}
+        },
+        )
+          .then(res=>{
+            localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
+            localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
+            dispatch(BalanceUpdate(res.data[0]['availablebalance'],res.data[0]['accountbalance']));
+            window.location.href = "/";
+          });
       })
       .catch(err => {dispatch(authFail(err))
         window.location.href = "/signup";
         }
          
       );
-      axios.get(`http://localhost:8000/transaction/balance/`,
-      {headers: 
-          {"Content-Type": "application/json",
-          accept: "application/json",
-          Authorization: `JWT ${localStorage.getItem('token')}`,}
-      },
-      )
-        .then(res=>{
-          localStorage.setItem('balance', res.data[0]['balance']); 
-          dispatch(BalanceUpdate(res.data[0]['balance']))
-        });
+
       
       
     }
@@ -125,8 +129,9 @@ export const authLogin = (e, data) => {
         },
         )
           .then(res=>{
-            localStorage.setItem('balance', res.data[0]['balance']); 
-            dispatch(BalanceUpdate(res.data[0]['balance']));
+            localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
+            localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
+            dispatch(BalanceUpdate(res.data[0]['availablebalance'],res.data[0]['accountbalance']));
             window.location.href = "/";
           });
 
