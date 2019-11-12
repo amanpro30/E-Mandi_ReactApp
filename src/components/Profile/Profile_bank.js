@@ -4,6 +4,7 @@ import Layout from '../Layout/Layout';
 import ProfileSideBar from '../Profile/Profile_sidebar';
 import axios from 'axios';
 import {connect} from 'react-redux';
+import PayPalBtn from '../Paypal/PaypalBtn';
 
 class ProfileBank extends Component {
 
@@ -15,6 +16,9 @@ class ProfileBank extends Component {
       "Ifsc": "",
       "AccountNumber": ""
     },
+    availableBal:this.props.availableBal,
+    accountingBal:this.props.accountingBal,
+    amount:0,
 }
 
 headers = {
@@ -43,6 +47,17 @@ handle_change = e => {
       return newState;
   })
 };
+
+handle_change2 = e => {
+  const name = e.target.name;
+  const value = e.target.value;
+  this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+  })
+};
+
 
 componentDidMount(){
     var self=this;  
@@ -77,7 +92,7 @@ componentDidMount(){
                                       </p>
                                   </div>
                                   <br />
-                                  €0,00      
+                                  ₹ {this.state.availableBal}      
                               </div>    
 
                         <div class="col-md-4">
@@ -94,8 +109,18 @@ componentDidMount(){
                               </p>
                           </div>
                                 <br />
-                                €0,00
+                                ₹ {this.state.accountingBal}
+                                
+                                
                               </div>
+                            </div>
+                            <div class="row row--field">
+                              Add Balance: 
+                              <div class="col-md-6">
+                                <input type="text" placeholder="Enter Amount" name="amount" onChange={this.handle_change2}></input>
+                                <PayPalBtn amount={this.state.amount}/>
+                              </div>
+
                             </div>
                             <br /><br />
                             <h2 class="bank_details_header">Transaction Details</h2>
@@ -155,6 +180,7 @@ componentDidMount(){
 const mapStateToProps = state =>{
   return{
     username:state.auth.username,
+    availableBal:state.auth.balance,
   }
 }
 

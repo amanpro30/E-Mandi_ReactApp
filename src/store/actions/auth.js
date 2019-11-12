@@ -42,14 +42,18 @@ export const authFail = (err) => {
 
 export const logout = () => {
     console.log('inside logout');
-    // localStorage.removeItem('expirationDate');
-    // localStorage.removeItem("token")
-    // localStorage.removeItem('username')
     localStorage.clear();
     sessionStorage.clear();
     return{
         type : actionTypes.AUTH_LOGOUT
     };
+}
+
+export const BalanceUpdate = (balance) => {
+    return{
+        type: actionTypes.BAL_UPDATE,
+        balance: balance,
+    }
 }
 
 export const checkAuthTimeout = expirationTime => {
@@ -82,6 +86,18 @@ export const authSignup = (e, data) => {
         }
          
       );
+      axios.get(`http://localhost:8000/transaction/balance/`,
+      {headers: 
+          {"Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `JWT ${localStorage.getItem('token')}`,}
+      },
+      )
+        .then(res=>{
+          localStorage.setItem('balance', res.data[0]['balance']); 
+          dispatch(BalanceUpdate(res.data[0]['balance']))
+        });
+      
       
     }
 }
@@ -100,12 +116,26 @@ export const authLogin = (e, data) => {
         console.log('mkc')
         dispatch(authSuccess(res.data.token, res.data.username));
         dispatch(checkAuthTimeout(3600));
-        window.location.href = "/";
+        
+        axios.get(`http://localhost:8000/transaction/balance/`,
+        {headers: 
+            {"Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `JWT ${res.data.token}`,}
+        },
+        )
+          .then(res=>{
+            localStorage.setItem('balance', res.data[0]['balance']); 
+            dispatch(BalanceUpdate(res.data[0]['balance']));
+            window.location.href = "/";
+          });
+
       })
       .catch(err => {dispatch(authFail(err))
         window.location.href = "/login";
     });
 
+    
       
     }
 }

@@ -7,6 +7,7 @@ const initialState = {
     error: null,
     loading: false,
     username: localStorage.username,
+    balance: localStorage.balance,
     isAuthenticated : localStorage.token ? true : false,
 }
 
@@ -25,6 +26,7 @@ const authSuccess = (state, action) => {
         loading: false,
         username: action.username,
         isAuthenticated: true,
+        balance: 0,
     });
 }
 
@@ -40,8 +42,16 @@ const authLogout = (state, action) => {
         token: null,
         username : '',
         isAuthenticated: false,
+        balance: 0,
     })
 }
+
+const balUpdate = (state, action) => {
+    return updateObject(state, {
+        balance: action.balance,
+    })
+}
+
 
 const reducer = (state= initialState, action ) => {
     switch (action.type){
@@ -49,6 +59,7 @@ const reducer = (state= initialState, action ) => {
         case actionTypes.AUTH_FAIL : return authFail(state, action);
         case actionTypes.AUTH_LOGOUT : return authLogout(state, action);
         case actionTypes.AUTH_SUCCESS : return authSuccess(state, action);
+        case actionTypes.BAL_UPDATE : return balUpdate(state, action);
         default:
             return state;
     }

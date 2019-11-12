@@ -5,9 +5,17 @@ import Layout from '../Layout/Layout'
 import { TypeChooser } from "react-stockcharts/lib/helper";
 
 class ChartComponent extends React.Component {
+	headers = {
+		"Content-Type": "application/json",
+		accept: "application/json",
+		Authorization: `JWT ${localStorage.getItem('token')}`,
+		  
+	}
 	componentDidMount() {
 		getData().then(data => {
-			this.setState({ data })
+			// this.setState({ data })
+			// console.log(data['columns'][0])
+			console.log(data)
 		})
 	}
 	render() {
