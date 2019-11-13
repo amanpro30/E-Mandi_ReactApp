@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
-import grain2_img from "../../assets/images/6.jpg";
-import farmers_img from "../../assets/images/4.jpg";
-import grain_img from "../../assets/images/5.png";
+import grain2_img from "../../assets/images/7.jpg";
+import farmers_img from "../../assets/images/8.jpg";
+import grain_img from "../../assets/images/9.jpg";
 
 function Slideshow() {
   const [index, setIndex] = useState(0);
@@ -26,7 +26,11 @@ function Slideshow() {
       indicators={false}
       controls={true}
     >
+      <br />
+
       <Carousel.Item>
+        <br />
+        <br />
         <img
           className="d-block w-100"
           src={grain2_img}
@@ -39,6 +43,9 @@ function Slideshow() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
+        <br />
+        <br />
+
         <img
           className="d-block w-100"
           src={farmers_img}
@@ -52,18 +59,20 @@ function Slideshow() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
+        <br />
+        <br />
         <img
           className="d-block w-100"
           src={grain_img}
-          style = {imgStyle}
+          style={imgStyle}
           alt="Third slide"
         />
-      {/* <Carousel.Caption>
+        {/* <Carousel.Caption>
           <h3>Third slide label</h3>
           {/* <p>
             Praesent commodo cursus magna, vel scelerisque nisl consectetur.
           </p> */}
-      {/* </Carousel.Caption> */} */}
+        {/* </Carousel.Caption> */} */}
       </Carousel.Item>
     </Carousel>
   );
