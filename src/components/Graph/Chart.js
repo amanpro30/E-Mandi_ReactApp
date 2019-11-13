@@ -138,7 +138,7 @@ class CandleStickChartWithZoomPan extends React.Component {
 					<MouseCoordinateX
 						at="bottom"
 						orient="bottom"
-						displayFormat={timeFormat("%Y-%m-%d")} />
+						displayFormat={timeFormat("%Y-%m-%dT%H:%M:%S")} />
 					<MouseCoordinateY
 						at="left"
 						orient="left"
