@@ -368,6 +368,7 @@ class Signup extends React.Component {
                     value={this.state.data.profile.city}
                     onChange={this.handle_change1}
                   >
+                      <option value="">Select a Value</option>
                       <option value="Almora" > Almora </option>
                       <option value="Bageshwar" > Bageshwar</option>
                       <option value="Chamoli" > Chamoli</option>
