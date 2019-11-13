@@ -197,7 +197,7 @@ class MarketPlace extends Component {
                   </div>
                 </div>
                 
-                {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate}/>})}
+                {Object.values(this.state.orderData).map(x=>{console.log(x); return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id}/>})}
                 
                 <br/>
               </div>

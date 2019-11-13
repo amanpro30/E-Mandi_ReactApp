@@ -42,14 +42,19 @@ export const authFail = (err) => {
 
 export const logout = () => {
     console.log('inside logout');
-    // localStorage.removeItem('expirationDate');
-    // localStorage.removeItem("token")
-    // localStorage.removeItem('username')
     localStorage.clear();
     sessionStorage.clear();
     return{
         type : actionTypes.AUTH_LOGOUT
     };
+}
+
+export const BalanceUpdate = (availablebalance,accountbalance) => {
+    return{
+        type: actionTypes.BAL_UPDATE,
+        availablebalance: availablebalance,
+        accountbalance:accountbalance,
+    }
 }
 
 export const checkAuthTimeout = expirationTime => {
@@ -76,12 +81,27 @@ export const authSignup = (e, data) => {
         dispatch(authSuccess(res.data.token, res.data.username));
         dispatch(checkAuthTimeout(3600));
         window.location.href = "/";
+        axios.get(`http://localhost:8000/transaction/balance/`,
+        {headers: 
+            {"Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `JWT ${localStorage.getItem('token')}`,}
+        },
+        )
+          .then(res=>{
+            localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
+            localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
+            dispatch(BalanceUpdate(res.data[0]['availablebalance'],res.data[0]['accountbalance']));
+            window.location.href = "/";
+          });
       })
       .catch(err => {dispatch(authFail(err))
         window.location.href = "/signup";
         }
          
       );
+
+      
       
     }
 }
@@ -100,12 +120,27 @@ export const authLogin = (e, data) => {
         console.log('mkc')
         dispatch(authSuccess(res.data.token, res.data.username));
         dispatch(checkAuthTimeout(3600));
-        window.location.href = "/";
+        
+        axios.get(`http://localhost:8000/transaction/balance/`,
+        {headers: 
+            {"Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `JWT ${res.data.token}`,}
+        },
+        )
+          .then(res=>{
+            localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
+            localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
+            dispatch(BalanceUpdate(res.data[0]['availablebalance'],res.data[0]['accountbalance']));
+            window.location.href = "/";
+          });
+
       })
       .catch(err => {dispatch(authFail(err))
         window.location.href = "/login";
     });
 
+    
       
     }
 }
