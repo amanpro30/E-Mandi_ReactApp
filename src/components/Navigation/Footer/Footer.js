@@ -20,9 +20,7 @@ const Footer = () => {
               <h4 className="list-title">About E-Mandi </h4>
               <ul className="list-unstyled">
                 <li>
-                  <a  href="/company">
-                    Our Company
-                  </a>
+                  <a href="/company">Our Company</a>
                 </li>
                 <li>
                   <a href="/people">Our People</a>
@@ -34,9 +32,7 @@ const Footer = () => {
                   <a href="/terms">Terms &amp; Conditions</a>
                 </li>
                 <li>
-                  <a target="/privacy_policy" href="privacy.html">
-                    Privacy Policy
-                  </a>
+                  <a href="/privacy_policy">Privacy Policy</a>
                 </li>
               </ul>
             </div>
