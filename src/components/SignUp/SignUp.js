@@ -13,7 +13,7 @@ class Signup extends React.Component {
     last_name: "",
     profile: {
       phone: "",
-      state: "",
+      state: "Uttarakhand",
       city: "",
       street: "",
       aadharcard: "",
@@ -50,6 +50,7 @@ class Signup extends React.Component {
       newState["data"][name] = value;
       return newState;
     });
+    
     let err="";
 
     
@@ -358,14 +359,31 @@ class Signup extends React.Component {
                     <strong>District</strong>
                   </label>
                   &nbsp;&nbsp;{this.state.districtError}
-                  <input
+                  <select
                     className="form-control"
+                    list="district"
                     required="required"
                     type="text"
                     name="city"
+                    // readOnly="readonly"
                     value={this.state.data.profile.city}
                     onChange={this.handle_change1}
-                  />
+                  >
+                      <option value="">Select a Value</option>
+                      <option value="Almora" > Almora </option>
+                      <option value="Bageshwar" > Bageshwar</option>
+                      <option value="Chamoli" > Chamoli</option>
+                      <option value="Champawat" > Champawat</option>
+                      <option value="Dehradun" > Dehradun </option>
+                      <option value="Haridwar" > Haridwar </option>
+                      <option value="Nainital" >Nainital</option>
+                      <option value="Pauri" >Pauri</option>
+                      <option value="Pithoragarh" >Pithoragarh</option>
+                      <option value="Rudraprayag" >Rudraprayag</option>
+                      <option value="Rudrapur" >Rudrapur</option>
+                      <option value="Tehri" >Tehri</option>
+                      <option value="Uttarkashi" >Uttarkashi</option>
+                    </select>
                 </div>
                 <div className="col-md-6 form-group">
                   <label htmlFor="state">
@@ -377,7 +395,7 @@ class Signup extends React.Component {
                     required="required"
                     type="text"
                     name="state"
-                    value={this.state.data.profile.state}
+                    value='Uttarakhand'
                     onChange={this.handle_change1}
                   />
                 </div>

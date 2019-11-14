@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 import Layout from "../Layout/Layout";
-import { Form, Col, Button } from "react-bootstrap";
-import { Input } from "reactstrap";
+import { Form, Col, Button, Dropdown } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
@@ -39,7 +38,12 @@ class MarketPlace extends Component {
       ProductionMode:"",
       BasePrice:"",
       OrderStatus:"",
-      }
+    
+      },
+    cropTypes:[],
+    cropVariety:[],
+    selectedCrop:"",
+    selectedVariety:"",
     };
   
     headers = {
@@ -51,6 +55,7 @@ class MarketPlace extends Component {
   OrderCreate = (e, data) => {
     e.preventDefault();
     console.log('coming')
+    this.handleClose_Market()
     axios.post(`http://localhost:8000/order/marketorder/`, data,{
         headers: this.headers})
     .then(res => {
@@ -75,7 +80,19 @@ class MarketPlace extends Component {
     componentDidMount(){
     var self=this;  
     axios.get('http://localhost:8000/order/otherorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data});})
-    }
+    
+    axios.get('http://localhost:8000/crop/cropname/',{headers:this.headers}).then(res => {self.setState({cropTypes:res.data})});
+    
+  }
+
+  getCropVariety(e){
+    var name = e.target.name;
+    axios.get('http://localhost:8000/crop/crop/'+name+'/',{headers:this.headers}).then(res=>{this.setState({cropVariety:res.data});this.setState({selectedCrop:name})});
+  }
+
+  filterCrop(e,cropname,cropvariety){
+    axios.get('http://localhost:8000/order/crop/'+cropname+'/'+cropvariety+'/',{headers:this.headers}).then(res=>{console.log('hallaho');console.log(res);});
+  }
 
   render() {
     return (
@@ -124,7 +141,31 @@ class MarketPlace extends Component {
                 <div class="products-index__top-filter"  style={{border:'3px' , borderStyle:'groove'}}>
                   <div class="row">
                     <div class="col-xs-3 products-index__top-filter__count">
-                      Results
+                      <div class="row">
+                        <div class="md-2">
+                          Results:
+                        </div>
+                        <div class="md-2">
+                          <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                              Crop Name
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              {Object.values(this.state.cropTypes).map(x=>{ return (<Dropdown.Item href="#" onClick={e=>this.getCropVariety(e)} value={x.cropName} name={x.cropName} >{x.cropName}</Dropdown.Item>)})}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>
+                        <div class="md-2">
+                          <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                              Crop Variety
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              {Object.values(this.state.cropVariety).map(x=>{ return (<Dropdown.Item href="#" onClick={e=>{this.setState({selectedVariety:x.varietyName});this.filterCrop(e,this.state.selectedCrop,this.state.selectedVariety)}} value={x.varietyName} name={x.varietyName} >{x.varietyName}</Dropdown.Item>)})}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>  
+                      </div>
                     </div>
                     <div class="col-xs-4 col-sm-4 form-inline products-index__top-filter__sort"></div>
                     <div class="col-xs-5 col-sm-5 products-index__top-filter__pager">
@@ -154,13 +195,14 @@ class MarketPlace extends Component {
                           <span
                             class="translation_missing"
                             title="translation missing: en.products.filter.commodities"
+                            style={{fontSize:'20px' ,fontWeight:"bold"}}
                           >
-                            Commodities
+                            Commodity
                           </span>
                         </label>
                       </div>
                       <div class="col-md-4">
-                        <label>
+                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
                           Bids by Buyers
                           <span class="products-index__list-info">
                             (Currency per weight unit)
@@ -168,8 +210,8 @@ class MarketPlace extends Component {
                         </label>
                       </div>
                       <div class="col-md-4">
-                        <label>
-                          Offers by Sellers
+                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
+                          Make Your Bid
                           <span class="products-index__list-info">
                             (Currency per weight unit)
                           </span>
@@ -195,7 +237,7 @@ class MarketPlace extends Component {
                   </div>
                 </div>
                 
-                {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} />})}
+                {Object.values(this.state.orderData).map(x=>{ return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id}/>})}
                 
                 <br/>
               </div>
@@ -237,9 +279,10 @@ class MarketPlace extends Component {
                       </Form.Label>
 
                       <Form.Control as="select" id="exampleSelect" name="ProductionMode" value={this.state.order.ProductionMode} onChange={this.handle_change}>
-                        <option value="organic">Organic</option>
-                        <option value="conventional">Conventional</option>
-                        <option value="hybrid" >Hybrid</option>
+                        <option value=" ">Select </option>
+                        <option value="Organic">Organic</option>
+                        <option value="Conventional">Conventional</option>
+                        <option value="Hybrid" >Hybrid</option>
                       </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridQuantity">
@@ -318,11 +361,13 @@ class MarketPlace extends Component {
                         <strong>Production Mode</strong>
                       </Form.Label>
 
-                      <Input type="select" name="select" id="exampleSelect">
-                        <option>Organic</option>
-                        <option>Conventional</option>
-                        <option>Hybrid</option>
-                      </Input>
+
+                      <Form.Control as="select" id="exampleSelect" name="ProductionMode">
+                        <option value=" ">Select </option>
+                        <option value="organic">Organic</option>
+                        <option value="conventional">Conventional</option>
+                        <option value="hybrid" >Hybrid</option>
+                      </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridQuantity">
                       <Form.Label>

@@ -6,7 +6,6 @@ import Block3 from "../Home/Blocks/Block3";
 import Aux from "../../hoc/Aux";
 import Layout from "../Layout/Layout";
 import Block4 from "./Blocks/Block4";
-import Carousel from "../Slideshow/Carousel"
 // import Slideshow1 from '../Slideshow/Slideshow1'
 
 const Home = props => (

@@ -1,9 +1,71 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import Layout from '../Layout/Layout';
 import ProfileSideBar from '../Profile/Profile_sidebar';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import PayPalBtn from '../Paypal/PaypalBtn';
 
-const ProfileBank = (props) => {
+class ProfileBank extends Component {
+
+  state = {
+    username: this.props.username,
+    bank : {
+      "BankName": "",
+      "BranchName": "",
+      "Ifsc": "",
+      "AccountNumber": ""
+    },
+    availablebalance:localStorage.getItem('accountbalance'),
+    accountbalance:localStorage.getItem('accountbalance'),
+    amount:0,
+}
+
+headers = {
+  "Content-Type": "application/json",
+  accept: "application/json",
+  Authorization: `JWT ${localStorage.getItem('token')}`,
+    
+}
+
+BankUpdate = (e, data) => {
+  e.preventDefault();
+  console.log('coming')
+  axios.put(`http://localhost:8000/transaction/bank/` + this.props.username + `/`, data, {
+      headers: this.headers
+  })
+      .then(res => {
+      })
+};
+
+handle_change = e => {
+  const name = e.target.name;
+  const value = e.target.value;
+  this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState['bank'][name] = value;
+      return newState;
+  })
+};
+
+handle_change2 = e => {
+  const name = e.target.name;
+  const value = e.target.value;
+  this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+  })
+};
+
+
+componentDidMount(){
+    var self=this;  
+    axios.get('http://localhost:8000/transaction/bank',{headers:this.headers}).then(res => {self.setState({bank:res.data[0]});});
+    // axios.get('http://localhost:8000/transaction/balance/',{headers:this.headers}).then(res=>{console.log('res');console.log(res['data'][0]['balance']);});
+}
+
+  render(){  
     return(
         <Aux>
             <Layout>
@@ -31,7 +93,7 @@ const ProfileBank = (props) => {
                                       </p>
                                   </div>
                                   <br />
-                                  €0,00      
+                                  ₹ {this.state.availablebalance}      
                               </div>    
 
                         <div class="col-md-4">
@@ -48,14 +110,24 @@ const ProfileBank = (props) => {
                               </p>
                           </div>
                                 <br />
-                                €0,00
+                                ₹ {this.state.accountbalance}
+                                
+                                
                               </div>
+                            </div>
+                            <div class="row row--field">
+                              Add Balance: 
+                              <div class="col-md-6">
+                                <input type="text" placeholder="Enter Amount" name="amount" onChange={this.handle_change2}></input>
+                                <PayPalBtn amount={this.state.amount}/>
+                              </div>
+
                             </div>
                             <br /><br />
                             <h2 class="bank_details_header">Transaction Details</h2>
 
 
-                            <form class="edit_user" id="edit_user_1071" enctype="multipart/form-data" action="/users/1071/payment_info" accept-charset="UTF-8" method="post">  
+                            <form class="edit_user" id="edit_user_1071" enctype="multipart/form-data"  accept-charset="UTF-8" method="post" onSubmit={e => this.BankUpdate(e, this.state)}>  
                                         <div class="row">
                                             <div class="col-md-12">
                                             </div>
@@ -70,22 +142,22 @@ const ProfileBank = (props) => {
                             <div class="row">
                               <div class="col-md-6">
                                 <label for="user_bank">Bank Name</label>*<br />
-                                <input class="form-control" required="required" type="text" name="user[bank]" id="user_bank" />
+                                <input class="form-control" required="required" value={this.state.bank.BankName}type="text" name="BankName" id="user_bank" onChange={this.handle_change}/>
                               </div>
 
                               <div class="col-md-6">
                                 <label for="user_ifsc">IFSC CODE</label>*<br />
-                                <input class="form-control" required="required" type="text" name="user[ifsc]" id="user_ifsc" />
+                                <input class="form-control" required="required" value={this.state.bank.Ifsc} type="text" name="Ifsc" id="user_ifsc" onChange={this.handle_change}/>
                               </div>
                             </div>
                             <div class="row row--field">
                               <div class="col-md-6">
                                 <label for="user_branch">Branch Name</label>*<br />
-                                <input class="form-control" type="text" value=" " name="user[branch]" id="user_branch" />
+                                <input class="form-control" type="text" value={this.state.bank.BranchName} name="BranchName" id="user_branch" onChange={this.handle_change}/>
                               </div>
                               <div class="col-md-6">
                                 <label for="user_account_number">Account Number</label>*
-                                <input type="text" class="form-control" value=" " name="user[account_number]" id="user_account_number" />
+                                <input type="text" class="form-control" value={this.state.bank.AccountNumber} name="AccountNumber" id="user_account_number" onChange={this.handle_change}/>
                               </div>
                             </div>
                             <div class="row row__save">
@@ -103,7 +175,15 @@ const ProfileBank = (props) => {
             </Layout>
         </Aux>
     );
+  }
 };
 
+const mapStateToProps = state =>{
+  return{
+    username:state.auth.username,
+    availablebalance:state.auth.availablebalance,
+    accountBal:state.auth.accountbalance,
+  }
+}
 
-export default ProfileBank;
+export default connect(mapStateToProps,null)(ProfileBank);

@@ -18,7 +18,7 @@ class Portfolio extends Component {
     componentDidMount(){
         var self=this;  
         axios.get('http://localhost:8000/order/myorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data});})
-        }
+    }
 
     render(){
     return(
@@ -27,13 +27,13 @@ class Portfolio extends Component {
             <p>Running Order</p>
         </div>
         <div>
-            {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} />})}
+            {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} id={x.id}/>})}
         </div>
         <div>
             <p>Executed Order</p>
         </div>
         <div>
-            {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} />})}
+            {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} id={x.id}/>})}
         </div>
 
 

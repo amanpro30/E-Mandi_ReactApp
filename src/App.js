@@ -1,4 +1,3 @@
-import Test from "../src/components/Test/Test";
 import React from 'react';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -9,7 +8,7 @@ import Home from '../src/components/Home/Home'
 import Login from '../src/components/Login/Login'
 import Signup from '../src/components/SignUp/SignUp'
 import ProfileAccount from '../src/components/Profile/Profile_account'
-import Example from '../src/components/Test/Test'
+import Example from '../src/components/Paypal/PaypalBtn'
 import ProfileBank from '../src/components/Profile/Profile_bank'
 import MarketPlace from './components/Marketplace/MarketPlace'  
 import Market from "./components/Market/market";
@@ -20,6 +19,10 @@ import Terms_and_conditions from "./components/Static/Terms_and_conditions";
 import Privacy_policy from "./components/Static/Privacy_policy";
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
 import Portfolio from '../src/components/Portfolio/Portfolio'
+import ChartComponent from "./components/Graph/ChartComponent";
+import Test from './components/Test/Test'
+
+
 
 const CLIENT = {
   sandbox: process.env.REACT_APP_sandbox,
@@ -42,7 +45,6 @@ function App() {
           <Route exact path = "/bank" component = {ProfileBank} />
           <Route exact path = "/MarketPlace" component = {MarketPlace} />
           <Route exact path = "/404" component = {NotFoundPage} />
-          <Route exact path = "/test" component = {Example} />
           <Route exact path="/market" component={Market} />
           <Route exact path="/404" component={NotFoundPage} />
           <Route exact path="/company" component={Ourcompany} />
@@ -51,7 +53,6 @@ function App() {
           <Route exact path="/terms" component={Terms_and_conditions} />
           <Route exact path="/privacy_policy" component={Privacy_policy} />
           <Route exact path="/MarketPlace" component={MarketPlace} />
-          <Route exact path="/test" render={(props) => <Test {...props} client={CLIENT} env={ENV} commit={true} />}/>
           <Route exact path = "/" component = {Home} />
           <Route exact path = "/login" component = {Login} />
           <Route exact path = "/signup" component = {Signup} />
@@ -59,9 +60,9 @@ function App() {
           <Route exact path = "/personal" component = {ProfilePersonal} />
           <Route exact path = "/bank" component = {ProfileBank} />
           <Route exact path = "/MarketPlace" component = {MarketPlace} />
-          <Route exact path="/test" component={Example} />
           <Route exact path="/portfolio" component={Portfolio} />
-
+          <Route exact path="/pricing" component={ChartComponent}/>
+          <Route exact path="/test" component={Test}/>
           <Redirect to="/404" />
         </Switch>
       </div>
