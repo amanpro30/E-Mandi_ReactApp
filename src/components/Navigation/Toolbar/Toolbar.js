@@ -39,13 +39,12 @@ const toolbar = props => {
           )}
         </Nav>
       </Navbar> */}
-        <nav
-          class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top"
-          style={{ height: "55px" }}
-        >
-          <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style={{ height: "55px" }} >
+          
+          <div class="container ">
+            
             <a href="/" class="navbar-brand">
-              <b>E Mandi</b>
+              <b class = " danger navbar-header">E Mandi</b>
             </a>
             <button
               class="navbar-toggler"
