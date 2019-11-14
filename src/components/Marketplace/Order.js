@@ -14,7 +14,7 @@ class Order extends Component {
     bids:[],
     userbid:"",
     username:this.props.username,
-    curruserbid:"",
+    curruserbid:[],
     show:"visible",
     showinput:"hidden",
     edituserbid:"",
@@ -31,7 +31,7 @@ class Order extends Component {
   componentDidMount(){
     var self=this;  
     axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
-    axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data});console.log(res.data)});
+    axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
   }
 
   getUserBid(e, data){
@@ -39,12 +39,14 @@ class Order extends Component {
     var self=this; 
     e.preventDefault();
     if(parseInt(data) > parseInt(this.props.BasePrice)){
-      axios.post('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{price:data},{headers:this.headers}).then(res => {console.log('in');console.log(res);window.location.href = "/marketplace";});
+      axios.post('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{price:data},{headers:this.headers}).then();
+      axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
+      axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
     }
     else{
       err = <strong style={{color:"red"}} >Bid must be greater than Base Price</strong>
+      this.setState({bidBasePriceError:err});
     }
-    this.setState({bidBasePriceError:err});
   }
 
   editUserBid(e, data){
@@ -52,7 +54,10 @@ class Order extends Component {
     var self=this; 
     e.preventDefault();
     if(parseInt(data) > parseInt(this.props.BasePrice)){
-      axios.put('http://localhost:8000/order/getbid/'+this.state.curruserbid[0]['id']+'/',{price:data},{headers:this.headers}).then(res => {console.log('in');console.log(res);window.location.href = "/marketplace";});
+      axios.put('http://localhost:8000/order/getbid/'+this.state.curruserbid[0]['id']+'/',{price:data},{headers:this.headers}).then(res => {});
+      console.log(this.state.curruserbid);
+      axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
+      axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
     }
     else{
       err = <strong style={{color:"red"}} >Bid must be greater than Base Price</strong>
@@ -91,13 +96,10 @@ class Order extends Component {
       }
       this.setState({bids:bids});
       this.setState({curruserbid:[]});
-      console.log(this.state.bids);
     })
   }
 
   toggle =  () => {
-    console.log('toggling');
-    console.log(this.state.showinput);
     if(this.state.showinput=="hidden"){
       this.setState({showinput:"visible"})
     }
