@@ -26,16 +26,6 @@ class Portfolio extends Component {
     return(
     <Layout>
         <div>
-            {/* <p>Running Order</p>
-        </div>
-        <div>
-            {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} id={x.id}/>})}
-        </div>
-        <div>
-            <p>Executed Order</p>
-        </div>
-        <div>
-            {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} />})} */}
             <br />
             <br />
             <br />
@@ -51,37 +41,7 @@ class Portfolio extends Component {
     </h1>   
         {Object.values(this.state.orderData).map(x=>{return <Order_Card CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate}  />})} 
         <Order_Card />
-        
-    {/* <Table striped bordered hover variant="light" responsive="sm">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><Card body>This is some text within a card body.</Card></td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td colSpan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</Table> */}
-
+   
   </div>
 
 
@@ -89,7 +49,6 @@ class Portfolio extends Component {
 
 </div>
 
-            {Object.values(this.state.orderData).map(x=>{return <Order CropName={x.CropName} id={x.id}/>})}
         </div>
 
 

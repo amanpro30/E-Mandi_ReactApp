@@ -13,7 +13,7 @@ class ProfileSideBar extends Component {
                     <div class="user-menu__profile">
                         <div class="user-menu__profile_photo_container">
                             <div class="user-menu__profile_photo">
-                                <img src={DefaultProfImg} alt="Profile" />
+                                <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Profile" />
                             </div>
                             
                         </div>

@@ -3,6 +3,8 @@ import Aux from '../../hoc/Aux';
 import Layout from '../Layout/Layout';
 import ProfileSideBar from '../Profile/Profile_sidebar';
 import axios from 'axios';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from "mdbreact";
+
 
 
 class ProfileAccount extends Component {
@@ -43,11 +45,13 @@ class ProfileAccount extends Component {
     return(
         <Aux>
             <Layout>
-                <div class = "content">
-                    <div class="container user-layout">
-                        <div class = "row">
+            <br/><br/><br/><br/>
+                <div class = "content ">
+                    <div className="container  user-layout cloudy-knoxville-gradient" >
+                        <div class = "row" >
                             <ProfileSideBar />
-                            <div class="col-md-8 user-layout__col">
+                            <div class="col-md-8 user-layout__col"  >
+                
                 <form class="edit_user" id="edit_user_1072" accept-charset="UTF-8" onSubmit={e => this.onSignup(e, this.state.email)} method="post">
                     <div class="row">
                         <div class="col-md-12">
@@ -56,15 +60,10 @@ class ProfileAccount extends Component {
                     </div>
                     <div class="row row--field">
                         <div class="col-md-4">
-                            <label class="input-picture" for="user_profile_picture">
-                            <img src="/assets/icons/photo-142975824a4cb52e519f87ef80e6c3abbda9de545771be5a8e918611d7721254.png" alt='imagew'/>
-                            Click to add Photo
-                            <input accept="image/*" type="file" name="user[profile_picture]" id="user_profile_picture" />
-                            </label>    
                         </div>
                     </div>
                     <div class="row row--field">
-                        <div class="col-md-6">
+                        <div class="col-md-6 ">
                         <label for="user_email">User Name</label>
                         <input class="form-control" type="text" value={this.state.username} name="user[email]" id="user_email" />
                         </div>
@@ -83,13 +82,13 @@ class ProfileAccount extends Component {
                             <input class="form-control" type="text" value={this.state.last_name} name="user[last_name]" id="user_last_name" />
                         </div>
                     </div>
-
-                    <div class="row row__save">
-                        <div class="col-md-4">
-                        <a class="btn btn-transparent btn--large alert" href="/users/edit">Change Password</a>
+                    <br/><br/><br/><br/><br/><br/><br/><br/>
+                    <div class="row ">
+                        <div class="col-md-6">
+                        <a class="btn w-100 bg-info" href="/users/edit">Change Password</a>
                         </div>
-                        <div class="col-md-4">
-                            <input type="submit" name="commit" value="Save" class="btn btn-solid btn--large btn_user_update" data-disable-with="Save" />
+                        <div class="col-md-6">
+                            <input type="submit" name="commit" value="Save" class="btn w-100 bg-info " data-disable-with="Save" />
                         </div>
                     </div>
                 </form>
@@ -97,6 +96,7 @@ class ProfileAccount extends Component {
                         </div>
                     </div>
                 </div>
+                
             </Layout>
         </Aux>
     );
