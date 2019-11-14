@@ -11,6 +11,7 @@ const toolbar = props => {
     fontSize: "25px",
     background: "dimgray"
   };
+
   return (
     <Aux>
       <div>
@@ -44,7 +45,9 @@ const toolbar = props => {
           <div class="container ">
             
             <a href="/" class="navbar-brand">
-              <b class = " danger navbar-header">E Mandi</b>
+              <b class = " danger navbar-header" >&#8377;Mandi</b>
+
+
             </a>
             <button
               class="navbar-toggler"

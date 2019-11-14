@@ -15,11 +15,11 @@ const Footer = () => {
     <footer
       class="fixed-bottam"
       className={classes.footer}
-      style={{ backgroundColor: "#343a40" }}
+      style={{  bottom: "0", backgroundColor: "#343a40", marginTop:'1px' }}
     >
       <div
         className="footer-row-top"
-        style={{ backgroundColor: "#343a40", color: "#fff" }}
+        style={{ backgroundColor: "#343a40", color: "#fff", paddingTop:'10px' }}
       >
         <div className="container">
           <div className="row">

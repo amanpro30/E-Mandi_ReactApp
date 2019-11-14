@@ -15,24 +15,27 @@ function Slideshow() {
     setDirection(e.direction);
   };
   
+
+
   return (
     
     <div>
         <br/><br/>
 
-        <Parallax className="classes.diva"
-            blur={1}
+        <Parallax
+            blur={2}
             bgImage={require('../../assets/images/7.jpg')}
             bgImageAlt="mandi"
-            strength={900}
+            strength={650}
             
         >
             <b className={classes.font} ><br/><br/>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            &euro;Mandi</b> 
+            &#8377; Mandi</b> 
+            <br/><br/><br/><br/>
+            <p className={`${classes.line1} ${classes.animtypewriter} ${classes.text_body} ${classes.html1}`}>Welcome to &#8377;Mandi </p>
 
-            
-            <div style={{ height: '280px', width:'100%' }} />
+            <div style={{ height: '256px', width:'100%' }} />
             
         </Parallax>
     </div>

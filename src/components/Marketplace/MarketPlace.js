@@ -5,7 +5,7 @@ import { Form, Col, Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
-
+import classes from "./marketplace.css"
 
 class MarketPlace extends Component {
   handleClose_Market = () => {
@@ -83,7 +83,7 @@ class MarketPlace extends Component {
         <Layout>
           <br /><br /><br /><br />
           {/* ########################################################################################################                    */}
-          <div class="content">
+          <div class="content" style={{width:"98%"}} >
             <div class="row">
               <div
                 style={{ marginLeft: 45 }}
