@@ -6,7 +6,8 @@ class Order_Card extends Component{
     render(){
         return(
             <Card style={{width:'900px'}}>
-                <Card.Header as="h3" style={{fontSize:'20px',fontWeight:'bold'}}>{this.props.CropName}&nbsp;&nbsp;&nbsp;|&nbsp; {this.props.CropVariety}&nbsp;&nbsp;&nbsp;|&nbsp; {this.props.Quantity} KG &nbsp;&nbsp;&nbsp;|&nbsp; {this.props.ProductionMode}     &nbsp;&nbsp;&nbsp;| </Card.Header>
+                <Card.Header as="h3" style={{fontSize:'20px',fontWeight:'bold'}}>
+                {this.props.CropName}&nbsp;&nbsp;&nbsp;|&nbsp; {this.props.CropVariety}&nbsp;&nbsp;&nbsp;|&nbsp; {this.props.Quantity} KG &nbsp;&nbsp;&nbsp;|&nbsp; {this.props.ProductionMode}     &nbsp;&nbsp;&nbsp;| </Card.Header>
                 <Card.Body>
                     {/* <Card.Title>Special title treatment</Card.Title> */}
                     <Card.Text>

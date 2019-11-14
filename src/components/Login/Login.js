@@ -67,6 +67,9 @@ class Login extends React.Component {
           <br />
           <br />
           <br />
+          <br />
+          <br />
+          <br />
           <h2> {this.state.error_description}</h2>
           <div class="user-session__form">
             <div>
