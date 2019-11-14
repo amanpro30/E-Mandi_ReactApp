@@ -50,7 +50,11 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
+<<<<<<< HEAD
                   <a href="/privacy_policy" style={{ color: "#fff" }}>
+=======
+                  <a href="/privacy_policy" >
+>>>>>>> 4800d374701f78070bc24f72e037df18806c237c
                     Privacy Policy
                   </a>
                 </li>
