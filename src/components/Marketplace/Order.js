@@ -79,7 +79,20 @@ class Order extends Component {
   };
 
   RemoveUserBid = (e, data) =>{
-    axios.delete('http://localhost:8000/order/getbid/'+data+'/',{headers:this.headers}).then(res=>{window.location.href = "/marketplace";})
+    e.preventDefault();
+    axios.delete('http://localhost:8000/order/getbid/'+data+'/',{headers:this.headers}).then(res=>{
+      var bids = this.state.bids;
+      if(res.status===204){
+        for (var key in bids){
+          if(bids[key]['id']===parseInt(data)){
+            bids.splice(key,1);
+          }        
+        }
+      }
+      this.setState({bids:bids});
+      this.setState({curruserbid:[]});
+      console.log(this.state.bids);
+    })
   }
 
   toggle =  () => {
