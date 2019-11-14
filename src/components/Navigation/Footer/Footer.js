@@ -1,10 +1,11 @@
 import React from "react";
 // import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import classes from "./Footer.css";
+import "./Footer.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import fb from "../../../assets/logos/fb2.jpeg";
+import fb from "../../../assets/logos/facebook-logo-0383e563e22ffcbf5b5331cb660c02de2eb287cad5cbf41c92ee987ccf158b11.png";
 import twitter from "../../../assets/logos/twitter-logo-2c280dc3870e868da6309a702d3cf0669ae48cc2e9902fcc034838db41359997.png";
 import linkedin from "../../../assets/logos/linkedin-6efc36a69e5c59219b21692f0b795b7aeb4818eae21bc82c828e63d63f7becc1.png";
 import youtube from "../../../assets/logos/youtube-logotype-4e93278734ae91b1f1aec5b1eebf0fbd8ae441676b4fb658c4974869da5874ee.png";
@@ -60,7 +61,7 @@ const Footer = () => {
                 Follow Us{" "}
               </h4>
               <ul className="list-unstyled">
-                <li>
+                
                   <img className="footer-image" src={fb} alt="Facebook logo" />
                   <a
                     style={{ color: "#fff" }}
@@ -70,19 +71,20 @@ const Footer = () => {
                   >
                     E-Mandi
                   </a>
-                </li>
+                
 
                 <a class="btn btn-social-icon btn-twitter">
                   <span class="fa fa-twitter"></span>
                 </a>
 
-                {/* <li>
+                <li>
                   <img
                     className="footer-image"
+                    
                     src={twitter}
                     alt="Twitter logo"
                   />
-                  <a
+                  <a style={{ color: "#fff" }}
                     href="https://twitter.com/E-Mandi"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -90,7 +92,7 @@ const Footer = () => {
                     {" "}
                     @EMandi{" "}
                   </a>
-                </li> */}
+                </li>
                 <li>
                   <img className="footer-image" src={linkedin} alt="Linkedin" />
                   <a

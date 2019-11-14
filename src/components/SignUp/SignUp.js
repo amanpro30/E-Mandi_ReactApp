@@ -50,6 +50,7 @@ class Signup extends React.Component {
       newState["data"][name] = value;
       return newState;
     });
+    
     let err="";
 
     
