@@ -3,6 +3,8 @@ import Layout from "../Layout/Layout";
 
 const Privacy_policy = props => (
   <Layout>
+    <br />
+    <br />
     <div class="content">
       <div class="container termsConditions">
         <div class="termsConditions-title">PRIVACY POLICY E-MANDI</div>

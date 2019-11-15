@@ -8,18 +8,19 @@ import * as actions from "../../store/actions/auth";
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: "",
+    this.state = {
+      username: "",
       password: "",
       logged_in: this.props.isAuthenticated,
-      error_description: localStorage.getItem("error_description_login")};
+      error_description: localStorage.getItem("error_description_login")
+    };
 
     this.handle_change = this.handle_change.bind(this);
-    
   }
 
   handle_change(event) {
-    console.log('mkc')
-    this.setState({value: event.target.value});
+    console.log("mkc");
+    this.setState({ value: event.target.value });
     const name = event.target.name;
     const value = event.target.value;
     this.setState(prevstate => {
@@ -48,6 +49,8 @@ class Login extends React.Component {
           console.log(this.setState({ username: res.username }));
         });
     }
+
+    console.log(this.state.error_description);
   }
 
   // handle_change = e => {
@@ -61,58 +64,74 @@ class Login extends React.Component {
   // };
 
   render() {
+    const isError = this.state.error_description;
     return (
       <Aux>
         <Layout>
           <br />
           <br />
           <br />
-          <h2> {this.state.error_description}</h2>
+          <br />
+          <br />
+          <br />
+          {/* <h2> {this.state.error_description}</h2> */}
           <div class="user-session__form">
             <div>
-              <h2>Login</h2>
-              <form
-                class="new_user"
-                id="new_user"
-                accept-charset="UTF-8"
-                method="post"
-                onSubmit={e => this.props.onLogin(e, this.state)}
-              >
-                <div class="form-group">
-                  <label for="username">
-                    <strong>UserName:</strong>
-                  </label>
-                  <input
-                    autofocus="autofocus"
-                    class="form-control"
-                    type="text"
-                    name="username"
-                    // value={this.state.username}
-                    onChange={this.handle_change}
-                  />
+              {isError ? (
+                <div class="alert alert-danger" role="alert">
+                  {this.state.error_description}
                 </div>
-                <div class="form-group">
-                  <label for="password:">
-                    <strong>Password:</strong>
-                  </label>
-                  <input
-                    class="form-control"
-                    type="password"
-                    name="password"
-                    // value={this.state.password}
-                    onChange={this.handle_change}
-                  />
-                </div>
-                <div class="actions">
-                  <input
-                    type="submit"
-                    name="commit"
-                    value="Login"
-                    class="btn btn-secondary btn--full"
-                    data-disable-with="Login"
-                  />
-                </div>
-              </form>
+              ) : (
+                <div />
+              )}
+              
+
+                <br/><br/>
+
+                <h2>Login</h2>
+                <form
+                  class="new_user"
+                  id="new_user"
+                  accept-charset="UTF-8"
+                  method="post"
+                  onSubmit={e => this.props.onLogin(e, this.state)}
+                >
+                  <div class="form-group">
+                    <label for="username">
+                      <strong>Username:</strong>
+                    </label>
+                    <input
+                      autofocus="autofocus"
+                      class="form-control"
+                      type="text"
+                      name="username"
+                      // value={this.state.username}
+                      onChange={this.handle_change}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="password:">
+                      <strong>Password:</strong>
+                    </label>
+                    <input
+                      class="form-control"
+                      type="password"
+                      name="password"
+                      // value={this.state.password}
+                      onChange={this.handle_change}
+                    />
+                  </div>
+                  <div class="actions">
+                    <input
+                      type="submit"
+                      name="commit"
+                      value="Login"
+                      class="btn btn-secondary btn--full"
+                      data-disable-with="Login"
+                    />
+                  </div>
+                </form>
+              </div>
             </div>
             <div class="user-session__links">
               <a href="password/new.html">Forgot your password?</a>
@@ -127,7 +146,7 @@ class Login extends React.Component {
               <br />
               <br />
             </div>
-          </div>
+          
         </Layout>
       </Aux>
     );
@@ -135,10 +154,10 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return{
-    isAuthenticated: state.auth.isAuthenticated,
-  }
-}
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -146,7 +165,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

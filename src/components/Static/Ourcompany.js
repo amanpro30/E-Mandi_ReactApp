@@ -5,6 +5,7 @@ import mandi from "../../assets/images/mandi.jpg";
 
 const Ourcompany = props => (
   <Layout>
+    <br/><br/>
     <div class="content">
       <div class="our_company">
         <div class="our_vision_and_mission our-company-section">
