@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
+    "@react-pdf/renderer": "^1.6.8",
     "@svgr/webpack": "4.3.2",
     "@trendmicro/react-sidenav": "^0.4.5",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
@@ -38,6 +39,7 @@
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
+    "jspdf": "^1.5.3",
     "mdbootstrap": "^4.9.0",
     "mdbreact": "^4.22.1",
     "mini-css-extract-plugin": "0.8.0",

@@ -9,7 +9,7 @@ import axios from "axios";
 class MarketPlace extends Component {
   handleClose_Market = () => {
     this.setState({ show_Market: false });
-    console.log(this.state.show_Market);
+    console.log(this.state.show_Market);    
   };
 
   handleShow_Market = () => {
@@ -24,7 +24,9 @@ class MarketPlace extends Component {
     this.setState({ show_Futures: true });
     console.log(this.state.show_Futures);
   };
+  
   state = {
+    x:1,
     show_Market: false,
     show_Futures: false,
     orderData: [],
@@ -41,6 +43,21 @@ class MarketPlace extends Component {
       OrderStatus:"",
     
       },
+
+    orderFutures:{
+      CropName:"",
+      CropVariety:"",
+      order:{
+      Quantity:"",
+      DeliveryDate:"",
+      ProductionMode:"",
+      ContractPrice:"",
+      advance:"",
+      AdvanceDate:"",
+
+      },      
+
+    },  
     cropTypes:[],
     cropVariety:[],
     cropVariety_order:[],
@@ -104,6 +121,7 @@ class MarketPlace extends Component {
       console.log(this.state.orderData_copy);
     });
   }
+
   OrderCreate = (e, data) => {
     e.preventDefault();
     console.log('coming')
@@ -113,12 +131,31 @@ class MarketPlace extends Component {
     .then(res => {
     })
   };  
+  OrderCreateFutures = (e, data) => {
+    e.preventDefault();
+    console.log('coming')
+    this.handleClose_Futures()
+    axios.post(`http://localhost:8000/order/futurecontract/${this.state.orderFutures['CropName']}/${this.state.orderFutures['CropVariety']}/`, data,{
+        headers: this.headers})
+    .then(res => {
+    })
+    console.log(this.state.orderFutures)
+  };  
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState(prevstate => {
       const newState = { ...prevstate };
       newState['order'][name] = value;
+      return newState;
+    })
+  };
+  handle_change_futures = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState['orderFutures']['order'][name] = value;
       return newState;
     })
   };
@@ -143,6 +180,26 @@ class MarketPlace extends Component {
     })
   };
     
+  handle_change_futures1 = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState['orderFutures'][name] = value;
+      return newState;
+    })
+    this.getCropVariety_order(e);
+  };
+  handle_change_futures2 = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(value)
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState['orderFutures'][name] = value;
+      return newState;
+    })
+  };
 
     handle_change1 = e =>{
       
@@ -386,7 +443,7 @@ class MarketPlace extends Component {
                   <Form.Group as={Col}>
                     <Form.Label>Crop Name</Form.Label>
                     <Form.Control as="select"  name="CropName" value={this.state.order.CropName} onChange={this.handle_change_order1}>
-                      
+                    <option>Crop Name</option>
                     {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
 
                     </Form.Control>
@@ -481,21 +538,28 @@ class MarketPlace extends Component {
             </Modal.Header>
             <div style={{ background: "#D6D3D2" }}>
               <div style={{ margin: "50px", width: "80%" }}>
-                <Form>
+                <Form onSubmit={e => this.OrderCreateFutures(e, this.state.orderFutures.order)}>
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridCropName">
                       <Form.Label>
                         <strong>Crop Name</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Crop Name" />
+                      <Form.Control as="select"  name="CropName" value={this.state.orderFutures.CropName} onChange={this.handle_change_futures1}>
+                    <option>Crop Name</option>
+                    {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
+
+                    </Form.Control>                      
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridCropVariety">
                       <Form.Label>
                         <strong>Crop Variety</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Crop Variety" />
-                    </Form.Group>
+                      <Form.Control as="select"  name="CropVariety" value={this.state.orderFutures.CropVariety} onChange={this.handle_change_futures2}>
+                      <option>Crop Variety</option>
+                    {Object.values(this.state.cropVariety_order).map(x=>{ return (<option href="#"  value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>)})}
+
+                    </Form.Control>                    </Form.Group>
                   </Form.Row>
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridProductionMode">
@@ -504,7 +568,7 @@ class MarketPlace extends Component {
                       </Form.Label>
 
 
-                      <Form.Control as="select" id="exampleSelect" name="ProductionMode">
+                      <Form.Control as="select" id="exampleSelect" name="ProductionMode" value={this.state.orderFutures.order.ProductionMode} onChange={this.handle_change_futures}>
                         <option value=" ">Select </option>
                         <option value="organic">Organic</option>
                         <option value="conventional">Conventional</option>
@@ -515,7 +579,7 @@ class MarketPlace extends Component {
                       <Form.Label>
                         <strong>Quantity Required (kg)</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Quantity" />
+                      <Form.Control placeholder="Enter Quantity" name="Quantity" value={this.state.orderFutures.Quantity} onChange={this.handle_change_futures} />
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
@@ -524,22 +588,22 @@ class MarketPlace extends Component {
                         {" "}
                         <strong>Delivery Date </strong>
                       </Form.Label>
-                      <Form.Control type="date" />
+                      <Form.Control type="date" name="DeliveryDate" value={this.state.orderFutures.order.DeliveryDate} onChange={this.handle_change_futures}/>
                     </Form.Group>
-                    <Form.Group as={Col} controlId="formGridClosingDate">
+                    <Form.Group as={Col} controlId="formGridClosingDate" >
                       <Form.Label>
                         <strong>Price (per kg)</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Base Price" />
+                      <Form.Control placeholder="Enter Base Price" name="ContractPrice" value={this.state.orderFutures.order.ContractPrice} onChange={this.handle_change_futures}/>
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
                         {" "}
-                        <strong>Advance Payment date</strong>{" "}
+                        <strong>Advance Payment By</strong>{" "}
                       </Form.Label>
-                      <Form.Control type="month" />
+                      <Form.Control type="date" name="AdvanceDate" value={this.state.orderFutures.order.AdvanceDate} onChange={this.handle_change_futures} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
@@ -549,6 +613,9 @@ class MarketPlace extends Component {
                         type="number"
                         max="99"
                         placeholder="Enter Base Price"
+                        name="advance"
+                        value={this.state.orderFutures.order.advance}
+                        onChange={this.handle_change_futures}
                       />
                     </Form.Group>
                   </Form.Row>
