@@ -16,11 +16,15 @@ const Footer = () => {
     <footer
       class="fixed-bottam"
       className={classes.footer}
-      style={{  bottam: "0", backgroundColor: "#343a40", }}
+      style={{  backgroundColor: "#343a40",left:'0px',bottom:'0px', width:'100%',
+   background:'#999',
+       }}
     >
       <div
         className="footer-row-top"
-        style={{ backgroundColor: "#343a40", color: "#fff", paddingTop:'10px' }}
+        style={{ backgroundColor: "#343a40", color: "#fff", paddingTop:'10px'
+        
+         }}
       >
         <div className="container">
           <div className="row">
@@ -73,7 +77,7 @@ const Footer = () => {
                   </a>
                 
 
-                <a class="btn btn-social-icon btn-twitter">
+                <a >
                   <span class="fa fa-twitter"></span>
                 </a>
 
