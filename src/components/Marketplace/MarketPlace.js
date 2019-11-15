@@ -28,7 +28,7 @@ class MarketPlace extends Component {
   state = {
     show_Market: false,
     show_Futures: false,
-    orderData: "",
+    orderData: [],
     orderData_copy:"",
     order: {
       CropName:"",
@@ -47,8 +47,8 @@ class MarketPlace extends Component {
     selectedCrop:"",
     selectedVariety:"",
 
-    temp1:"",
-    temp2:"",
+    temp1:"Crop Name",
+    temp2:"Crop Variety",
     };
   
     headers = {
@@ -62,17 +62,20 @@ class MarketPlace extends Component {
     console.log(name);
     console.log('^');
     console.log(this.state.orderData);
-    var OrderData1=this.state.orderData_copy.filter(x=>{
+    var OrderData1=[...this.state.orderData];
+    OrderData1=this.state.orderData_copy.filter(x=>{
       return x.CropName===name;
     });
     
     console.log('^^');
 
-    console.log([...OrderData1]);
-    this.setState({orderDate:[...OrderData1]},()=>{
+    // console.log([...OrderData1]);
+    // console.log(OrderData1)
+    this.setState({orderData:[...OrderData1]},()=>{
+    console.log(OrderData1);
     console.log(this.state.orderData);}
-    );
-    console.log(this.state.orderData);
+    );  
+    this.setState({temp1:name});
 
   }; 
   handle_orderData_cropVariety = e =>{
@@ -84,11 +87,22 @@ class MarketPlace extends Component {
     });
     console.log('%%');
     console.log(OrderData1);
-    this.setState({orderDate:OrderData1});
-    console.log(this.state.orderData);
+    this.setState({orderData:[...OrderData1]},()=>{
+      console.log(OrderData1);
+      console.log(this.state.orderData);}
+      );  
+      this.setState({temp2:varietyName});
 
-  };  
-  
+  }; 
+  filter_reset= () =>{
+    console.log('inside filter reset');
+    this.setState({temp1:"Crop Name"});
+    this.setState({temp2:"Crop Variety"});
+    this.setState({orderData:[...this.state.orderData_copy]},()=>{
+      console.log(this.state.orderData);
+      console.log(this.state.orderData_copy);
+    });
+  }
   OrderCreate = (e, data) => {
     e.preventDefault();
     console.log('coming')
@@ -130,6 +144,7 @@ class MarketPlace extends Component {
     
 
     handle_change1 = e =>{
+      
       this.getCropVariety_filter(e);
       this.handle_orderData_cropName(e);
       // console.log(e.target.value);
@@ -253,7 +268,7 @@ class MarketPlace extends Component {
                             <Form.Row>
                             <Form.Group as={Col} controlId="formGridState" style={{width:'250px'}}>
                               {/* <Form.Label>State</Form.Label> */}
-                              <Form.Control as="select" value={this.temp1} onChange={this.handle_change1}>
+                              <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
                                 <option>Crop Name</option>
                                 {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
                               </Form.Control>
@@ -261,11 +276,13 @@ class MarketPlace extends Component {
                             
                             <Form.Group as={Col} controlId="formGridState" style={{width:'250px'}}>
                               {/* <Form.Label>State</Form.Label> */}
-                              <Form.Control as="select" value={this.temp2} onChange={this.handle_change2} >
+                              <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
                                 <option>Crop Variety</option>
                                 {Object.values(this.state.cropVariety).map(x=>{ return (<option href="#"  value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>)})}
                               </Form.Control>
                             </Form.Group>
+
+                            <Button variant="secondary" onClick={this.filter_reset}>Reset</Button>
                             </Form.Row>  
                           </Form>   
 
