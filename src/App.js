@@ -20,7 +20,8 @@ import Privacy_policy from "./components/Static/Privacy_policy";
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
 import Portfolio from '../src/components/Portfolio/Portfolio'
 import ChartComponent from "./components/Graph/ChartComponent";
-import Test from './components/Test/Test'
+// import Test from './components/Test/Test'
+import WatchList from './components/Marketplace/WatchList';
 
 
 
@@ -62,7 +63,8 @@ function App() {
           <Route exact path = "/MarketPlace" component = {MarketPlace} />
           <Route exact path="/portfolio" component={Portfolio} />
           <Route exact path="/pricing" component={ChartComponent}/>
-          <Route exact path="/test" component={Test}/>
+          <Route exact path="/watchlist" component={WatchList}/>
+
           <Redirect to="/404" />
         </Switch>
       </div>

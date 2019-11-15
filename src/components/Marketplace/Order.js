@@ -149,7 +149,7 @@ class Order extends Component {
               ):
               (<Form onSubmit={e => this.getUserBid(e, this.state.userbid)} >
                 <Form.Control size="lg" type="text" placeholder="Bid Price" name="userbid" onChange={this.handle_change}/>
-                <Button style={{width:'200px'}} variant="outline-info" type="submit">Bid</Button>
+                <Button style={{width:'200px'}} variant="outline-success" type="submit" >Bid</Button>
                 &nbsp;&nbsp;{this.state.bidNumberError}<br/>
                 &nbsp;&nbsp;{this.state.bidBasePriceError}
                 
