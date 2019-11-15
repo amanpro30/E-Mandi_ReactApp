@@ -180,7 +180,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <Layout><br/><br/>
         <div className="row">
           <div className="col-md-8 offset-md-2 user-registration__col">
             <h2>Sign Up</h2>

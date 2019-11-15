@@ -1,45 +1,49 @@
-import React, {Component} from 'react';
-import Aux from '../../hoc/Aux';
-import Layout from '../Layout/Layout';
-import ProfileSideBar from '../Profile/Profile_sidebar';
-import axios from 'axios';
+import React, { Component } from "react";
+import Aux from "../../hoc/Aux";
+import Layout from "../Layout/Layout";
+import ProfileSideBar from "../Profile/Profile_sidebar";
+import axios from "axios";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from "mdbreact";
 
-
-
 class ProfileAccount extends Component {
-    state = {
-        username:"",
-        email:"",
-        first_name:"",
-        last_name:""
-    }
-    
-    headers = {
-      "Content-Type": "application/json",
-      accept: "application/json",
-      Authorization: `JWT ${localStorage.getItem('token')}`,
-        
-    }
-    
-    componentDidMount(){
-        var self=this;  
-        axios.get('http://localhost:8000/accounts/userprofile/',{headers:this.headers}).then(res => {self.setState({first_name:res.data[0]['first_name'],last_name:res.data[0]['last_name'],email:res.data[0]['email'],username:res.data[0]['username']})})
-    }
+  state = {
+    username: "",
+    email: "",
+    first_name: "",
+    last_name: ""
+  };
 
-    handle_change = e => {
-        const name = e.target.name;
-        const value = e.target.value;
-        this.setState(prevstate => {
-          const newState = { ...prevstate };
-          newState[name] = value;
-          return newState;
-    })};
+  headers = {
+    "Content-Type": "application/json",
+    accept: "application/json",
+    Authorization: `JWT ${localStorage.getItem("token")}`
+  };
 
-    onSignup =(e,email) => {
-        e.preventDefault();
-        axios.put('http://localhost:8000/accounts/userprofile/'+this.state.username+'/',{email},{headers:this.headers}).then(res=>{});
-    }
+  componentDidMount() {
+    var self = this;
+    axios
+      .get("http://localhost:8000/accounts/userprofile/", {
+        headers: this.headers
+      })
+      .then(res => {
+        self.setState({
+          first_name: res.data[0]["first_name"],
+          last_name: res.data[0]["last_name"],
+          email: res.data[0]["email"],
+          username: res.data[0]["username"]
+        });
+      });
+  }
+
+  handle_change = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+    });
+  };
 
     render(){
     return(
@@ -54,33 +58,59 @@ class ProfileAccount extends Component {
                 
                 <form class="edit_user" id="edit_user_1072" accept-charset="UTF-8" onSubmit={e => this.onSignup(e, this.state.email)} method="post" >
                     <div class="row">
-                        <div class="col-md-12">
-                        <h2 class="bid-list__header user_menu_title">Account Information</h2>
-                        </div>
+                      <div class="col-md-12">
+                        <h2 class="bid-list__header user_menu_title">
+                          Account Information
+                        </h2>
+                      </div>
                     </div>
                     <div class="row row--field">
-                        <div class="col-md-4">
-                        </div>
+                      <div class="col-md-4"></div>
                     </div>
                     <div class="row row--field">
-                        <div class="col-md-6 ">
+                      <div class="col-md-6 ">
                         <label for="user_email">User Name</label>
-                        <input class="form-control" type="text" value={this.state.username} name="user[email]" id="user_email" />
-                        </div>
-                        <div class="col-md-6">
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={this.state.username}
+                          name="user[email]"
+                          id="user_email"
+                        />
+                      </div>
+                      <div class="col-md-6">
                         <label for="user_email">Email</label>
-                        <input class="form-control" type="email" value={this.state.email} name="email" id="user_email" onChange={this.handle_change}/>
-                        </div>
+                        <input
+                          class="form-control"
+                          type="email"
+                          value={this.state.email}
+                          name="email"
+                          id="user_email"
+                          onChange={this.handle_change}
+                        />
+                      </div>
                     </div>
                     <div class="row row--field">
-                        <div class="col-md-6">
-                            <label for="user_first_name">First Name</label>
-                            <input class="form-control" type="text" value={this.state.first_name} name="user[first_name]" id="user_first_name" />
-                        </div>
-                        <div class="col-md-6">
-                            <label for="user_last_name">Last Name</label>
-                            <input class="form-control" type="text" value={this.state.last_name} name="user[last_name]" id="user_last_name" />
-                        </div>
+                      <div class="col-md-6">
+                        <label for="user_first_name">First Name</label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={this.state.first_name}
+                          name="user[first_name]"
+                          id="user_first_name"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="user_last_name">Last Name</label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={this.state.last_name}
+                          name="user[last_name]"
+                          id="user_last_name"
+                        />
+                      </div>
                     </div>
                     <br/><br/><br/><br/><br/> <br/>
                     <div class="row ">
@@ -95,13 +125,13 @@ class ProfileAccount extends Component {
             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                    <br />
                 <br/><br/><br/><br/>   
             </Layout>
         </Aux>
     );
-    }
-};
-
+  }
+}
 
 export default ProfileAccount;

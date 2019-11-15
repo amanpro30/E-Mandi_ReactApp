@@ -9,6 +9,8 @@ import mandi from "../../assets/images/mandi.jpg";
 
 const Ourpeople = props => (
   <Layout>
+    <br />
+    <br />
     <div class="content">
       <div class="aboutUs">
         <div class="container">
