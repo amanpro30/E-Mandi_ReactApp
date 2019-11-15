@@ -69,31 +69,11 @@ export const checkAuthTimeout = expirationTime => {
 
 export const authSignup = (e, data) => {
     return dispatch => {
-    dispatch(authStart());
+    dispatch(logout());
     e.preventDefault();
     axios.post(`http://localhost:8000/accounts/signup/`, data)
       .then(res => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('expirationDate', res.data.expirationDate);
-        localStorage.setItem('username', res.data.username);
-        console.log(res.data.expirationDate);
-        console.log(res.data.username);
-        dispatch(authSuccess(res.data.token, res.data.username));
-        dispatch(checkAuthTimeout(3600));
-        window.location.href = "/";
-        axios.get(`http://localhost:8000/transaction/balance/`,
-        {headers: 
-            {"Content-Type": "application/json",
-            accept: "application/json",
-            Authorization: `JWT ${localStorage.getItem('token')}`,}
-        },
-        )
-          .then(res=>{
-            localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
-            localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
-            dispatch(BalanceUpdate(res.data[0]['availablebalance'],res.data[0]['accountbalance']));
-            window.location.href = "/";
-          });
+        window.location.href ="/login";
       })
       .catch(err => {dispatch(authFail(err))
         window.location.href = "/signup";

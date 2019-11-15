@@ -5,9 +5,6 @@ import { Form, Col, Button, Dropdown } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
-import WatchList from "./WatchList";
-
-import classes from "./marketplace.css"
 
 class MarketPlace extends Component {
   handleClose_Market = () => {

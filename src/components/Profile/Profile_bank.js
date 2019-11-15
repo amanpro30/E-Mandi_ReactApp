@@ -7,7 +7,6 @@ import {connect} from 'react-redux';
 import PayPalBtn from '../Paypal/PaypalBtn';
 
 class ProfileBank extends Component {
-
   state = {
     username: this.props.username,
     bank : {
@@ -16,7 +15,7 @@ class ProfileBank extends Component {
       "Ifsc": "",
       "AccountNumber": ""
     },
-    availablebalance:localStorage.getItem('accountbalance'),
+    availablebalance:localStorage.getItem('availablebalance'),
     accountbalance:localStorage.getItem('accountbalance'),
     amount:0,
 }
@@ -25,7 +24,6 @@ headers = {
   "Content-Type": "application/json",
   accept: "application/json",
   Authorization: `JWT ${localStorage.getItem('token')}`,
-    
 }
 
 BankUpdate = (e, data) => {
@@ -62,6 +60,21 @@ handle_change2 = e => {
 componentDidMount(){
     var self=this;  
     axios.get('http://localhost:8000/transaction/bank',{headers:this.headers}).then(res => {self.setState({bank:res.data[0]});});
+    axios.get(`http://localhost:8000/transaction/balance/`,
+    {headers: 
+        {"Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `JWT ${localStorage.getItem('token')}`,}
+    },
+    )
+      .then(res=>{
+        console.log(res.data[0]['accountbalance']);
+        console.log(res.data[0]['availablebalance']);
+        this.setState({'accountbalance':res.data[0]['accountbalance']});
+        this.setState({'availablebalance': res.data[0]['availablebalance']});
+        localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
+        localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
+      });
     // axios.get('http://localhost:8000/transaction/balance/',{headers:this.headers}).then(res=>{console.log('res');console.log(res['data'][0]['balance']);});
 }
 
@@ -181,8 +194,6 @@ componentDidMount(){
 const mapStateToProps = state =>{
   return{
     username:state.auth.username,
-    availablebalance:state.auth.availablebalance,
-    accountBal:state.auth.accountbalance,
   }
 }
 
