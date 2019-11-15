@@ -16,7 +16,7 @@ const Footer = () => {
     <footer
       class="fixed-bottam"
       className={classes.footer}
-      style={{  bottom: "0", backgroundColor: "#343a40", marginTop:'1px' }}
+      style={{  bottam: "0", backgroundColor: "#343a40", }}
     >
       <div
         className="footer-row-top"

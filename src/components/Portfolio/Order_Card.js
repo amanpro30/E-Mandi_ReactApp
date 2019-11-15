@@ -1,19 +1,23 @@
 import React, {Component} from 'react'
 import {Table, Card, Button} from 'react-bootstrap'
-
+import {MDBBtnGroup,MDBBtn,MDBCol} from 'mdbreact';
 class Order_Card extends Component{
 
     render(){
         return(
-            <Card style={{width:'900px'}}>
-                <Card.Header as="h3" style={{fontSize:'20px',fontWeight:'bold'}}>{this.props.CropName}&nbsp;&nbsp;&nbsp;|&nbsp; {this.props.CropVariety}&nbsp;&nbsp;&nbsp;|&nbsp; {this.props.Quantity} KG &nbsp;&nbsp;&nbsp;|&nbsp; {this.props.ProductionMode}     &nbsp;&nbsp;&nbsp;| </Card.Header>
+
+            <Card >
                 <Card.Body>
-                    {/* <Card.Title>Special title treatment</Card.Title> */}
                     <Card.Text>
-                    <span style={{fontSize:'20px',fontWeight:'bold'}}> Bids : </span>
-                    <Button style={{width:'100px'}} variant="outline-info">₹ Price 1</Button>
+                        <tr className="col-xl-12">
+                            <td className= "col-xl-2">rice</td>
+                            <td className= "col-xl-2">basmati</td>
+                            <td className= "col-xl-2">100kg</td>
+                            <td className= "col-xl-4"><b>100.1&emsp;100.2&emsp;100.3&emsp;&emsp;100</b></td>
+                            <td className= "col-xl-2">&emsp;<span className="text-primary">Sell</span>&emsp;<span className="text-danger">Delete</span></td>
+                        </tr>
+                        
                     </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
                 </Card.Body>
             </Card>
         )

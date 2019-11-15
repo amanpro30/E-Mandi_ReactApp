@@ -47,12 +47,12 @@ class ProfileAccount extends Component {
             <Layout>
             <br/><br/><br/><br/>
                 <div class = "content ">
-                    <div className="container  user-layout cloudy-knoxville-gradient" >
+                    <div className="container  user-layout cloudy-knoxville-gradient"   >
                         <div class = "row" >
                             <ProfileSideBar />
                             <div class="col-md-8 user-layout__col"  >
                 
-                <form class="edit_user" id="edit_user_1072" accept-charset="UTF-8" onSubmit={e => this.onSignup(e, this.state.email)} method="post">
+                <form class="edit_user" id="edit_user_1072" accept-charset="UTF-8" onSubmit={e => this.onSignup(e, this.state.email)} method="post" >
                     <div class="row">
                         <div class="col-md-12">
                         <h2 class="bid-list__header user_menu_title">Account Information</h2>
@@ -82,15 +82,15 @@ class ProfileAccount extends Component {
                             <input class="form-control" type="text" value={this.state.last_name} name="user[last_name]" id="user_last_name" />
                         </div>
                     </div>
-                    <br/><br/><br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/> <br/><br/>
                     <div class="row ">
                         <div class="col-md-6">
-                        <a class="btn w-100 bg-info" href="/users/edit">Change Password</a>
+                        <a class="btn w-100 btn-outline-info" href="/users/edit">Change Password</a>
                         </div>
                         <div class="col-md-6">
-                            <input type="submit" name="commit" value="Save" class="btn w-100 bg-info " data-disable-with="Save" />
+                            <input type="submit" name="commit" value="Save" class="btn w-100 btn-outline-info " data-disable-with="Save" />
                         </div>
-                    </div>
+                    </div><br/>
                 </form>
             </div>
                         </div>
