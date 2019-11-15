@@ -8,12 +8,12 @@ class ProfileSideBar extends Component {
     }
     render (){    
         return(
-            <div class="col-md-4 user-layout__col">
-                <div class="text-xs-center user-menu">
+            <div class="col-md-4 user-layout__col" style={{background:"##E0E0E0"}}>
+                <div class="text-xs-center user-menu " style={{background:"#E0E0E0"}} >
                     <div class="user-menu__profile">
                         <div class="user-menu__profile_photo_container">
                             <div class="user-menu__profile_photo">
-                                <img src={DefaultProfImg} alt="Profile" />
+                                <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Profile" />
                             </div>
                             
                         </div>

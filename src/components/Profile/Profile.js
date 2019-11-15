@@ -11,6 +11,7 @@ const Profile = props => {
           <div class="container user-layout">
             <div class="row">
               <ProfileSideBar />
+
               <div class="col-md-8 user-layout__col">
                 <form
                   class="edit_user"
@@ -27,6 +28,7 @@ const Profile = props => {
                       </h2>
                     </div>
                   </div>
+
                   <div class="row row--field">
                     <div class="col-md-4">
                       <label class="input-picture" for="user_profile_picture">

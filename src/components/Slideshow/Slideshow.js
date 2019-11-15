@@ -35,7 +35,7 @@ function Slideshow() {
             <br/><br/><br/><br/>
             <p className={`${classes.line1} ${classes.animtypewriter} ${classes.text_body} ${classes.html1}`}>Welcome to &#8377;Mandi </p>
 
-            <div style={{ height: '256px', width:'100%' }} />
+            <div style={{ height: '130px', width:'100%' }} />
             
         </Parallax>
     </div>
