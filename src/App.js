@@ -38,7 +38,6 @@ function App() {
           <Route exact path = "/" component = {Home} />
           <Route exact path = "/login" component = {Login} />
           <Route exact path = "/signup" component = {Signup} />
-          <Route exact path = "/profile" component = {ProfileAccount} />
           <Route exact path = "/personal" component = {ProfilePersonal} />
           <Route exact path = "/bank" component = {ProfileBank} />
           <Route exact path = "/MarketPlace" component = {MarketPlace} />

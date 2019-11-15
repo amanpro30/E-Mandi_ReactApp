@@ -1,6 +1,7 @@
 import React from "react";
 // import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import classes from "./Footer.css";
+import "./Footer.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -12,55 +13,78 @@ import phone from "../../../assets/logos/phone_icon-d27d3ccfa4eebf5fa5c7419e3def
 import mail from "../../../assets/logos/mail_icon-4260a55e62b163f2a269cbac2b5f77089abcede1089547cc928bab6785c6902d.svg";
 const Footer = () => {
   return (
-    <footer class="fixed-bottam" className={classes.footer} style={{backgroundColor:'#343a40'}}>
-      <div className="footer-row-top" style={{backgroundColor:'#343a40' ,color:'#fff'}}>
+    <footer
+      class="fixed-bottam"
+      className={classes.footer}
+      style={{  bottam: "0", backgroundColor: "#343a40", }}
+    >
+      <div
+        className="footer-row-top"
+        style={{ backgroundColor: "#343a40", color: "#fff", paddingTop:'10px' }}
+      >
         <div className="container">
           <div className="row">
             <div className="col-xs-6 col-md-4 offset-md-1">
-              <h4 className="list-title" style={{color:'#fff'}} >About E-Mandi </h4>
+              <h4 className="list-title" style={{ color: "#fff" }}>
+                About E-Mandi{" "}
+              </h4>
               <ul className="list-unstyled">
                 <li>
-                  <a  href="/company">
+                  <a href="/company" style={{ color: "#fff" }}>
                     Our Company
                   </a>
                 </li>
                 <li>
-                  <a href="/people">Our People</a>
+                  <a href="/people" style={{ color: "#fff" }}>
+                    Our People
+                  </a>
                 </li>
                 <li>
-                  <a href="/faqs">FAQ&#39;s</a>
+                  <a href="/faqs" style={{ color: "#fff" }}>
+                    FAQ&#39;s
+                  </a>
                 </li>
                 <li>
-                  <a href="/terms">Terms &amp; Conditions</a>
+                  <a href="/terms" style={{ color: "#fff" }}>
+                    Terms &amp; Conditions
+                  </a>
                 </li>
                 <li>
-                  <a href="/privacy_policy" >
+                  <a href="/privacy_policy" style={{ color: "#fff" }}>
                     Privacy Policy
                   </a>
                 </li>
               </ul>
             </div>
             <div className="col-xs-6 col-md-4">
-              <h4 className="list-title">Follow Us </h4>
+              <h4 className="list-title" style={{ color: "#fff" }}>
+                Follow Us{" "}
+              </h4>
               <ul className="list-unstyled">
-                <li>
+                
                   <img className="footer-image" src={fb} alt="Facebook logo" />
                   <a
+                    style={{ color: "#fff" }}
                     href="https://www.facebook.com/E-Mandi"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    {" "}
-                    E-Mandi{" "}
+                    E-Mandi
                   </a>
-                </li>
+                
+
+                <a class="btn btn-social-icon btn-twitter">
+                  <span class="fa fa-twitter"></span>
+                </a>
+
                 <li>
                   <img
                     className="footer-image"
+                    
                     src={twitter}
                     alt="Twitter logo"
                   />
-                  <a
+                  <a style={{ color: "#fff" }}
                     href="https://twitter.com/E-Mandi"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -72,6 +96,7 @@ const Footer = () => {
                 <li>
                   <img className="footer-image" src={linkedin} alt="Linkedin" />
                   <a
+                    style={{ color: "#fff" }}
                     href="https://www.linkedin.com/company/E-Mandi/"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -86,7 +111,7 @@ const Footer = () => {
                     src={youtube}
                     alt="Youtube logotype"
                   />
-                  <a href=" " target="_blank">
+                  <a style={{ color: "#fff" }} href=" " target="_blank">
                     {" "}
                     E-Mandi{" "}
                   </a>
@@ -94,11 +119,17 @@ const Footer = () => {
               </ul>
             </div>
             <div className="col-xs-6 col-md-3">
-              <h4 className="list-title">Contact us </h4>
+              <h4 className="list-title" style={{ color: "#fff" }}>
+                Contact us{" "}
+              </h4>
               <ul className="list-unstyled">
                 <li className="img-li">
                   <img src={phone} alt="Phone icon" />
-                  <a className="strong" href="callto:+91 9999999999">
+                  <a
+                    className="strong"
+                    style={{ color: "#fff" }}
+                    href="callto:+91 9999999999"
+                  >
                     +91 9999999999
                   </a>
                 </li>
@@ -108,9 +139,11 @@ const Footer = () => {
                     {" "}
                     <span
                       className="__cf_email__"
+                      style={{ color: "white" }}
                       data-cfemail="93fafdf5fcd3f2f4e1fafee3bdf0fcfe"
                     >
-                      [email&#160;protected]
+                      {/* [email&#160;protected] */}
+                      emandi@mandi.com
                     </span>{" "}
                   </a>
                 </li>
@@ -120,16 +153,16 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  //   <footer class="navbar navbar-expand-sm navbar-dark bg-dark text-center p-4 navbar-bottom w-100" style={{position:"relative",bottom:"0", color:'black'}}>
-  //   <div class="container">
-  //     <div class="row">
-  //       <div class="col">
-  //         <p>Copyright ©
-  //           <span id="year">2019</span> Smart HealthCare</p>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </footer>
+    //   <footer class="navbar navbar-expand-sm navbar-dark bg-dark text-center p-4 navbar-bottom w-100" style={{position:"relative",bottom:"0", color:'black'}}>
+    //   <div class="container">
+    //     <div class="row">
+    //       <div class="col">
+    //         <p>Copyright ©
+    //           <span id="year">2019</span> Smart HealthCare</p>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </footer>
   );
 };
 

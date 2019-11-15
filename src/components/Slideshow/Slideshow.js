@@ -1,9 +1,10 @@
-import React, {useState} from "react";
-import Carousel from 'react-bootstrap/Carousel';
-import grain2_img from '../../assets/images/grains2.jpg';
-import farmers_img from '../../assets/images/farmer.jpg';
-
-
+import React, { useState } from "react";
+// import Carousel from "react-bootstrap/Carousel";
+// import image from "../../assets/images/7.jpg";
+// import farmers_img from "../../assets/images/8.jpg";
+// import grain_img from "../../assets/images/9.jpg";
+import { Parallax, Background } from 'react-parallax';
+import classes from './Slideshow.css';
 
 function Slideshow() {
   const [index, setIndex] = useState(0);
@@ -13,57 +14,33 @@ function Slideshow() {
     setIndex(selectedIndex);
     setDirection(e.direction);
   };
+  
 
-  var imgStyle = {
-    height:"500px",
-    width:"100%",
-  }
 
   return (
-    <Carousel activeIndex={index} direction={direction} onSelect={handleSelect} indicators={true} controls={true}>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src={grain2_img}
-          alt="First slide"
-          style = {imgStyle}
-        />
-        <Carousel.Caption>
-          {/* <h3>First slide label</h3> */}
-          {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src={farmers_img}
-          alt="Second slide"
-          style = {imgStyle}
-        />
+    
+    <div>
+        <br/><br/>
 
-        <Carousel.Caption>
-          {/* <h3>Second slide label</h3> */}
-          {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
-        </Carousel.Caption>
-      </Carousel.Item>
-      {/* <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src={tractor}
-          style = {imgStyle}
-          alt="Third slide"
-        /> */}
+        <Parallax
+            blur={2}
+            bgImage={require('../../assets/images/7.jpg')}
+            bgImageAlt="mandi"
+            strength={650}
+            
+        >
+            <b className={classes.font} ><br/><br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            &#8377; Mandi</b> 
+            <br/><br/><br/><br/>
+            <p className={`${classes.line1} ${classes.animtypewriter} ${classes.text_body} ${classes.html1}`}>Welcome to &#8377;Mandi </p>
 
-        {/* <Carousel.Caption>
-          <h3>Third slide label</h3>
-          {/* <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p> */}
-        {/* </Carousel.Caption> */} */}
-      {/* </Carousel.Item> */}
-    </Carousel>
+            <div style={{ height: '130px', width:'100%' }} />
+            
+        </Parallax>
+    </div>
+
   );
 }
 
 export default Slideshow;
-

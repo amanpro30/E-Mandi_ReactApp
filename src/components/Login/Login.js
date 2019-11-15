@@ -16,7 +16,7 @@ class Login extends React.Component {
     this.handle_change = this.handle_change.bind(this);
     
   }
-
+  
   handle_change(event) {
     console.log('mkc')
     this.setState({value: event.target.value});
@@ -48,7 +48,10 @@ class Login extends React.Component {
           console.log(this.setState({ username: res.username }));
         });
     }
+
+  console.log(this.state.error_description);
   }
+
 
   // handle_change = e => {
   //   const name = e.target.name;
@@ -61,7 +64,11 @@ class Login extends React.Component {
   // };
 
   render() {
+
+    const isError =this.state.error_description;
     return (
+
+      
       <Aux>
         <Layout>
           <br />
@@ -70,9 +77,17 @@ class Login extends React.Component {
           <br />
           <br />
           <br />
-          <h2> {this.state.error_description}</h2>
+          {/* <h2> {this.state.error_description}</h2> */}
           <div class="user-session__form">
             <div>
+             
+                        {isError ? (
+                  <div class="alert alert-danger" role="alert">
+                  {this.state.error_description}  
+                </div>
+                ) : (
+                  <div />
+                )}
               <h2>Login</h2>
               <form
                 class="new_user"
