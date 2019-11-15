@@ -5,7 +5,8 @@ import { Form, Col, Button, Dropdown } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
-import classes from "./marketplace.css"
+// import classes from "./marketplace.css"
+// import MDBtn from 'mdbreact'
 
 class MarketPlace extends Component {
   handleClose_Market = () => {
@@ -147,6 +148,7 @@ class MarketPlace extends Component {
                           Results:
                         </div>
                         <div class="md-2">
+                        <br/>
                           <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                               Crop Name
@@ -155,8 +157,8 @@ class MarketPlace extends Component {
                               {Object.values(this.state.cropTypes).map(x=>{ return (<Dropdown.Item href="#" onClick={e=>this.getCropVariety(e)} value={x.cropName} name={x.cropName} >{x.cropName}</Dropdown.Item>)})}
                             </Dropdown.Menu>
                           </Dropdown>
-                        </div>
-                        <div class="md-2">
+                        {/* </div> */}
+                        {/* <div class="md-2"> */}
                           <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                               Crop Variety
