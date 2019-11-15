@@ -5,10 +5,50 @@ import { Form, Col, Button, Dropdown } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 // import classes from "./marketplace.css"
 // import MDBtn from 'mdbreact'
 
+
+
+
 class MarketPlace extends Component {
+
+  state = {
+    show_Market: false,
+    show_Futures: false,
+    orderData: [],
+    orderData_copy: "",
+    orderData_cropNameFilter: "",
+    order: {
+      CropName: "",
+      CropVariety: "",
+      Quantity: "",
+      OrderDate: "",
+      ClosingDate: "",
+      ProductionMode: "",
+      BasePrice: "",
+      OrderStatus: "",
+
+    },
+    cropTypes: [],
+    cropVariety: [],
+    cropVariety_order: [],
+    selectedCrop: "",
+    selectedVariety: "",
+
+    temp1: "Crop Name",
+    temp2: "Crop Variety",
+    modal8: false,
+    modal9: false,
+  };
+  
+  toggle = nr => () => {
+    let modalNumber = 'modal' + nr
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  }
   handleClose_Market = () => {
     this.setState({ show_Market: false });
     console.log(this.state.show_Market);
@@ -26,82 +66,59 @@ class MarketPlace extends Component {
     this.setState({ show_Futures: true });
     console.log(this.state.show_Futures);
   };
-  state = {
-    show_Market: false,
-    show_Futures: false,
-    orderData: [],
-    orderData_copy:"",
-    orderData_cropNameFilter:"",
-    order: {
-      CropName:"",
-      CropVariety:"",
-      Quantity:"",
-      OrderDate:"",
-      ClosingDate:"",
-      ProductionMode:"",
-      BasePrice:"",
-      OrderStatus:"",
-    
-      },
-    cropTypes:[],
-    cropVariety:[],
-    cropVariety_order:[],
-    selectedCrop:"",
-    selectedVariety:"",
 
-    temp1:"Crop Name",
-    temp2:"Crop Variety",
-    };
-  
-    headers = {
-      "Content-Type": "application/json",
-      accept: "application/json",
-      Authorization: `JWT ${localStorage.getItem('token')}`,
-    }
 
-  handle_orderData_cropName = e =>{
-    var name=e.target.value;
+  headers = {
+    "Content-Type": "application/json",
+    accept: "application/json",
+    Authorization: `JWT ${localStorage.getItem('token')}`,
+  }
+
+  handle_orderData_cropName = e => {
+    var name = e.target.value;
     console.log(name);
     console.log('^');
     console.log(this.state.orderData);
-    var OrderData1=[...this.state.orderData];
-    OrderData1=this.state.orderData_copy.filter(x=>{
-      return x.CropName===name;
+    var OrderData1 = [...this.state.orderData];
+    OrderData1 = this.state.orderData_copy.filter(x => {
+      return x.CropName === name;
     });
-    
+
     console.log('^^');
 
     // console.log([...OrderData1]);
     // console.log(OrderData1)
-    this.setState({orderData:[...OrderData1]},()=>{
-    console.log(OrderData1);
-    console.log(this.state.orderData);}
-    );  
-    this.setState({orderData_cropNameFilter:[...OrderData1]});
-    this.setState({temp1:name});
+    this.setState({ orderData: [...OrderData1] }, () => {
+      console.log(OrderData1);
+      console.log(this.state.orderData);
+    }
+    );
+    this.setState({ orderData_cropNameFilter: [...OrderData1] });
+    this.setState({ temp1: name });
 
-  }; 
-  handle_orderData_cropVariety = e =>{
-    let varietyName=e.target.value
+  };
+  handle_orderData_cropVariety = e => {
+    let varietyName = e.target.value
     console.log('%');
     console.log(this.state.orderData);
-    var OrderData1=this.state.orderData_cropNameFilter.filter(x=>{
-      return x.CropVariety===varietyName;
+    var OrderData1 = this.state.orderData_cropNameFilter.filter(x => {
+      return x.CropVariety === varietyName;
     });
     console.log('%%');
     console.log(OrderData1);
-    this.setState({orderData:[...OrderData1]},()=>{
+    this.setState({ orderData: [...OrderData1] }, () => {
       console.log(OrderData1);
-      console.log(this.state.orderData);}
-      );  
-      this.setState({temp2:varietyName});
+      console.log(this.state.orderData);
+    }
+    );
+    this.setState({ temp2: varietyName });
 
-  }; 
-  filter_reset= () =>{
+  };
+  filter_reset = () => {
     console.log('inside filter reset');
-    this.setState({temp1:"Crop Name"});
-    this.setState({temp2:"Crop Variety"});
-    this.setState({orderData:[...this.state.orderData_copy]},()=>{
+    this.setState({ temp1: "Crop Name" });
+    this.setState({ temp2: "Crop Variety" });
+    this.setState({ orderData: [...this.state.orderData_copy] }, () => {
       console.log(this.state.orderData);
       console.log(this.state.orderData_copy);
     });
@@ -110,11 +127,12 @@ class MarketPlace extends Component {
     e.preventDefault();
     console.log('coming')
     this.handleClose_Market()
-    axios.post(`http://localhost:8000/order/marketorder/`, data,{
-        headers: this.headers})
-    .then(res => {
+    axios.post(`http://localhost:8000/order/marketorder/`, data, {
+      headers: this.headers
     })
-  };  
+      .then(res => {
+      })
+  };
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -144,56 +162,56 @@ class MarketPlace extends Component {
       return newState;
     })
   };
-    
 
-    handle_change1 = e =>{
-      
-      this.getCropVariety_filter(e);
-      this.handle_orderData_cropName(e);
-      // console.log(e.target.value);
-    }
 
-    handle_change2 = e =>{
-      let varietyName=e.target.value
-      console.log(varietyName);
-      this.setState({selectedVariety:varietyName});
-      this.filterCrop(e,this.state.selectedCrop,this.state.selectedVariety)
-      this.handle_orderData_cropVariety(e);
+  handle_change1 = e => {
 
-    }
+    this.getCropVariety_filter(e);
+    this.handle_orderData_cropName(e);
+    // console.log(e.target.value);
+  }
 
-    headers = {
-      "Content-Type": "application/json",
-      accept: "application/json",
-      Authorization: `JWT ${localStorage.getItem('token')}`,
-    }
+  handle_change2 = e => {
+    let varietyName = e.target.value
+    console.log(varietyName);
+    this.setState({ selectedVariety: varietyName });
+    this.filterCrop(e, this.state.selectedCrop, this.state.selectedVariety)
+    this.handle_orderData_cropVariety(e);
 
-    componentDidMount(){
-    var self=this;  
-    axios.get('http://localhost:8000/order/otherorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data, orderData_copy:res.data});})
+  }
+
+  headers = {
+    "Content-Type": "application/json",
+    accept: "application/json",
+    Authorization: `JWT ${localStorage.getItem('token')}`,
+  }
+
+  componentDidMount() {
+    var self = this;
+    axios.get('http://localhost:8000/order/otherorder/', { headers: this.headers }).then(res => { self.setState({ orderData: res.data, orderData_copy: res.data }); })
     // console.log('*');
-    axios.get('http://localhost:8000/crop/cropname/',{headers:this.headers}).then(res => {self.setState({cropTypes:res.data})});
+    axios.get('http://localhost:8000/crop/cropname/', { headers: this.headers }).then(res => { self.setState({ cropTypes: res.data }) });
     // console.log(this.state.orderData.cropName);
 
   }
 
-  getCropVariety_filter(e){
+  getCropVariety_filter(e) {
     var name = e.target.value;
 
     console.log('xx');
-    axios.get('http://localhost:8000/crop/crop/'+name+'/',{headers:this.headers}).then(res=>{this.setState({cropVariety:res.data});this.setState({selectedCrop:name})});
+    axios.get('http://localhost:8000/crop/crop/' + name + '/', { headers: this.headers }).then(res => { this.setState({ cropVariety: res.data }); this.setState({ selectedCrop: name }) });
     console.log(this.state.cropVariety);
   }
-  getCropVariety_order(e){
+  getCropVariety_order(e) {
     var name = e.target.value;
 
     console.log('xx');
-    axios.get('http://localhost:8000/crop/crop/'+name+'/',{headers:this.headers}).then(res=>{this.setState({cropVariety_order:res.data})});
+    axios.get('http://localhost:8000/crop/crop/' + name + '/', { headers: this.headers }).then(res => { this.setState({ cropVariety_order: res.data }) });
     console.log(this.state.cropVariety_order);
   }
 
-  filterCrop(e,cropname,cropvariety){
-    axios.get('http://localhost:8000/order/crop/'+cropname+'/'+cropvariety+'/',{headers:this.headers}).then(res=>{console.log('hallaho');console.log(res);});
+  filterCrop(e, cropname, cropvariety) {
+    axios.get('http://localhost:8000/order/crop/' + cropname + '/' + cropvariety + '/', { headers: this.headers }).then(res => { console.log('hallaho'); console.log(res); });
   }
 
   render() {
@@ -202,9 +220,36 @@ class MarketPlace extends Component {
         <Layout>
           <br /><br /><br /><br />
           {/* ########################################################################################################                    */}
-          <div class="content" style={{width:"98%"}} >
+          <div class="content" style={{ width: "98%" }} >
+
             <div class="row">
-              <div
+              <div className="col-xl-4">
+                <MDBContainer>
+                  <MDBBtn color="info" onClick={this.toggle(8)}>Right</MDBBtn>
+                  <MDBModal isOpen={this.state.modal8} toggle={this.toggle(8)} fullHeight position="left" fade={false} animation={false}>
+                    <MDBModalHeader toggle={this.toggle(8)}>MDBModal title</MDBModalHeader>
+                    <MDBModalBody>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                      consequat.
+                    </MDBModalBody>
+                    <MDBModalFooter>
+                      <MDBBtn color="secondary" onClick={this.toggle(8)}>Close</MDBBtn>
+                      <MDBBtn color="primary">Save changes</MDBBtn>
+                    </MDBModalFooter>
+                  </MDBModal>
+                  
+                </MDBContainer>
+
+
+
+
+              </div>
+              <div className="col-xl-8">sss</div>
+              </div>
+
+              <div className="row">
+              {/* <div
                 style={{ marginLeft: 45 }}
                 class="col-md-4 products-index__col"
               >
@@ -218,35 +263,35 @@ class MarketPlace extends Component {
                   </div>
                 </div>
                 <br />
-              </div>
+              </div> */}
               <div class="col-md-7 products-index__col">
                 <div class="row">
                   <div class="col-md-6">
                     <h3 class="product-filter_header">Order Board</h3>
                   </div>
                   <div class="col-md-6 text-xs-right">
-                    <button
+                    {/* <button
                       class="btn btn-secondary"
                       onClick={this.handleShow_Market}
                     >
                       New Market Order
-                    </button>
-                    &nbsp;&nbsp;
-                    <button
+                    </button> */}
+                    {/* &nbsp;&nbsp; */}
+                    {/* <button
                       class="btn btn-secondary"
                       onClick={this.handleShow_Futures}
                     >
                       New Futures Order
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
-                <div class="products-index__top-filter"  style={{border:'3px' , borderStyle:'groove'}}>
+                <div class="products-index__top-filter" style={{ border: '3px', borderStyle: 'groove' }}>
                   <div class="row">
                     <div class="col-xs-3 products-index__top-filter__count">
-                      
+
                       <div class="row">
-                        
+
                         {/* <div class="md-2">
                           <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -258,36 +303,36 @@ class MarketPlace extends Component {
                           </Dropdown>
                         {/* </div> */}
                         {/* <div class="md-2"> */}
-                          <Dropdown>
+                        {/* <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                               Crop Variety
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                               {Object.values(this.state.cropVariety).map(x=>{ return (<Dropdown.Item href="#" onClick={e=>{this.setState({selectedVariety:x.varietyName});this.filterCrop(e,this.state.selectedCrop,this.state.selectedVariety)}} value={x.varietyName} name={x.varietyName} >{x.varietyName}</Dropdown.Item>)})}
                             </Dropdown.Menu>
-                          </Dropdown>
+                          </Dropdown> */}
 
-                          <Form>
-                            <Form.Row>
-                            <Form.Group as={Col} controlId="formGridState" style={{width:'250px'}}>
+                        <Form>
+                          <Form.Row>
+                            <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
                               {/* <Form.Label>State</Form.Label> */}
                               <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
                                 <option>Crop Name</option>
-                                {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
+                                {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
                               </Form.Control>
                             </Form.Group>
-                            
-                            <Form.Group as={Col} controlId="formGridState" style={{width:'250px'}}>
+
+                            <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
                               {/* <Form.Label>State</Form.Label> */}
                               <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
                                 <option>Crop Variety</option>
-                                {Object.values(this.state.cropVariety).map(x=>{ return (<option href="#"  value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>)})}
+                                {Object.values(this.state.cropVariety).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
                               </Form.Control>
                             </Form.Group>
 
                             <Button variant="secondary" onClick={this.filter_reset}>Reset</Button>
-                            </Form.Row>  
-                          </Form>   
+                          </Form.Row>
+                        </Form>
 
 
 
@@ -313,7 +358,7 @@ class MarketPlace extends Component {
                   </div>
                 </div>
 
-                <div class="products-index__list"  style={{border:'2px' ,borderStyle:'groove'}}>
+                <div class="products-index__list" style={{ border: '2px', borderStyle: 'groove' }}>
                   <div class="products-index__list__header hidden-sm-down">
                     <div class="row">
                       <div class="col-md-4">
@@ -321,14 +366,14 @@ class MarketPlace extends Component {
                           <span
                             class="translation_missing"
                             title="translation missing: en.products.filter.commodities"
-                            style={{fontSize:'20px' ,fontWeight:"bold"}}
+                            style={{ fontSize: '20px', fontWeight: "bold" }}
                           >
                             Commodity
                           </span>
                         </label>
                       </div>
                       <div class="col-md-4">
-                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
+                        <label style={{ fontSize: '20px', fontWeight: "bold" }}>
                           Bids by Buyers
                           <span class="products-index__list-info">
                             (Currency per weight unit)
@@ -336,7 +381,7 @@ class MarketPlace extends Component {
                         </label>
                       </div>
                       <div class="col-md-4">
-                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
+                        <label style={{ fontSize: '20px', fontWeight: "bold" }}>
                           Make Your Bid
                           <span class="products-index__list-info">
                             (Currency per weight unit)
@@ -362,10 +407,10 @@ class MarketPlace extends Component {
                     </div>
                   </div>
                 </div>
-                
-                {Object.values(this.state.orderData).map(x=>{ return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id}/>})}
-                
-                <br/>
+
+                {Object.values(this.state.orderData).map(x => { return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id} /> })}
+
+                <br />
               </div>
             </div>
           </div>
@@ -384,14 +429,14 @@ class MarketPlace extends Component {
               <div style={{ margin: "50px", width: "80%" }}>
                 <Form onSubmit={e => this.OrderCreate(e, this.state.order)}>
                   <Form.Row>
-                  <Form.Group as={Col}>
-                    <Form.Label>Crop Name</Form.Label>
-                    <Form.Control as="select"  name="CropName" value={this.state.order.CropName} onChange={this.handle_change_order1}>
-                      
-                    {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
+                    <Form.Group as={Col}>
+                      <Form.Label>Crop Name</Form.Label>
+                      <Form.Control as="select" name="CropName" value={this.state.order.CropName} onChange={this.handle_change_order1}>
 
-                    </Form.Control>
-                  </Form.Group>
+                        {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
+
+                      </Form.Control>
+                    </Form.Group>
                     {/* <Form.Group as={Col} controlId="formGridCropName" >
                       <Form.Label style={{ align: "left" }}>
                         <strong>Crop Name</strong>
@@ -401,13 +446,13 @@ class MarketPlace extends Component {
                       <option>...</option>
                     </Form.Group> */}
                     <Form.Group as={Col}>
-                    <Form.Label>Crop Variety</Form.Label>
-                    <Form.Control as="select"  name="CropVariety" value={this.state.order.CropVariety} onChange={this.handle_change_order2}>
-                      <option>Crop Variety</option>
-                    {Object.values(this.state.cropVariety_order).map(x=>{ return (<option href="#"  value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>)})}
+                      <Form.Label>Crop Variety</Form.Label>
+                      <Form.Control as="select" name="CropVariety" value={this.state.order.CropVariety} onChange={this.handle_change_order2}>
+                        <option>Crop Variety</option>
+                        {Object.values(this.state.cropVariety_order).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
 
-                    </Form.Control>
-                  </Form.Group>
+                      </Form.Control>
+                    </Form.Group>
                     {/* <Form.Group as={Col} controlId="formGridCropVariety">
                       <Form.Label>
                         <strong>Crop Variety</strong>
@@ -432,7 +477,7 @@ class MarketPlace extends Component {
                       <Form.Label>
                         <strong>Quantity (kg)</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Quantity" name= "Quantity" value={this.state.order.Quantity} onChange={this.handle_change}/>
+                      <Form.Control placeholder="Enter Quantity" name="Quantity" value={this.state.order.Quantity} onChange={this.handle_change} />
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
@@ -440,13 +485,13 @@ class MarketPlace extends Component {
                       <Form.Label>
                         <strong>Expected Closing Date</strong>
                       </Form.Label>
-                      <Form.Control type="date" name= "ClosingDate" value={this.state.order.ClosingDate} onChange={this.handle_change}/>
+                      <Form.Control type="date" name="ClosingDate" value={this.state.order.ClosingDate} onChange={this.handle_change} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
                         <strong>Base Price (per kg)</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Base Price" name= "BasePrice" value={this.state.order.BasePrice} onChange={this.handle_change}/>
+                      <Form.Control placeholder="Enter Base Price" name="BasePrice" value={this.state.order.BasePrice} onChange={this.handle_change} />
                     </Form.Group>
                   </Form.Row>
 
@@ -569,7 +614,7 @@ class MarketPlace extends Component {
               </div>
             </div>
           </Modal>
-          <br/><br/><br/><br/><br/>
+          <br /><br /><br /><br /><br />
         </Layout>
       </Aux>
     );
