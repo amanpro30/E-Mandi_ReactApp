@@ -1,14 +1,18 @@
 import Layout from '../Layout/Layout'
 import React, {Component} from 'react'
-import {Table, Card, Badge} from 'react-bootstrap'
+import {Table, Card, Badge, Button} from 'react-bootstrap'
 import axios from 'axios'
 import Order from '../Marketplace/Order'
 import Order_Card from './Order_Card'
 import { MDBBtn, MDBBtnGroup, MDBIcon, MDBCol, MDBRow } from "mdbreact";
+import ReactPDF from '@react-pdf/renderer';
+import MyDocument from './MyDocument'
+import jsPDF from 'jspdf';
 class Portfolio extends Component {
 
     state = {
         orderData : "",
+        name:"asa",
     }
 
     headers = {
@@ -16,7 +20,13 @@ class Portfolio extends Component {
         accept: "application/json",
         Authorization: `JWT ${localStorage.getItem('token')}`,
     }
-
+    jsPdfGenerator=()=>{
+        var doc = new jsPDF('p', 'pt');
+        doc.setFont('courier');
+        doc.setFontType('normal');
+        doc.text(150,100,'EMandi (AUTOMATED PDF GENERATOR --- Invoice');
+        doc.save("generated.pdf");
+    }
     componentDidMount(){
         var self=this;  
         axios.get('http://localhost:8000/order/myorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data});})
@@ -94,7 +104,9 @@ class Portfolio extends Component {
         </div>
 
     <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <Button onClick={this.jsPdfGenerator} >Generate PDF</Button>
     </Layout>
+
     )}
 };
 
