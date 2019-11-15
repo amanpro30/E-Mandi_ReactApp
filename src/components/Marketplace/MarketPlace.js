@@ -303,7 +303,8 @@ class MarketPlace extends Component {
                 </div>
                 <br />
               </div> */}
-              <div class="col-md-7 products-index__col">
+              {/* <WatchList /> */}
+              <div class="col-md-9 offset-md-2 products-index__col">
                 <div class="row">
                   <div class="col-md-6">
                     <h3 class="product-filter_header">Order Board</h3>

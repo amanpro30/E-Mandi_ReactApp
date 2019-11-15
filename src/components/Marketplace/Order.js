@@ -14,12 +14,14 @@ class Order extends Component {
     bids:[],
     userbid:"",
     username:this.props.username,
-    curruserbid:"",
+    curruserbid:[],
     show:"visible",
     showinput:"hidden",
     edituserbid:"",
     bidNumberError:"",
-    bidBasePriceError:""
+    bidBasePriceError:"",
+    availablebalance:localStorage.getItem('accountbalance'),
+    accountbalance:localStorage.getItem('accountbalance'),
   }
 
   headers = {
@@ -31,15 +33,37 @@ class Order extends Component {
   componentDidMount(){
     var self=this;  
     axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
-    axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data});console.log(res.data)});
+    axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
+    axios.get(`http://localhost:8000/transaction/balance/`,
+    {headers: 
+        {"Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `JWT ${localStorage.getItem('token')}`,}
+    },
+    )
+      .then(res=>{
+        localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
+        localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
+        this.setState({'accountbalance':res.data[0]['accountbalance']});
+        this.setState({'availablebalance': res.data[0]['availablebalance']});
+      });
   }
 
   getUserBid(e, data){
     var err = ""
     var self=this; 
     e.preventDefault();
-    if(parseInt(data) > parseInt(this.props.BasePrice)){
-      axios.post('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{price:data},{headers:this.headers}).then(res => {console.log('in');console.log(res);window.location.href = "/marketplace";});
+    if(parseInt(data) > parseInt(this.props.BasePrice) && parseInt(data) < this.state.availablebalance){
+      axios.post('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{price:data},{headers:this.headers}).then();
+      axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
+      axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
+      let balancedata = {username:this.props.username,balance:{accountbalance:this.state.accountbalance,availablebalance:this.state.availablebalance-data}};
+      axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, balancedata , {
+      headers: this.headers}).then(res => { this.setState({'availablebalance':balancedata.balance.availablebalance});localStorage.setItem('availablebalance',balancedata.balance.availablebalance); console.log('done');console.log(balancedata);
+      });
+    }
+    else if( parseInt(data) > parseInt(this.state.availablebalance)){
+      err = <strong style={{color:"red"}} >You don't have enough balance.</strong>
     }
     else{
       err = <strong style={{color:"red"}} >Bid must be greater than Base Price</strong>
@@ -51,8 +75,17 @@ class Order extends Component {
     var err = ""
     var self=this; 
     e.preventDefault();
-    if(parseInt(data) > parseInt(this.props.BasePrice)){
-      axios.put('http://localhost:8000/order/getbid/'+this.state.curruserbid[0]['id']+'/',{price:data},{headers:this.headers}).then(res => {console.log('in');console.log(res);window.location.href = "/marketplace";});
+    if(parseInt(data) > parseInt(this.props.BasePrice && parseInt(data) < this.state.availablebalance)){
+      axios.put('http://localhost:8000/order/getbid/'+this.state.curruserbid[0]['id']+'/',{price:data},{headers:this.headers}).then(res => {});
+      console.log(this.state.curruserbid);
+      axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
+      axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
+      axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, parseInt(this.state.availablebalance) - parseInt(data), {
+      headers: this.headers}).then(res => {localStorage.setItem('availablebalance',parseInt(this.props.availablebalance)-parseInt(data));
+      });
+    }
+    else if( parseInt(data) > parseInt(this.state.availablebalance)){
+      err = <strong style={{color:"red"}} >You don't have enough balance.</strong>
     }
     else{
       err = <strong style={{color:"red"}} >Bid must be greater than Base Price</strong>
@@ -78,7 +111,9 @@ class Order extends Component {
     })
   };
 
-  RemoveUserBid = (e, data) =>{
+  RemoveUserBid = (e, data,price) =>{
+    console.log(data);
+    console.log('ddd');
     e.preventDefault();
     axios.delete('http://localhost:8000/order/getbid/'+data+'/',{headers:this.headers}).then(res=>{
       var bids = this.state.bids;
@@ -91,13 +126,14 @@ class Order extends Component {
       }
       this.setState({bids:bids});
       this.setState({curruserbid:[]});
-      console.log(this.state.bids);
     })
+    let balancedata = {username:this.props.username,balance:{accountbalance:this.state.accountbalance,availablebalance:this.state.availablebalance+price}};
+    axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, balancedata , {
+    headers: this.headers}).then(res => { this.setState({'availablebalance':balancedata.balance.availablebalance});localStorage.setItem('availablebalance',balancedata.balance.availablebalance); console.log('done');console.log(balancedata);
+    });
   }
 
   toggle =  () => {
-    console.log('toggling');
-    console.log(this.state.showinput);
     if(this.state.showinput=="hidden"){
       this.setState({showinput:"visible"})
     }
@@ -136,7 +172,7 @@ class Order extends Component {
                 <div>
                   <div className="biduser" id="biduser" style={{visibility:this.state.show}} ref = "biduser">Your Bid :  {this.state.curruserbid[0]['price']}
                     <EditIcon name="edit" onClick={e=>this.toggle()} ></EditIcon>
-                    <TrashIcon name="delete" onClick={e=>this.RemoveUserBid(e,this.state.curruserbid[0]['id'])}></TrashIcon>
+                    <TrashIcon name="delete" onClick={e=>this.RemoveUserBid(e,this.state.curruserbid[0]['id'],this.state.curruserbid[0]['price'])}></TrashIcon>
                   </div>
                   <div style={{visibility:this.state.showinput}}>
                     <input type="text" style={{width:"100px",}} name="edituserbid" onChange={this.handle_change} placeholder="New Bid"/>
@@ -147,10 +183,9 @@ class Order extends Component {
               ):
               (<Form onSubmit={e => this.getUserBid(e, this.state.userbid)} >
                 <Form.Control size="lg" type="text" placeholder="Bid Price" name="userbid" onChange={this.handle_change}/>
-                <Button style={{width:'200px'}} variant="outline-info" type="submit">Bid</Button>
+                <Button style={{width:'200px'}} variant="outline-success" type="submit" >Bid</Button>
                 &nbsp;&nbsp;{this.state.bidNumberError}<br/>
                 &nbsp;&nbsp;{this.state.bidBasePriceError}
-                
               </Form>)
             }
             </div>
@@ -164,6 +199,7 @@ class Order extends Component {
 const mapStateToProps = state =>{
   return{
   username:state.auth.username,
+
   }
 };
 
