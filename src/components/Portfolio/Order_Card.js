@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Table, Card, Button} from 'react-bootstrap'
+import React, {Component} from 'react';
+import {Table, Card, Button} from 'react-bootstrap';
 import {MDBBtnGroup,MDBBtn,MDBCol} from 'mdbreact';
 class Order_Card extends Component{
 
