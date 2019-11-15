@@ -30,6 +30,7 @@ class MarketPlace extends Component {
     show_Futures: false,
     orderData: [],
     orderData_copy:"",
+    orderData_cropNameFilter:"",
     order: {
       CropName:"",
       CropVariety:"",
@@ -75,6 +76,7 @@ class MarketPlace extends Component {
     console.log(OrderData1);
     console.log(this.state.orderData);}
     );  
+    this.setState({orderData_cropNameFilter:[...OrderData1]});
     this.setState({temp1:name});
 
   }; 
@@ -82,7 +84,7 @@ class MarketPlace extends Component {
     let varietyName=e.target.value
     console.log('%');
     console.log(this.state.orderData);
-    var OrderData1=this.state.orderData.filter(x=>{
+    var OrderData1=this.state.orderData_cropNameFilter.filter(x=>{
       return x.CropVariety===varietyName;
     });
     console.log('%%');
