@@ -115,7 +115,7 @@ class Login extends React.Component {
               </form>
             </div>
             <div class="user-session__links">
-              <a href="password/new.html">Forgot your password?</a>
+              <a href="http://127.0.0.1:8000/accounts/password-reset/">Forgot your password?</a>
               <br />
               <a href="/signup">Not registered yet? Sign up</a>
               <br />
