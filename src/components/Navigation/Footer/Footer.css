@@ -3,6 +3,16 @@
     left: 0px;
     bottom: 0px;
     width:100%;
+    /* backgroundColor: blue; */
     
     ;
 }  
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 30px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+  }

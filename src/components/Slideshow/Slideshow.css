@@ -1,9 +1,65 @@
-
-.slideshow{
-    width:100%;
+.diva {
+    width: 100px;
+    height: 100px;
+    /* background: white; */
     position: relative;
-    height: 500px;
-    margin-left: 0;
-    margin-right: 0;
+    animation: mymove 5s infinite;
 
+  }
+  
+  @keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
+  }
+
+.font{
+    font-size: 65px;
+    font-style: oblique;
+    font-family: cursive;
+    color:whitesmoke;
+
+    /* #rgb(198, 200, 62) */
+}
+
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+/* Global */
+.html1{
+  min-height: 1px;
+  overflow: hidden;
+}
+.text_body{
+  
+  height: calc(100vh -1em);
+  padding-top: 0.5px;
+  font-style: oblique;
+  font-family: cursive;
+  color:white;
+  
+}
+.line1{
+    position: relative;
+    width: 24em;
+    margin: 0 auto;
+    border-right: 2px solid rgba(255,255,255,.75);
+    font-size: 200%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+}
+
+/* Animation */
+.animtypewriter{
+  animation: typewriter 3.5s steps(44) 1s 1 normal both,
+             blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 9em;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
 }

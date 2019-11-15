@@ -1,14 +1,20 @@
 import React from "react";
-import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBView, MDBContainer } from
-"mdbreact";
-import grain2_img from '../../assets/images/grains2.jpg';
-import farmers_img from '../../assets/images/farmer.jpg';
+import {
+  MDBCarousel,
+  MDBCarouselInner,
+  MDBCarouselItem,
+  MDBView,
+  MDBContainer
+} from "mdbreact";
+import grain2_img from "../../assets/images/grains2.jpg";
+import farmers_img from "../../assets/images/farmer.jpg";
+import grain_img from "../../assets/images/9.jpg";
 
 const Carousel = () => {
-    var imgStyle = {
-        height:"500px",
-        width:"2000px",
-      }
+  var imgStyle = {
+    height: "500px",
+    width: "2000px"
+  };
   return (
     <MDBContainer>
       <MDBCarousel
@@ -16,17 +22,16 @@ const Carousel = () => {
         length={3}
         showControls={true}
         showIndicators={true}
-    
-        style = {imgStyle}
+        style={imgStyle}
       >
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
             <MDBView>
               <img
-                // className="d-block w-100"
+                className="d-block w-100"
                 src={grain2_img}
                 alt="First slide"
-                style = {imgStyle}
+                style={imgStyle}
               />
             </MDBView>
           </MDBCarouselItem>
@@ -36,7 +41,7 @@ const Carousel = () => {
                 className="d-block w-100"
                 src={farmers_img}
                 alt="Second slide"
-                style = {imgStyle}
+                style={imgStyle}
               />
             </MDBView>
           </MDBCarouselItem>
@@ -44,9 +49,9 @@ const Carousel = () => {
             <MDBView>
               <img
                 className="d-block w-100"
-                src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
+                src={grain_img}
                 alt="Third slide"
-                style = {imgStyle}
+                style={imgStyle}
               />
             </MDBView>
           </MDBCarouselItem>
@@ -54,6 +59,6 @@ const Carousel = () => {
       </MDBCarousel>
     </MDBContainer>
   );
-}
+};
 
 export default Carousel;

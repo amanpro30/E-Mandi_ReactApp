@@ -1,7 +1,7 @@
-import React from 'react';
-import Chart from './Chart';
-import { getData } from "./utils"
-import Layout from '../Layout/Layout'
+import React from "react";
+import Chart from "./Chart";
+import { getData } from "./utils";
+import Layout from "../Layout/Layout";
 import { TypeChooser } from "react-stockcharts/lib/helper";
 
 class ChartComponent extends React.Component {

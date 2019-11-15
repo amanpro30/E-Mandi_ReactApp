@@ -14,8 +14,8 @@ const Home = props => (
       <Slideshow />
       {/* <Carousel /> */}
       <Block1 />
-      <Block2 />
       <Block3 />
+      <Block2 />
       <Block4 />
     </Layout>
   </Aux>

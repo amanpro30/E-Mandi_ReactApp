@@ -9,11 +9,14 @@ const Profile = (props) => {
             <Layout>
                 <div class = "content">
                     <div class="container user-layout">
+                        
                         <div class = "row">
                             <ProfileSideBar />
+                            
                             <div class="col-md-8 user-layout__col">
                 <form class="edit_user" id="edit_user_1072" enctype="multipart/form-data" action="/users/1072" accept-charset="UTF-8" method="post">
                     <div class="row">
+                        
                         <div class="col-md-12">
                         <h2 class="bid-list__header user_menu_title">Account Information</h2>
                         </div>
