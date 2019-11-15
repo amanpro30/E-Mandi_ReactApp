@@ -27,9 +27,11 @@ class MarketPlace extends Component {
   };
   
   state = {
-    x:1,
+    ordersType:'Market',
     show_Market: false,
     show_Futures: false,
+    futureData:[],
+    marketData:[],
     orderData: [],
     orderData_copy:"",
     orderData_cropNameFilter:"",
@@ -226,10 +228,15 @@ class MarketPlace extends Component {
 
     componentDidMount(){
     var self=this;  
-    axios.get('http://localhost:8000/order/otherorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data, orderData_copy:res.data});})
-    // console.log('*');
+    axios.get('http://localhost:8000/order/otherorder/',{headers:this.headers}).then(res => {self.setState({orderData:res.data, orderData_copy:res.data, marketData:res.data});})
+    console.log('*');
     axios.get('http://localhost:8000/crop/cropname/',{headers:this.headers}).then(res => {self.setState({cropTypes:res.data})});
     // console.log(this.state.orderData.cropName);
+    axios.get('http://localhost:8000/order/otherfutures/',{headers:this.headers}).then(res => {console.log('II'); self.setState({futureData:res.data}); console.log('XX') ; console.log(this.state.futureData);})
+    console.log('*');
+    console.log(this.state.futureData);
+    
+    
 
   }
 
