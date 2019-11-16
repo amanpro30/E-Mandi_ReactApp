@@ -22,7 +22,6 @@ class Order extends Component {
     bidBasePriceError:"",
     availablebalance:localStorage.getItem('accountbalance'),
     accountbalance:localStorage.getItem('accountbalance'),
-    changed:this.props.changed,
   }
 
   headers = {
@@ -33,10 +32,6 @@ class Order extends Component {
 
   componentDidMount(){
     var self=this;  
-    console.log('mkc');
-    console.log(self.props.id);
-    console.log(self.props)
-    console.log('sss')
     axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
     axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
     axios.get(`http://localhost:8000/transaction/balance/`,
@@ -53,33 +48,6 @@ class Order extends Component {
         this.setState({'availablebalance': res.data[0]['availablebalance']});
       });
   }
-
-  componentWillReceiveProps() {
-    // var self=this;  
-    // console.log('mkc');
-    // console.log(self.props.CropName);
-    // console.log(self.props)
-    // console.log('ddd')
-    // axios.get('http://localhost:8000/order/getbid/order/'+self.props.id+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data})});
-    // axios.get('http://localhost:8000/order/getbid/curruser/'+self.props.id+'/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data})});
-    // axios.get(`http://localhost:8000/transaction/balance/`,
-    // {headers: 
-    //     {"Content-Type": "application/json",
-    //     accept: "application/json",
-    //     Authorization: `JWT ${localStorage.getItem('token')}`,}
-    // },
-    // )
-    //   .then(res=>{
-    //     localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
-    //     localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
-    //     this.setState({'accountbalance':res.data[0]['accountbalance']});
-    //     this.setState({'availablebalance': res.data[0]['availablebalance']});
-    //   });
-    console.log('skskd')
-    this.forceUpdate();
-    this.componentDidMount();
-  }
-
 
   getUserBid(e, data){
     var err = ""
@@ -177,10 +145,9 @@ class Order extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <Aux>
-        <div class="products-index__list__items" style={{border:'2px' ,borderStyle:'groove'}} >
+        <div class="products-index__list__items" style={{border:'2px' ,borderStyle:'groove'}}>
           <div
             style={{ marginLeft: 3, marginRight: 3 }}
             class="row products-index__order__row"
@@ -214,9 +181,9 @@ class Order extends Component {
                   </div>
                 </div>
               ):
-              (<Form onSubmit={e => this.getUserBid(e, this.state.userbid)} class="row">
-                <Form.Control class="md-4" type="text" placeholder="Bid Price" name="userbid" onChange={this.handle_change}/>
-                <Button style={{width:'300px'}} variant="outline-success" type="submit" >Bid</Button>
+              (<Form onSubmit={e => this.getUserBid(e, this.state.userbid)} >
+                <Form.Control size="lg" type="text" placeholder="Bid Price" name="userbid" onChange={this.handle_change}/>
+                <Button style={{width:'200px'}} variant="outline-success" type="submit" >Bid</Button>
                 &nbsp;&nbsp;{this.state.bidNumberError}<br/>
                 &nbsp;&nbsp;{this.state.bidBasePriceError}
               </Form>)

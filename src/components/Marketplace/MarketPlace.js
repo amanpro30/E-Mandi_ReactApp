@@ -32,9 +32,11 @@ class MarketPlace extends Component {
   };
 
   state = {
-    x: 1,
+    ordersType:'Market',
     show_Market: false,
     show_Futures: false,
+    futureData:[],
+    marketData:[],
     orderData: [],
     orderData_copy: "",
     orderData_cropNameFilter: "",
@@ -239,18 +241,20 @@ class MarketPlace extends Component {
 
   }
 
-  headers = {
-    "Content-Type": "application/json",
-    accept: "application/json",
-    Authorization: `JWT ${localStorage.getItem('token')}`,
-  }
-
-  componentDidMount() {
-    var self = this;
-    axios.get('http://localhost:8000/order/otherorder/', { headers: this.headers }).then(res => { self.setState({ orderData: res.data, orderData_copy: res.data }); })
-    // console.log('*');
-    axios.get('http://localhost:8000/crop/cropname/', { headers: this.headers }).then(res => { self.setState({ cropTypes: res.data }) });
+    componentDidMount(){
+    var self=this;  
+    axios.get('http://localhost:8000/order/otherorder/',{headers:this.headers}).then
+    
+    
+    (res => {self.setState({orderData:res.data, orderData_copy:res.data, marketData:res.data});})
+    console.log('*');
+    axios.get('http://localhost:8000/crop/cropname/',{headers:this.headers}).then(res => {self.setState({cropTypes:res.data})});
     // console.log(this.state.orderData.cropName);
+    axios.get('http://localhost:8000/order/otherfutures/',{headers:this.headers}).then(res => {console.log('II'); self.setState({futureData:res.data}); console.log('XX') ; console.log(this.state.futureData);})
+    console.log('*');
+    console.log(this.state.futureData);
+    
+    
 
   }
 
@@ -399,8 +403,8 @@ class MarketPlace extends Component {
             fade={false}
             animation={false}
           >
-            <Modal.Header closeButton style={{ background: "dimgray" }}>
-              <Modal.Title>Market Order</Modal.Title>
+            <Modal.Header class="info-color white-text" closeButton>
+              <Modal.Title  ><span>Market Order</span></Modal.Title>
             </Modal.Header>
             <div style={{ background: "#D6D3D2" }}>
               <div style={{ margin: "50px", width: "80%" }}>
@@ -428,7 +432,7 @@ class MarketPlace extends Component {
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridProductionMode">
                       <Form.Label>
-                        <strong>Production Mode</strong>
+                        Production Mode
                       </Form.Label>
 
                       <Form.Control as="select" id="exampleSelect" name="ProductionMode" value={this.state.order.ProductionMode} onChange={this.handle_change}>
@@ -440,7 +444,7 @@ class MarketPlace extends Component {
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridQuantity">
                       <Form.Label>
-                        <strong>Quantity (kg)</strong>
+                        Quantity (kg)
                       </Form.Label>
                       <Form.Control placeholder="Enter Quantity" name="Quantity" value={this.state.order.Quantity} onChange={this.handle_change} />
                     </Form.Group>
@@ -448,13 +452,13 @@ class MarketPlace extends Component {
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
-                        <strong>Expected Closing Date</strong>
+                        Expected Closing Date
                       </Form.Label>
                       <Form.Control type="date" name="ClosingDate" value={this.state.order.ClosingDate} onChange={this.handle_change} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
-                        <strong>Base Price (per kg)</strong>
+                       Base Price (per kg)
                       </Form.Label>
                       <Form.Control placeholder="Enter Base Price" name="BasePrice" value={this.state.order.BasePrice} onChange={this.handle_change} />
                     </Form.Group>
@@ -463,7 +467,7 @@ class MarketPlace extends Component {
                   <Form.Group id="formGridCheckbox">
                     <Form.Check
                       type="checkbox"
-                      label="I agree with the E-Mandi Terms and Conditions for buy and sell offers"
+                      label="I agree with the ₹-Mandi Terms and Conditions for buy and sell offers"
                     />
                   </Form.Group>
                   <center>
@@ -574,7 +578,7 @@ class MarketPlace extends Component {
                   <Form.Group id="formGridCheckbox">
                     <Form.Check
                       type="checkbox"
-                      label="I agree with the E-Mandi Terms and Conditions for buy and sell offers"
+                      label="I agree with the ₹-Mandi Terms and Conditions for buy and sell offers"
                     />
                   </Form.Group>
                   <center>

@@ -30,7 +30,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-xs-6 col-md-4 offset-md-1">
               <h4 className="list-title" style={{ color: "#fff" }}>
-                About ₹Mandi{" "}
+                About ₹ Mandi{" "}
               </h4>
               <ul className="list-unstyled">
                 <li>
@@ -75,12 +75,8 @@ const Footer = () => {
                   >
                     ₹Mandi
                   </a>
-
-                  <a>
-                    <span class="fa fa-twitter"></span>
-                  </a>
                 </li>
-
+                
                 <li>
                   <img
                     className="footer-image"
