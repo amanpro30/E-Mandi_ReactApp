@@ -278,7 +278,7 @@ class MarketPlace extends Component {
             <div class="row">
               
               <div className="col-xl-4 ">
-                <MDBContainerFluid className="w-100">
+                <MDBContainer className="w-100">
                   <MDBBtn color="info" onClick={this.toggle(8)}>Watch List</MDBBtn>
                   <MDBModal isOpen={this.state.modal8} toggle={this.toggle(8)} fullHeight position="left" fade={false} animation={false} >
                     <MDBModalHeader toggle={this.toggle(8)}>&emsp;&emsp;&emsp;&emsp;&emsp;Your Watch List</MDBModalHeader>
@@ -301,7 +301,7 @@ class MarketPlace extends Component {
                       <MDBBtn color="primary">Save changes</MDBBtn>
                     </MDBModalFooter>
                   </MDBModal>
-                </MDBContainerFluid>
+                </MDBContainer>
               </div>
 
               <div className="col-xl-8">

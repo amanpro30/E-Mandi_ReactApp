@@ -74,6 +74,11 @@ const toolbar = props => {
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="/wallet" class="nav-link">
+                    Wallet
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="/pricing" class="nav-link">
                     Pricing
                   </a>

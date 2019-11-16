@@ -25,7 +25,7 @@ class PayPalBtn extends React.Component {
             Axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, data, {
             headers: this.headers}).then(res => {localStorage.setItem('accountbalance',parseInt(this.props.accountbalance)+parseInt(total));
             localStorage.setItem('availablebalance',parseInt(this.props.availablebalance)+parseInt(total));
-            window.location.href = "/bank";
+            window.location.href = "/wallet";
         })};
  
         const onCancel = (data) => {

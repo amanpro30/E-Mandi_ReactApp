@@ -22,7 +22,7 @@ import Portfolio from '../src/components/Portfolio/Portfolio'
 import ChartComponent from "./components/Graph/ChartComponent";
 // import Test from './components/Test/Test'
 import WatchList from './components/Marketplace/WatchList';
-
+import Wallet from "./components/Wallet/Wallet"
 
 
 const CLIENT = {
@@ -63,7 +63,7 @@ function App() {
           <Route exact path="/portfolio" component={Portfolio} />
           <Route exact path="/pricing" component={ChartComponent}/>
           <Route exact path="/watchlist" component={WatchList}/>
-
+          <Route exact path="/wallet" component={Wallet}/>
           <Redirect to="/404" />
         </Switch>
       </div>
