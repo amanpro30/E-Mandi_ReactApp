@@ -73,12 +73,10 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    ₹Mandi
+                    &emsp;₹Mandi
                   </a>
 
-                  <a>
-                    <span class="fa fa-twitter"></span>
-                  </a>
+                 
                 </li>
 
                 <li>
@@ -106,7 +104,7 @@ const Footer = () => {
                     target="_blank"
                   >
                     {" "}
-                    ₹Mandi
+                    &emsp;₹Mandi
                   </a>
                 </li>
                 <li>
@@ -117,7 +115,7 @@ const Footer = () => {
                   />
                   <a style={{ color: "#fff" }} href=" " target="_blank">
                     {" "}
-                    ₹Mandi{" "}
+                    &emsp;₹Mandi{" "}
                   </a>
                 </li>
               </ul>
@@ -156,16 +154,16 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <div class="row ">
+          <div class="col  ">
+             <p style={{ color: "#fff" }}>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+             Copyright ©
+               <span id="year">2019</span>  ₹Mandi</p>
+           </div>
+         </div>
     </footer>
     //   <footer class="navbar navbar-expand-sm navbar-dark bg-dark text-center p-4 navbar-bottom w-100" style={{position:"relative",bottom:"0", color:'black'}}>
-    //   <div class="container">
-    //     <div class="row">
-    //       <div class="col">
-    //         <p>Copyright ©
-    //           <span id="year">2019</span> Smart HealthCare</p>
-    //       </div>
-    //     </div>
-    //   </div>
+    //   
     // </footer>
   );
 };

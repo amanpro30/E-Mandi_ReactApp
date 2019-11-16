@@ -4,12 +4,14 @@ import { Table, Card, Badge, Button } from "react-bootstrap";
 import axios from "axios";
 import Order from "../Marketplace/Order";
 import Order_Card from "./Order_Card";
+import Order_Card_Executed from './Order_Card_Executed'
 import { MDBBtn, MDBBtnGroup, MDBIcon, MDBCol, MDBRow } from "mdbreact";
 import jsPDF from "jspdf";
 class Portfolio extends Component {
   state = {
     orderData: "",
-    name: "asa"
+    name: "asa",
+    selected:"running",
   };
 
   headers = {
@@ -78,7 +80,7 @@ class Portfolio extends Component {
       "Quantity: "
     );
     
-    let str = "Copyright @ EMandi";
+    let str = "Copyright @ ₹Mandi";
     doc.setTextColor(100);
     doc.setFontSize(10);
     doc.text(str, pageWidth / 2, pageHeight - 10, "center");
@@ -90,6 +92,28 @@ class Portfolio extends Component {
       .get("http://localhost:8000/order/myorder/", { headers: this.headers })
       .then(res => {
         self.setState({ orderData: res.data });
+        this.setState({ selected: "running" });
+      });
+      
+      
+  }
+
+  fetchRunningOrder(e){
+    axios
+      .get("http://localhost:8000/order/myorder/", { headers: this.headers })
+      .then(res => {
+        this.setState({ orderData: res.data });
+        this.setState({ selected: "running" });
+      });
+  }
+  fetchExecutedOrder(e){
+    axios
+      .get("http://localhost:8000/order/myorderexec/", { headers: this.headers })
+      .then(res => {
+        console.log('exec');
+        console.log(res);
+        this.setState({ orderData: res.data });
+        this.setState({ selected: "executed" });
       });
   }
 
@@ -104,7 +128,7 @@ class Portfolio extends Component {
 
           <div class="container-fluid">
             <div className="row">
-              <div className="col-xl-8">
+              <div className="col-xl-9">
                 {/* <tr className="col-xl-12">
                 <td className= "col-xl-4"><a href="/../courses/about-us" class="btn dusty-grass-gradient w-100 ">Your Running Orders!</a></td>
                 <td className= "col-xl-4"><a href="/../courses/about-us" class="btn dusty-grass-gradient w-100">Your Pending Orders!</a></td>
@@ -113,13 +137,10 @@ class Portfolio extends Component {
                 <MDBRow>
                   <MDBCol xl="12" md="12" className="col-xl-12"></MDBCol>
                   <MDBBtnGroup size="lg" className="col-xl-12">
-                    <MDBBtn color="btn tempting-azure-gradient w-100">
+                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e =>this.fetchRunningOrder(e)}>
                       Your Running Orders!
                     </MDBBtn>
-                    <MDBBtn color="btn tempting-azure-gradient w-100">
-                      Your Pending Orders!
-                    </MDBBtn>
-                    <MDBBtn color="btn tempting-azure-gradient w-100">
+                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e=>this.fetchExecutedOrder(e)}>
                       Your Executed Orders!
                     </MDBBtn>
                   </MDBBtnGroup>
@@ -127,6 +148,8 @@ class Portfolio extends Component {
 
                 <br />
                 <br />
+
+            {this.state.selected==='running' ?
 
                 <tr className="col-xl-12">
                   <Card>
@@ -141,19 +164,60 @@ class Portfolio extends Component {
                             <td className="col-xl-2">CropName</td>
                             <td className="col-xl-2">CropVariety</td>
                             <td className="col-xl-2">Quantity</td>
-                            <td className="col-xl-4">
-                              Bid1&emsp;Bid2&emsp;Bid3&emsp;BasePrice
+                            <td className="col-xl-1">
+                              Bid1&emsp;
                             </td>
-                            <td className="col-xl-2">Sell&emsp;Delete</td>
+                            <td className="col-xl-1">
+                              Bid2&emsp;
+                            </td>
+                            <td className="col-xl-1">
+                              Bid3&emsp;
+                            </td>
+                            <td className="col-xl-1">
+                              BasePrice
+                            </td>
+                            <td className="float-right">Sell&emsp;Delete&emsp;</td>
                           </b>
                         </h6>
                       </Card.Text>
                     </Card.Body>
                   </Card>
                 </tr>
-
+            :
                 <tr className="col-xl-12">
-                  {Object.values(this.state.orderData).map(x => {
+                  <Card>
+                    <Badge>
+                      {" "}
+                      <h1 className="text-success  ">Executed Order</h1>
+                    </Badge>
+                    <Card.Body>
+                      <Card.Text>
+                        <h6>
+                          <b>
+                            <td className="col-xl-2">CropName</td>
+                            <td className="col-xl-2">CropVariety</td>
+                            <td className="col-xl-2">Quantity</td>
+                            <td className="col-xl-1">
+                             
+                            </td>
+                            <td className="col-xl-1">
+                             </td>
+                            
+                            <td className="col-xl-2">
+                              Executed Price
+                            </td>
+                            <td className="float-right">Export As Pdf</td>
+                          </b>
+                        </h6>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </tr>
+  }
+  {this.state.selected==='running'?(
+                <tr className="col-xl-12">
+                  {
+                  Object.values(this.state.orderData).map(x => {
                     return (
                       <Order_Card
                         CropName={x.CropName}
@@ -161,15 +225,34 @@ class Portfolio extends Component {
                         Quantity={x.Quantity}
                         ProductionMode={x.ProductionMode}
                         BasePrice={x.BasePrice}
-                        ClosingDate={x.ClosingDate}
+                        bids={x.bids}
+                        id={x.id}
                       />
                     );
                   })}
-                  <Order_Card />
-                </tr>
-              </div>
+                </tr>)
+                :    
+                (<tr className="col-xl-12">
+                {
+                Object.values(this.state.orderData).map(x => {
+                  return (
+                    <Order_Card_Executed
+                      CropName={x.CropName}
+                      CropVariety={x.CropVariety}
+                      Quantity={x.Quantity}
+                      ProductionMode={x.ProductionMode}
+                      BasePrice={x.BasePrice}
+                      bids={x.bids}
+                      id={x.id}
+                    />
+                  );
+                })}
+                </tr>)
+              }
 
-              <div className="col-xl-4 w-75 " style={{ paddingTop: "50px" }}>
+        </div>
+
+              <div className="col-xl-3 w-75 " style={{ paddingTop: "50px" }}>
                 <div class="card my-5 w-75">
                   <h2 class="card-header text-info text-center">Make Orders</h2>
                   <div class="card-body">
@@ -201,8 +284,8 @@ class Portfolio extends Component {
         <br />
         <br />
         <br />
-        <br />
-        <br />
+        
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Button onClick={this.jsPdfGenerator}>Generate PDF</Button>
       </Layout>
     );
