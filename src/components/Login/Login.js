@@ -88,17 +88,23 @@ class Login extends React.Component {
                 ) : (
                   <div />
                 )}
-              <h2>Login</h2>
+              <div class="card">
+  
+              <h5 class="card-header info-color white-text text-center py-4">
+                  Sign in
+              </h5>
+              <div class="card-body px-lg-5 pt-0">
               <form
-                class="new_user"
+                 style={{color: '#757575'}} 
                 id="new_user"
                 accept-charset="UTF-8"
                 method="post"
                 onSubmit={e => this.props.onLogin(e, this.state)}
               >
+                <br />
                 <div class="form-group">
                   <label for="username">
-                    <strong>UserName:</strong>
+                    UserName:
                   </label>
                   <input
                     autofocus="autofocus"
@@ -111,7 +117,7 @@ class Login extends React.Component {
                 </div>
                 <div class="form-group">
                   <label for="password:">
-                    <strong>Password:</strong>
+                    Password:
                   </label>
                   <input
                     class="form-control"
@@ -126,20 +132,22 @@ class Login extends React.Component {
                     type="submit"
                     name="commit"
                     value="Login"
-                    class="btn btn-secondary btn--full"
+                    class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" 
                     data-disable-with="Login"
                   />
                 </div>
               </form>
             </div>
-            <div class="user-session__links">
-              <a href="password/new.html">Forgot your password?</a>
+            <div class="user-session__links" style={{color:'blue'}}>
+              <a style={{color:'DodgerBlue'}} href="password/new.html">Forgot your password?</a>
               <br />
-              <a href="/signup">Not registered yet? Sign up</a>
+              <a style={{color:'DodgerBlue'}} href="/signup">Not registered yet? Sign up</a>
               <br />
-              <a href="confirmation/new.html">
-                Didn&#39;t receive confirmation instructions?
-              </a>
+              
+              <br />
+              </div>
+              <br />
+              </div>
               <br />
               <br />
               <br />

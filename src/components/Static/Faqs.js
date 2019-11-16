@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../Layout/Layout";
 
 const Faqs = props => (
-  <Layout>
+  <Layout><br/><br/>
     <div className="content">
       <div className="faq">
         <div className="hidden-md-down">

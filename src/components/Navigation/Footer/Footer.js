@@ -26,7 +26,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-xs-6 col-md-4 offset-md-1">
               <h4 className="list-title" style={{ color: "#fff" }}>
-                About E-Mandi{" "}
+                About ₹ Mandi{" "}
               </h4>
               <ul className="list-unstyled">
                 <li>
@@ -69,14 +69,11 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    E-Mandi
+                    ₹Mandi
                   </a>
                 
 
-                <a class="btn btn-social-icon btn-twitter">
-                  <span class="fa fa-twitter"></span>
-                </a>
-
+                
                 <li>
                   <img
                     className="footer-image"
@@ -90,7 +87,7 @@ const Footer = () => {
                     target="_blank"
                   >
                     {" "}
-                    @EMandi{" "}
+                    @₹Mandi{" "}
                   </a>
                 </li>
                 <li>
@@ -102,7 +99,7 @@ const Footer = () => {
                     target="_blank"
                   >
                     {" "}
-                    E-Mandi
+                    ₹Mandi
                   </a>
                 </li>
                 <li>
@@ -113,7 +110,7 @@ const Footer = () => {
                   />
                   <a style={{ color: "#fff" }} href=" " target="_blank">
                     {" "}
-                    E-Mandi{" "}
+                    ₹Mandi{" "}
                   </a>
                 </li>
               </ul>
