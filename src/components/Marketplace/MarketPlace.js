@@ -74,6 +74,7 @@ class MarketPlace extends Component {
     temp2: "Crop Variety",
     modal8: false,
     modal9: false,
+    changed:false,
   };
 
   toggle = nr => () => {
@@ -102,11 +103,6 @@ class MarketPlace extends Component {
     OrderData1 = this.state.orderData_copy.filter(x => {
       return x.CropName === name;
     });
-
-    console.log('^^');
-
-    // console.log([...OrderData1]);
-    // console.log(OrderData1)
     this.setState({ orderData: [...OrderData1] }, () => {
       console.log(OrderData1);
       console.log(this.state.orderData);
@@ -114,13 +110,15 @@ class MarketPlace extends Component {
     );
     this.setState({ orderData_cropNameFilter: [...OrderData1] });
     this.setState({ temp1: name });
+    this.setState({ changed:true });
 
   };
   handle_orderData_cropVariety = e => {
     let varietyName = e.target.value
     console.log('%');
     console.log(this.state.orderData);
-    var OrderData1 = this.state.orderData_cropNameFilter.filter(x => {
+    var OrderData1 = [...this.state.orderData_copy];
+    var OrderData1 = this.state.orderData_copy.filter(x => {
       return x.CropVariety === varietyName;
     });
     console.log('%%');
@@ -142,6 +140,7 @@ class MarketPlace extends Component {
       console.log(this.state.orderData_copy);
     });
   }
+  
 
   OrderCreate = (e, data) => {
     e.preventDefault();
@@ -335,7 +334,7 @@ class MarketPlace extends Component {
               {/* #============================================Start================================================== */}
               <div className="col-xl-8 ">
 
-                <div className="col-xl-9">
+                <div className="col-xl-15">
                   {/* <Form>
                     <Form.Row>
                       <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
@@ -375,7 +374,7 @@ class MarketPlace extends Component {
                           <Card.Text>
                             <h6>
                               <b>
-                                {Object.values(this.state.orderData).map(x => { return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id} /> })}
+                                {Object.values(this.state.orderData).map(x => {  console.log('ss', this.state.orderData); return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id} changed={this.state.changed} /> })}
 
                               </b>
                             </h6>
