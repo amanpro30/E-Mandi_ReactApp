@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 import Layout from "../Layout/Layout";
-import { Table, Card,Form, Col, Button, Dropdown } from "react-bootstrap";
+import { Table, Card, Form, Col, Button, Badge, Dropdown } from "react-bootstrap";
+import Sidebar from 'react-sidebar';
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
 import classes from "./marketplace.css"
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBIcon } from 'mdbreact';
+import { thisExpression } from "@babel/types";
 
 
 
@@ -80,6 +82,11 @@ class MarketPlace extends Component {
       [modalNumber]: !this.state[modalNumber]
     });
   }
+  sidebarStyles = {
+    sidebar: {
+      width: '358500px'
+    }
+  };
   headers = {
     "Content-Type": "application/json",
     accept: "application/json",
@@ -267,149 +274,124 @@ class MarketPlace extends Component {
     axios.get('http://localhost:8000/order/crop/' + cropname + '/' + cropvariety + '/', { headers: this.headers }).then(res => { console.log('hallaho'); console.log(res); });
   }
 
+
   render() {
     return (
       <Aux>
         <Layout>
           <br /><br /><br /><br />
           {/* ########################################################################################################                    */}
-          <div class="content" style={{ width: "98%" }} >
+          <div class="container-fluid">
 
             <div class="row">
-              
-              <div className="col-xl-4 ">
-                <MDBContainerFluid className="w-100">
-                  <MDBBtn color="info" onClick={this.toggle(8)}>Watch List</MDBBtn>
+
+              <div className="col-xl-4   ">
+
+                <Form>
+                  <Form.Row>
+                    <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                      <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
+                        <option>Crop Name</option>
+                        {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
+                      </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                      <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
+                        <option>Crop Variety</option>
+                        {Object.values(this.state.cropVariety).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
+                      </Form.Control>
+                    </Form.Group>
+
+                    <Button onClick={this.filter_reset} className="btn    w-100">Reset</Button>
+                  </Form.Row>
+                </Form>
+
+
+                <MDBContainer  >
+                  <MDBBtn color="info btn-rounded" onClick={this.toggle(8)}>Watch List</MDBBtn>
                   <MDBModal isOpen={this.state.modal8} toggle={this.toggle(8)} fullHeight position="left" fade={false} animation={false} >
                     <MDBModalHeader toggle={this.toggle(8)}>&emsp;&emsp;&emsp;&emsp;&emsp;Your Watch List</MDBModalHeader>
+                    <span className="btn  btn-rounded btn-grey  ">ADD</span>
                     <MDBModalBody>
-                    <Card >
-                      <Card.Body>
+                      <Card >
+                        <Card.Body>
                           <Card.Text>
-                              <tr className="col-xl-12">
-                                  <td className= "col-xl-4"><span className="text-primary">Rice</span></td>
-                                  <td className= "col-xl-4"><span className="text-primary">Basmati</span></td>
-                                  <td className= "col-xl-4"><span className="text-success">100</span></td>
-                              </tr>
-                              
+                            <tr className="col-xl-12 w-100">
+                              <td className="col-xl-3"><span className="text-primary">Rice</span></td>
+                              <td className="col-xl-4"><span className="text-primary">Basmati</span></td>
+                              <td className="col-xl-3"><span className="text-success">100</span></td>
+                              <td className="col-xl-1"><span className="text-danger"><MDBIcon icon="times" /></span></td>
+                            </tr>
                           </Card.Text>
-                      </Card.Body>
-                  </Card>
+                        </Card.Body>
+                      </Card>
                     </MDBModalBody>
-                    <MDBModalFooter>
-                      <MDBBtn color="secondary" onClick={this.toggle(8)}>Close</MDBBtn>
-                      <MDBBtn color="primary">Save changes</MDBBtn>
+                    <MDBModalFooter className="text-success"><hr />
                     </MDBModalFooter>
                   </MDBModal>
-                </MDBContainerFluid>
+                </MDBContainer>
               </div>
+              {/* #============================================Start================================================== */}
+              <div className="col-xl-8 ">
 
-              <div className="col-xl-8">
-                <div class="col-md-9 offset-md-2 products-index__col">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <h3 class="product-filter_header">Order Board</h3>
-                    </div>
-                    <div class="col-md-6 text-xs-right">
+                <div className="col-xl-9">
+                  {/* <Form>
+                    <Form.Row>
+                      <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                        <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
+                          <option>Crop Name</option>
+                          {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
+                        </Form.Control>
+                      </Form.Group>
 
-                    </div>
+                      <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                        <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
+                          <option>Crop Variety</option>
+                          {Object.values(this.state.cropVariety).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
+                        </Form.Control>
+                      </Form.Group>
+
+                      <Button onClick={this.filter_reset} className="btn    w-100">Reset</Button>
+                    </Form.Row>
+                  </Form> */}
+
+                  {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
+                  <div>
+                    <tr className="col-xl-12">
+                      <Card>
+                        <Badge>
+                          <h4>
+                            <tr className="col-xl-12">
+                              <td className="col-xl-4 text-grey">Commodity</td>
+                              <td className="col-xl-4 text-grey">Bids by Buyers<br /><small className="text-grey">(Currency per weight unit)</small></td>
+                              <td className="col-xl-4 text-grey">Make Your Bid<br /><small>(Currency per weight unit)</small></td>
+                            </tr>
+                          </h4>
+
+                        </Badge>
+                        <br />
+                        <Card.Body>
+                          <Card.Text>
+                            <h6>
+                              <b>
+                                {Object.values(this.state.orderData).map(x => { return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id} /> })}
+
+                              </b>
+                            </h6>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </tr>
                   </div>
+                </div>{/**extra */}
 
-                  <div class="products-index__top-filter" style={{ border: '3px', borderStyle: 'groove' }}>
-                    <div class="row">
-                      <div class="col-xs-3 products-index__top-filter__count">
-
-                        <div class="row">
-                          <Form>
-                            <Form.Row>
-                              <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
-                                <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
-                                  <option>Crop Name</option>
-                                  {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
-                                </Form.Control>
-                              </Form.Group>
-
-                              <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
-                                {/* <Form.Label>State</Form.Label> */}
-                                <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
-                                  <option>Crop Variety</option>
-                                  {Object.values(this.state.cropVariety).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
-                                </Form.Control>
-                              </Form.Group>
-
-                              <Button variant="secondary" onClick={this.filter_reset}>Reset</Button>
-                            </Form.Row>
-                          </Form>
-
-
-
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-
-                  <div class="products-index__list" style={{ border: '2px', borderStyle: 'groove' }}>
-                    <div class="products-index__list__header hidden-sm-down">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <label>
-                            <span
-                              class="translation_missing"
-                              title="translation missing: en.products.filter.commodities"
-                              style={{ fontSize: '20px', fontWeight: "bold" }}
-                            >
-                              Commodity
-                          </span>
-                          </label>
-                        </div>
-                        <div class="col-md-4">
-                          <label style={{ fontSize: '20px', fontWeight: "bold" }}>
-                            Bids by Buyers
-                          <span class="products-index__list-info">
-                              (Currency per weight unit)
-                          </span>
-                          </label>
-                        </div>
-                        <div class="col-md-4">
-                          <label style={{ fontSize: '20px', fontWeight: "bold" }}>
-                            Make Your Bid
-                          <span class="products-index__list-info">
-                              (Currency per weight unit)
-                          </span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="products-index__list__items">
-                      <div class="">
-                        <div class="col-xs-3 hidden-md-up">
-                          <div class="row">
-                            <label>
-                              <span
-                                class="translation_missing"
-                                title="translation missing: en.products.order_board.commodities"
-                              >
-                                Commodities
-                            </span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {Object.values(this.state.orderData).map(x => { return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id} /> })}
-
-                  <br />
-                </div>
-
-              </div>
-            </div>
+              </div> {/* col of 2 */}
+            </div>{/* row  */}
           </div>
-          <div className="row">
 
-          </div>
+          {/* #==================================END==================================== */}
+
 
           <Modal
             show={this.state.show_Market}
@@ -606,7 +588,7 @@ class MarketPlace extends Component {
             </div>
           </Modal>
         </Layout>
-      </Aux>
+      </Aux >
     );
   }
 }
