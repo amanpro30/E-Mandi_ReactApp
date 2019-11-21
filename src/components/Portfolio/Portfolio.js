@@ -94,7 +94,21 @@ class Portfolio extends Component {
         self.setState({ orderData: res.data });
         this.setState({ selected: "running" });
       });
-      
+      axios.get(`http://localhost:8000/transaction/balance/`,
+      {headers: 
+          {"Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `JWT ${localStorage.getItem('token')}`,}
+      },
+      )
+        .then(res=>{
+          console.log(res.data[0]['accountbalance']);
+          console.log(res.data[0]['availablebalance']);
+          this.setState({'accountbalance':res.data[0]['accountbalance']});
+          this.setState({'availablebalance': res.data[0]['availablebalance']});
+          localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
+          localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
+        });
       
   }
 
