@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { Card,Button} from 'react-bootstrap';
 import axios from 'axios';
-import SmallBid from './SmallBid'
 import jsPDF from "jspdf";
+
+
 class Order_Card extends Component{
 
     jsPdfGenerator = () => {
@@ -21,11 +22,6 @@ class Order_Card extends Component{
           "center"
         );
         doc.setFont("bold");
-        // doc.setTextColor(255, 0, 0);
-        // doc.setFillColor(100, 100, 240);
-        // doc.setDrawColor(100, 100, 0);
-        // doc.setLineWidth(1);
-        // doc.setFontType("bolditalic");
         doc.setFontStyle("bold");
         doc.setFontSize(10);
         doc.line(50, 60, 550, 60);
@@ -46,38 +42,6 @@ class Order_Card extends Component{
           "Crop Variety: "
         );
         doc.text(100,140, this.props.CropVariety)
-        
-        // doc.text(
-        //   100,
-        //   160,
-    
-        //   "Seller Name: "
-        // );
-        // // doc.text(100,140, this.props.CropVariety)
-
-    
-        // doc.text(
-        //   100,
-        //   190,
-    
-        //   "Buyer Name: "
-        // );
-    
-        // doc.text(
-        //   100,
-        //   160,
-    
-        //   "Quantity: "
-        // );
-        // doc.text(100,170,'asajgs')
-
-        // doc.text(
-        //     100,
-        //     190,
-        //     "Base Price"
-
-        // );
-        // doc.text(100,200, this.props.BasePrice)
         let str = "Copyright @ ₹Mandi";
         doc.setTextColor(100);
         doc.setFontSize(10);
@@ -113,10 +77,9 @@ class Order_Card extends Component{
                             <td className= "col-xl-2">{this.props.CropVariety}</td>
                             <td className= "col-xl-2">{this.props.Quantity}</td>
                             <td className= "col-xl-1"></td>
+                            <td className= "col-xl-2"><b>{this.state.highbids}</b></td>
                             <td className= "col-xl-1"></td>
-                            <td className= "col-xl-1"></td>
-                            <td className= "col-xl-1"><b>{this.state.highbids}</b></td>
-                            <td className= "col-xl-3"><Button onClick={this.jsPdfGenerator}>Generate PDF</Button></td>
+                            <td className= "col-xl-2"><Button className="btn-sm" style={{margin:"0px"}} onClick={this.jsPdfGenerator}>Receipt</Button></td>
                         </tr>
                         
                     </Card.Text>

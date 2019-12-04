@@ -1,13 +1,12 @@
 import React,{Component} from 'react';
+import Aux from '../../hoc/Aux'
 
-class SmallBid extends Component{
-    render(){
-        return(
-            <div>
-                {this.props.price}&emsp;
-            </div>
-        )
-    }
-}
+const SmallBid = (props) => (
+    <Aux>
+        <td className="col-xl-1">
+            {props.price}&emsp;
+        </td>
+    </Aux>
+)
 
 export default SmallBid;

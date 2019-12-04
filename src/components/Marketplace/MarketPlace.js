@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 import Layout from "../Layout/Layout";
-import { Table, Card, Form, Col, Button, Badge, Dropdown } from "react-bootstrap";
-import Sidebar from 'react-sidebar';
+import { Card, Form, Col, Button, Badge } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
-import classes from "./marketplace.css"
+import {connect} from 'react-redux';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBIcon } from 'mdbreact';
-import { thisExpression } from "@babel/types";
-
-
 
 class MarketPlace extends Component {
   handleClose_Market = () => {
@@ -49,7 +45,6 @@ class MarketPlace extends Component {
       OrderStatus: "",
 
     },
-
     orderFutures: {
       CropName: "",
       CropVariety: "",
@@ -60,20 +55,21 @@ class MarketPlace extends Component {
         ContractPrice: "",
         advance: "",
         AdvanceDate: "",
-
       },
-
     },
     cropTypes: [],
     cropVariety: [],
     cropVariety_order: [],
     selectedCrop: "",
     selectedVariety: "",
-
     temp1: "Crop Name",
     temp2: "Crop Variety",
     modal8: false,
     modal9: false,
+    bids:[],
+    curruserbid : [],
+    availablebalance:0,
+    accountbalance:0
   };
 
   toggle = nr => () => {
@@ -95,21 +91,11 @@ class MarketPlace extends Component {
 
   handle_orderData_cropName = e => {
     var name = e.target.value;
-    console.log(name);
-    console.log('^');
-    console.log(this.state.orderData);
     var OrderData1 = [...this.state.orderData];
     OrderData1 = this.state.orderData_copy.filter(x => {
       return x.CropName === name;
     });
-
-    console.log('^^');
-
-    // console.log([...OrderData1]);
-    // console.log(OrderData1)
     this.setState({ orderData: [...OrderData1] }, () => {
-      console.log(OrderData1);
-      console.log(this.state.orderData);
     }
     );
     this.setState({ orderData_cropNameFilter: [...OrderData1] });
@@ -240,6 +226,33 @@ class MarketPlace extends Component {
 
   }
 
+  add_balance = (bal) => {
+    let balancedata = {username:this.props.username,balance:{accountbalance:this.state.accountbalance,availablebalance:this.state.availablebalance+bal}};
+    axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, balancedata , {
+    headers: this.headers}).then(res => { this.setState({'availablebalance':balancedata.balance.availablebalance});});
+  }
+
+  del_balance = (bal) =>{
+    let balancedata = {username:this.props.username,balance:{accountbalance:this.state.accountbalance,availablebalance:this.state.availablebalance-bal}};
+    axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, balancedata , {
+    headers: this.headers}).then(res => { this.setState({'availablebalance':balancedata.balance.availablebalance});});
+  }
+
+  BidChange = () => {
+    axios.get('http://localhost:8000/order/getbids/',{ headers: this.headers }).then(res=>{this.setState({bids:res.data});});
+    axios.get('http://localhost:8000/order/getbid/curruser/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data});console.log(res);});
+    axios.get(`http://localhost:8000/transaction/balance/`,
+    {headers: 
+        {"Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `JWT ${localStorage.getItem('token')}`,}
+    },).then(res=>{
+        this.setState({'accountbalance':res.data[0]['accountbalance']});
+        this.setState({'availablebalance': res.data[0]['availablebalance']});
+      });
+    this.forceUpdate();
+  }
+
   headers = {
     "Content-Type": "application/json",
     accept: "application/json",
@@ -249,19 +262,26 @@ class MarketPlace extends Component {
   componentDidMount() {
     var self = this;
     axios.get('http://localhost:8000/order/otherorder/', { headers: this.headers }).then(res => { self.setState({ orderData: res.data, orderData_copy: res.data }); })
-    // console.log('*');
     axios.get('http://localhost:8000/crop/cropname/', { headers: this.headers }).then(res => { self.setState({ cropTypes: res.data }) });
-    // console.log(this.state.orderData.cropName);
-
+    axios.get('http://localhost:8000/order/getbids/',{ headers: this.headers }).then(res=>{this.setState({bids:res.data});console.log(res);});
+    axios.get('http://localhost:8000/order/getbid/curruser/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data});console.log(res);});
+    axios.get(`http://localhost:8000/transaction/balance/`,
+    {headers: 
+        {"Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `JWT ${localStorage.getItem('token')}`,}
+    },).then(res=>{
+        this.setState({'accountbalance':res.data[0]['accountbalance']});
+        this.setState({'availablebalance': res.data[0]['availablebalance']});
+      });
   }
 
   getCropVariety_filter(e) {
     var name = e.target.value;
-
-    console.log('xx');
     axios.get('http://localhost:8000/crop/crop/' + name + '/', { headers: this.headers }).then(res => { this.setState({ cropVariety: res.data }); this.setState({ selectedCrop: name }) });
     console.log(this.state.cropVariety);
   }
+
   getCropVariety_order(e) {
     var name = e.target.value;
 
@@ -274,6 +294,10 @@ class MarketPlace extends Component {
     axios.get('http://localhost:8000/order/crop/' + cropname + '/' + cropvariety + '/', { headers: this.headers }).then(res => { console.log('hallaho'); console.log(res); });
   }
 
+  addWatchList(e){
+    console.log('hw');
+    axios.post(`http://localhost:8000/crop/watchlist/${this.state.selectedCrop}/${this.state.selectedVariety}/`,"", { headers:this.headers }).then(res => console.log(res));
+  }
 
   render() {
     return (
@@ -285,7 +309,7 @@ class MarketPlace extends Component {
 
             <div class="row">
 
-              <div className="col-xl-4   ">
+              <div className="col-xl-3 justify-content-right ">
 
                 <Form>
                   <Form.Row>
@@ -302,14 +326,18 @@ class MarketPlace extends Component {
                         {Object.values(this.state.cropVariety).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
                       </Form.Control>
                     </Form.Group>
-
+                    <div>
+                    </div>
                     <Button onClick={this.filter_reset} className="btn    w-100">Reset</Button>
+                    <br/><br/><MDBBtn color="info btn-rounded" onClick={e => this.addWatchList(e)}>Add To Watch List</MDBBtn>
+                    <br/><br/><MDBBtn color="info btn-rounded" onClick={this.toggle(8)}>Watch List</MDBBtn>
+
                   </Form.Row>
                 </Form>
 
 
                 <MDBContainer  >
-                  <MDBBtn color="info btn-rounded" onClick={this.toggle(8)}>Watch List</MDBBtn>
+
                   <MDBModal isOpen={this.state.modal8} toggle={this.toggle(8)} fullHeight position="left" fade={false} animation={false} >
                     <MDBModalHeader toggle={this.toggle(8)}>&emsp;&emsp;&emsp;&emsp;&emsp;Your Watch List</MDBModalHeader>
                     <span className="btn  btn-rounded btn-grey  ">ADD</span>
@@ -321,7 +349,8 @@ class MarketPlace extends Component {
                               <td className="col-xl-3"><span className="text-primary">Rice</span></td>
                               <td className="col-xl-4"><span className="text-primary">Basmati</span></td>
                               <td className="col-xl-3"><span className="text-success">100</span></td>
-                              <td className="col-xl-1"><span className="text-danger"><MDBIcon icon="times" /></span></td>
+                              <td className="col-xl-1"><span className="text-danger"><i class="far fa-chart-bar"></i></span></td>
+                                  
                             </tr>
                           </Card.Text>
                         </Card.Body>
@@ -333,9 +362,9 @@ class MarketPlace extends Component {
                 </MDBContainer>
               </div>
               {/* #============================================Start================================================== */}
-              <div className="col-xl-8 ">
+              <div className="col-xl-9 ">
 
-                <div className="col-xl-9">
+                <div className="col-xl-12">
                   {/* <Form>
                     <Form.Row>
                       <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
@@ -359,7 +388,7 @@ class MarketPlace extends Component {
                   {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
                   <div>
                     <tr className="col-xl-12">
-                      <Card>
+                      <Card style={{width:"100%"}}>
                         <Badge>
                           <h4>
                             <tr className="col-xl-12">
@@ -375,8 +404,24 @@ class MarketPlace extends Component {
                           <Card.Text>
                             <h6>
                               <b>
-                                {Object.values(this.state.orderData).map(x => { return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id} /> })}
-
+                                {Object.values(this.state.orderData).map(
+                                  x => { 
+                                  return <Order 
+                                    CropName={x.CropName} 
+                                    CropVariety={x.CropVariety} 
+                                    Quantity={x.Quantity} 
+                                    ProductionMode={x.ProductionMode} 
+                                    BasePrice={x.BasePrice} 
+                                    ClosingDate={x.ClosingDate} 
+                                    SellerName={x.user} id={x.id}  
+                                    Bids={this.state.bids.filter(y => {return y.order == x.id;}).sort((a, b) =>b.price -  a.price )} 
+                                    onBidChange={this.BidChange} 
+                                    curruserbid={this.state.curruserbid.filter(y => {return y.order == x.id;})} 
+                                    accountbalance={this.state.accountbalance} 
+                                    availablebalance={this.state.availablebalance} 
+                                    onAddBalance={this.add_balance}
+                                    onDelBalance={this.del_balance}
+                                  />})}
                               </b>
                             </h6>
                           </Card.Text>
@@ -593,4 +638,10 @@ class MarketPlace extends Component {
   }
 }
 
-export default MarketPlace;
+const mapStateToProps = state =>{
+  return{
+  username:state.auth.username,
+  }
+};
+
+export default connect(mapStateToProps, null)(MarketPlace);

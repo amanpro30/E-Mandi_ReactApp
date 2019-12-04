@@ -12,6 +12,10 @@ class Portfolio extends Component {
     orderData: "",
     name: "asa",
     selected:"running",
+    bids:[],
+    accountbalance:0,
+    availablebalance:0,
+    modifyOrder:[]
   };
 
   headers = {
@@ -35,11 +39,6 @@ class Portfolio extends Component {
       "center"
     );
     doc.setFont("bold");
-    // doc.setTextColor(255, 0, 0);
-    // doc.setFillColor(100, 100, 240);
-    // doc.setDrawColor(100, 100, 0);
-    // doc.setLineWidth(1);
-    // doc.setFontType("bolditalic");
     doc.setFontStyle("bold");
     doc.setFontSize(10);
     doc.line(50, 60, 550, 60);
@@ -86,30 +85,25 @@ class Portfolio extends Component {
     doc.text(str, pageWidth / 2, pageHeight - 10, "center");
     doc.save("generated.pdf");
   };
+
   componentDidMount() {
     var self = this;
-    axios
-      .get("http://localhost:8000/order/myorder/", { headers: this.headers })
+    axios.get("http://localhost:8000/order/myorder/", { headers: this.headers })
       .then(res => {
         self.setState({ orderData: res.data });
         this.setState({ selected: "running" });
       });
       axios.get(`http://localhost:8000/transaction/balance/`,
-      {headers: 
-          {"Content-Type": "application/json",
-          accept: "application/json",
-          Authorization: `JWT ${localStorage.getItem('token')}`,}
-      },
-      )
-        .then(res=>{
-          console.log(res.data[0]['accountbalance']);
-          console.log(res.data[0]['availablebalance']);
+        {headers: 
+            {"Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `JWT ${localStorage.getItem('token')}`,}
+        },
+      ).then(res=>{
           this.setState({'accountbalance':res.data[0]['accountbalance']});
           this.setState({'availablebalance': res.data[0]['availablebalance']});
-          localStorage.setItem('accountbalance', res.data[0]['accountbalance']);
-          localStorage.setItem('availablebalance', res.data[0]['availablebalance']); 
         });
-      
+    axios.get('http://localhost:8000/order/getbids/',{ headers: this.headers }).then(res=>{this.setState({bids:res.data});});
   }
 
   fetchRunningOrder(e){
@@ -131,6 +125,27 @@ class Portfolio extends Component {
       });
   }
 
+  Change = () => {
+    axios
+    .get("http://localhost:8000/order/myorder/", { headers: this.headers })
+    .then(res => {
+      this.setState({ orderData: res.data });
+      this.setState({ selected: "running" });
+    });
+    this.forceUpdate();
+  }
+
+
+  OrderExecuted(e,price, id){
+    axios.get('http://localhost:8000/order/marketorder/'+id+'/',{headers:this.headers}).then(res=>{this.setState({modifyOrder:res.data});
+    axios.put('http://localhost:8000/order/marketorder/'+id+'/',{...this.state.modifyOrder},{headers:this.headers}).then(res=>{
+      this.Change();  
+    })
+    
+  })
+    
+  }
+
   render() {
     return (
       <Layout>
@@ -143,11 +158,6 @@ class Portfolio extends Component {
           <div class="container-fluid">
             <div className="row">
               <div className="col-xl-9">
-                {/* <tr className="col-xl-12">
-                <td className= "col-xl-4"><a href="/../courses/about-us" class="btn dusty-grass-gradient w-100 ">Your Running Orders!</a></td>
-                <td className= "col-xl-4"><a href="/../courses/about-us" class="btn dusty-grass-gradient w-100">Your Pending Orders!</a></td>
-                <td className= "col-xl-4"><a href="/../courses/about-us" class="btn dusty-grass-gradient w-100">Your Executed Order!</a></td>
-            </tr> */}
                 <MDBRow>
                   <MDBCol xl="12" md="12" className="col-xl-12"></MDBCol>
                   <MDBBtnGroup size="lg" className="col-xl-12">
@@ -177,20 +187,25 @@ class Portfolio extends Component {
                           <b>
                             <td className="col-xl-2">CropName</td>
                             <td className="col-xl-2">CropVariety</td>
-                            <td className="col-xl-2">Quantity</td>
+                            <td className="col-xl-1">Qty</td>
                             <td className="col-xl-1">
                               Bid1&emsp;
                             </td>
-                            <td className="col-xl-1">
+                            <td className="col-xl-1 ">
                               Bid2&emsp;
                             </td>
                             <td className="col-xl-1">
                               Bid3&emsp;
                             </td>
                             <td className="col-xl-1">
-                              BasePrice
+                              Base<br/>Price
                             </td>
-                            <td className="float-right">Sell&emsp;Delete&emsp;</td>
+                            <td className="col-xl-2">
+                            &emsp;&emsp;&emsp;Sell
+                            </td>
+                            <td className="col-xl-1">
+                              Delete&emsp;
+                            </td>
                           </b>
                         </h6>
                       </Card.Text>
@@ -214,13 +229,12 @@ class Portfolio extends Component {
                             <td className="col-xl-1">
                              
                             </td>
-                            <td className="col-xl-1">
-                             </td>
-                            
                             <td className="col-xl-2">
                               Executed Price
                             </td>
-                            <td className="float-right">Export As Pdf</td>
+                            <td className="col-xl-1">
+                             </td>
+                            <td className="col-xl-2">Export As Pdf</td>
                           </b>
                         </h6>
                       </Card.Text>
@@ -239,8 +253,9 @@ class Portfolio extends Component {
                         Quantity={x.Quantity}
                         ProductionMode={x.ProductionMode}
                         BasePrice={x.BasePrice}
-                        bids={x.bids}
+                        bids={this.state.bids.filter(y => {return y.order == x.id;}).sort((a, b) =>b.price -  a.price )} 
                         id={x.id}
+                        onOrderExecuted={e => this.OrderExecuted(e,this.state.bids.filter(y => {return y.order == x.id;}).sort((a, b) =>b.price -  a.price )[0]['price'],x.id)}
                       />
                     );
                   })}
@@ -298,9 +313,6 @@ class Portfolio extends Component {
         <br />
         <br />
         <br />
-        
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Button onClick={this.jsPdfGenerator}>Generate PDF</Button>
       </Layout>
     );
   }

@@ -78,10 +78,10 @@ const toolbar = props => {
                     Wallet
                   </a>
                 </li>
-                <li class="nav-item">
+                {/* <li class="nav-item">
                   <a href="/pricing" class="nav-link">
                     Pricing
-                  </a>
+                  </a> */}
 
                   {/* {props.islogged ? (
                     <Nav.Link href="/profile">Profile</Nav.Link>
@@ -97,7 +97,7 @@ const toolbar = props => {
                       <h2 style={{ color: "black" }}>LogIn</h2>
                     </Nav.Link>
                   )} */}
-                </li>
+                {/* </li> */}
                 <li class="nav-item">
                   {props.islogged ? (
                     <a href="/profile" class="nav-link">

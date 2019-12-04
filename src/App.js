@@ -8,7 +8,6 @@ import Home from '../src/components/Home/Home'
 import Login from '../src/components/Login/Login'
 import Signup from '../src/components/SignUp/SignUp'
 import ProfileAccount from '../src/components/Profile/Profile_account'
-import Example from '../src/components/Paypal/PaypalBtn'
 import ProfileBank from '../src/components/Profile/Profile_bank'
 import MarketPlace from './components/Marketplace/MarketPlace'  
 import Market from "./components/Market/market";
@@ -19,8 +18,7 @@ import Terms_and_conditions from "./components/Static/Terms_and_conditions";
 import Privacy_policy from "./components/Static/Privacy_policy";
 import ProfilePersonal from '../src/components/Profile/Profile_personal'
 import Portfolio from '../src/components/Portfolio/Portfolio'
-import ChartComponent from "./components/Graph/ChartComponent";
-// import Test from './components/Test/Test'
+import ChartComponent from "./components/Graph/ChartComponent1";
 import WatchList from './components/Marketplace/WatchList';
 import Wallet from "./components/Wallet/Wallet"
 
