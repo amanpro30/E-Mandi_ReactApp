@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 import Layout from "../Layout/Layout";
-import { Form, Col, Button, Dropdown } from "react-bootstrap";
+import { Card, Form, Col, Button, Badge } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Order from "./Order";
 import axios from "axios";
-import classes from "./marketplace.css"
+import {connect} from 'react-redux';
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBIcon } from 'mdbreact';
 
 class MarketPlace extends Component {
   handleClose_Market = () => {
     this.setState({ show_Market: false });
-    console.log(this.state.show_Market);    
+    console.log(this.state.show_Market);
   };
 
   handleShow_Market = () => {
@@ -25,101 +26,106 @@ class MarketPlace extends Component {
     this.setState({ show_Futures: true });
     console.log(this.state.show_Futures);
   };
-  
+
   state = {
-    ordersType:'Market',
+    x: 1,
     show_Market: false,
     show_Futures: false,
     futureData:[],
     marketData:[],
     orderData: [],
-    orderData_copy:"",
-    orderData_cropNameFilter:"",
+    orderData_copy: "",
+    orderData_cropNameFilter: "",
     order: {
-      CropName:"",
-      CropVariety:"",
-      Quantity:"",
-      OrderDate:"",
-      ClosingDate:"",
-      ProductionMode:"",
-      BasePrice:"",
-      OrderStatus:"",
-    
+      CropName: "",
+      CropVariety: "",
+      Quantity: "",
+      OrderDate: "",
+      ClosingDate: "",
+      ProductionMode: "",
+      BasePrice: "",
+      OrderStatus: "",
+
+    },
+    orderFutures: {
+      CropName: "",
+      CropVariety: "",
+      order: {
+        Quantity: "",
+        DeliveryDate: "",
+        ProductionMode: "",
+        ContractPrice: "",
+        advance: "",
+        AdvanceDate: "",
       },
+    },
+    cropTypes: [],
+    cropVariety: [],
+    cropVariety_order: [],
+    selectedCrop: "",
+    selectedVariety: "",
+    temp1: "Crop Name",
+    temp2: "Crop Variety",
+    modal8: false,
+    modal9: false,
+    bids:[],
+    curruserbid : [],
+    availablebalance:0,
+    accountbalance:0
+  };
 
-    orderFutures:{
-      CropName:"",
-      CropVariety:"",
-      order:{
-      Quantity:"",
-      DeliveryDate:"",
-      ProductionMode:"",
-      ContractPrice:"",
-      advance:"",
-      AdvanceDate:"",
-
-      },      
-
-    },  
-    cropTypes:[],
-    cropVariety:[],
-    cropVariety_order:[],
-    selectedCrop:"",
-    selectedVariety:"",
-
-    temp1:"Crop Name",
-    temp2:"Crop Variety",
-    };
-  
-    headers = {
-      "Content-Type": "application/json",
-      accept: "application/json",
-      Authorization: `JWT ${localStorage.getItem('token')}`,
-    }
-
-  handle_orderData_cropName = e =>{
-    var name=e.target.value;
-    console.log(name);
-    console.log('^');
-    console.log(this.state.orderData);
-    var OrderData1=[...this.state.orderData];
-    OrderData1=this.state.orderData_copy.filter(x=>{
-      return x.CropName===name;
+  toggle = nr => () => {
+    let modalNumber = 'modal' + nr
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
     });
-    
-    console.log('^^');
+  }
+  sidebarStyles = {
+    sidebar: {
+      width: '358500px'
+    }
+  };
+  headers = {
+    "Content-Type": "application/json",
+    accept: "application/json",
+    Authorization: `JWT ${localStorage.getItem('token')}`,
+  }
 
-    // console.log([...OrderData1]);
-    // console.log(OrderData1)
-    this.setState({orderData:[...OrderData1]},()=>{
-    console.log(OrderData1);
-    console.log(this.state.orderData);}
-    );  
-    this.setState({orderData_cropNameFilter:[...OrderData1]});
-    this.setState({temp1:name});
+  handle_orderData_cropName = e => {
+    var name = e.target.value;
+    var OrderData1 = [...this.state.orderData];
+    OrderData1 = this.state.orderData_copy.filter(x => {
+      return x.CropName === name;
+    });
+    this.setState({ orderData: [...OrderData1] }, () => {
+    }
+    );
+    this.setState({ orderData_cropNameFilter: [...OrderData1] });
+    this.setState({ temp1: name });
 
-  }; 
-  handle_orderData_cropVariety = e =>{
-    let varietyName=e.target.value
+  };
+  handle_orderData_cropVariety = e => {
+    let varietyName = e.target.value
     console.log('%');
     console.log(this.state.orderData);
-    var OrderData1=this.state.orderData_cropNameFilter.filter(x=>{
-      return x.CropVariety===varietyName;
+    var OrderData1 = this.state.orderData_cropNameFilter.filter(x => {
+      return x.CropVariety === varietyName;
     });
     console.log('%%');
     console.log(OrderData1);
-    this.setState({orderData:[...OrderData1]},()=>{
+    this.setState({ orderData: [...OrderData1] }, () => {
       console.log(OrderData1);
-      console.log(this.state.orderData);}
-      );  
-      this.setState({temp2:varietyName});
+      console.log(this.state.orderData);
+    }
+    );
+    this.setState({ temp2: varietyName });
 
-  }; 
-  filter_reset= () =>{
+  };
+  filter_reset = () => {
     console.log('inside filter reset');
-    this.setState({temp1:"Crop Name"});
-    this.setState({temp2:"Crop Variety"});
-    this.setState({orderData:[...this.state.orderData_copy]},()=>{
+    this.setState({ temp1: "Crop Name" });
+    this.setState({ temp2: "Crop Variety" });
+    this.setState({ orderData: [...this.state.orderData_copy] }, () => {
       console.log(this.state.orderData);
       console.log(this.state.orderData_copy);
     });
@@ -129,21 +135,23 @@ class MarketPlace extends Component {
     e.preventDefault();
     console.log('coming')
     this.handleClose_Market()
-    axios.post(`http://localhost:8000/order/marketorder/`, data,{
-        headers: this.headers})
-    .then(res => {
+    axios.post(`http://localhost:8000/order/marketorder/`, data, {
+      headers: this.headers
     })
-  };  
+      .then(res => {
+      })
+  };
   OrderCreateFutures = (e, data) => {
     e.preventDefault();
     console.log('coming')
     this.handleClose_Futures()
-    axios.post(`http://localhost:8000/order/futurecontract/${this.state.orderFutures['CropName']}/${this.state.orderFutures['CropVariety']}/`, data,{
-        headers: this.headers})
-    .then(res => {
+    axios.post(`http://localhost:8000/order/futurecontract/${this.state.orderFutures['CropName']}/${this.state.orderFutures['CropVariety']}/`, data, {
+      headers: this.headers
     })
+      .then(res => {
+      })
     console.log(this.state.orderFutures)
-  };  
+  };
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -182,7 +190,7 @@ class MarketPlace extends Component {
       return newState;
     })
   };
-    
+
   handle_change_futures1 = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -204,64 +212,93 @@ class MarketPlace extends Component {
     })
   };
 
-    handle_change1 = e =>{
-      
-      this.getCropVariety_filter(e);
-      this.handle_orderData_cropName(e);
-      // console.log(e.target.value);
-    }
+  handle_change1 = e => {
 
-    handle_change2 = e =>{
-      let varietyName=e.target.value
-      console.log(varietyName);
-      this.setState({selectedVariety:varietyName});
-      this.filterCrop(e,this.state.selectedCrop,this.state.selectedVariety)
-      this.handle_orderData_cropVariety(e);
+    this.getCropVariety_filter(e);
+    this.handle_orderData_cropName(e);
+    // console.log(e.target.value);
+  }
 
-    }
-
-    headers = {
-      "Content-Type": "application/json",
-      accept: "application/json",
-      Authorization: `JWT ${localStorage.getItem('token')}`,
-    }
-
-    componentDidMount(){
-    var self=this;  
-    console.log('**********************');
-    console.log((localStorage.getItem("token")));
-    axios.get('http://localhost:8000/order/otherorder/',{headers:this.headers}).then
-    
-    
-    (res => {self.setState({orderData:res.data, orderData_copy:res.data, marketData:res.data});})
-    console.log('*');
-    axios.get('http://localhost:8000/crop/cropname/',{headers:this.headers}).then(res => {self.setState({cropTypes:res.data})});
-    // console.log(this.state.orderData.cropName);
-    axios.get('http://localhost:8000/order/otherfutures/',{headers:this.headers}).then(res => {console.log('II'); self.setState({futureData:res.data}); console.log('XX') ; console.log(this.state.futureData);})
-    console.log('*');
-    console.log(this.state.futureData);
-    
-    
+  handle_change2 = e => {
+    let varietyName = e.target.value
+    console.log(varietyName);
+    this.setState({ selectedVariety: varietyName });
+    this.filterCrop(e, this.state.selectedCrop, this.state.selectedVariety)
+    this.handle_orderData_cropVariety(e);
 
   }
 
-  getCropVariety_filter(e){
-    var name = e.target.value;
+  add_balance = (bal) => {
+    let balancedata = {username:this.props.username,balance:{accountbalance:this.state.accountbalance,availablebalance:this.state.availablebalance+bal}};
+    axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, balancedata , {
+    headers: this.headers}).then(res => { this.setState({'availablebalance':balancedata.balance.availablebalance});});
+  }
 
-    console.log('xx');
-    axios.get('http://localhost:8000/crop/crop/'+name+'/',{headers:this.headers}).then(res=>{this.setState({cropVariety:res.data});this.setState({selectedCrop:name})});
+  del_balance = (bal) =>{
+    let balancedata = {username:this.props.username,balance:{accountbalance:this.state.accountbalance,availablebalance:this.state.availablebalance-bal}};
+    axios.put('http://localhost:8000/transaction/balances/' + this.props.username + `/`, balancedata , {
+    headers: this.headers}).then(res => { this.setState({'availablebalance':balancedata.balance.availablebalance});});
+  }
+
+  BidChange = () => {
+    axios.get('http://localhost:8000/order/getbids/',{ headers: this.headers }).then(res=>{this.setState({bids:res.data});});
+    axios.get('http://localhost:8000/order/getbid/curruser/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data});console.log(res);});
+    axios.get(`http://localhost:8000/transaction/balance/`,
+    {headers: 
+        {"Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `JWT ${localStorage.getItem('token')}`,}
+    },).then(res=>{
+        this.setState({'accountbalance':res.data[0]['accountbalance']});
+        this.setState({'availablebalance': res.data[0]['availablebalance']});
+      });
+    this.forceUpdate();
+  }
+
+  headers = {
+    "Content-Type": "application/json",
+    accept: "application/json",
+    Authorization: `JWT ${localStorage.getItem('token')}`,
+  }
+
+  componentDidMount() {
+    var self = this;
+    axios.get('http://localhost:8000/order/otherorder/', { headers: this.headers }).then(res => { self.setState({ orderData: res.data, orderData_copy: res.data }); })
+    axios.get('http://localhost:8000/crop/cropname/', { headers: this.headers }).then(res => { self.setState({ cropTypes: res.data }) });
+    axios.get('http://localhost:8000/order/getbids/',{ headers: this.headers }).then(res=>{this.setState({bids:res.data});console.log(res);});
+    axios.get('http://localhost:8000/order/getbid/curruser/',{headers:this.headers}).then(res => {this.setState({curruserbid:res.data});console.log(res);});
+    axios.get(`http://localhost:8000/transaction/balance/`,
+    {headers: 
+        {"Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `JWT ${localStorage.getItem('token')}`,}
+    },).then(res=>{
+        this.setState({'accountbalance':res.data[0]['accountbalance']});
+        this.setState({'availablebalance': res.data[0]['availablebalance']});
+      });
+  }
+
+  getCropVariety_filter(e) {
+    var name = e.target.value;
+    axios.get('http://localhost:8000/crop/crop/' + name + '/', { headers: this.headers }).then(res => { this.setState({ cropVariety: res.data }); this.setState({ selectedCrop: name }) });
     console.log(this.state.cropVariety);
   }
-  getCropVariety_order(e){
+
+  getCropVariety_order(e) {
     var name = e.target.value;
 
     console.log('xx');
-    axios.get('http://localhost:8000/crop/crop/'+name+'/',{headers:this.headers}).then(res=>{this.setState({cropVariety_order:res.data})});
+    axios.get('http://localhost:8000/crop/crop/' + name + '/', { headers: this.headers }).then(res => { this.setState({ cropVariety_order: res.data }) });
     console.log(this.state.cropVariety_order);
   }
 
-  filterCrop(e,cropname,cropvariety){
-    axios.get('http://localhost:8000/order/crop/'+cropname+'/'+cropvariety+'/',{headers:this.headers}).then(res=>{console.log('hallaho');console.log(res);});
+  filterCrop(e, cropname, cropvariety) {
+    axios.get('http://localhost:8000/order/crop/' + cropname + '/' + cropvariety + '/', { headers: this.headers }).then(res => { console.log('hallaho'); console.log(res); });
+  }
+
+  addWatchList(e){
+    console.log('hw');
+    axios.post(`http://localhost:8000/crop/watchlist/${this.state.selectedCrop}/${this.state.selectedVariety}/`,"", { headers:this.headers }).then(res => console.log(res));
   }
 
   render() {
@@ -270,173 +307,139 @@ class MarketPlace extends Component {
         <Layout>
           <br /><br /><br /><br />
           {/* ########################################################################################################                    */}
-          <div class="content" style={{width:"98%"}} >
+          <div class="container-fluid">
+
             <div class="row">
-              <div
-                style={{ marginLeft: 45 }}
-                class="col-md-4 products-index__col"
-              >
-                <h3 class="product-filter_header" style={{marginBottom:'13px'}}>Watch List</h3>
-                
-                <div class="product-filter" style={{border:'3px' , borderStyle:'groove', marginBottam:'20px' ,height:'100%'}}>
-                  <div class="row form-filter_product">
-                    <div class="col-sm-6 col-md-10 col-lg-10">
-                      <h4>Rice</h4>
+
+              <div className="col-xl-3 justify-content-right ">
+
+                <Form>
+                  <Form.Row>
+                    <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                      <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
+                        <option>Crop Name</option>
+                        {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
+                      </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                      <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
+                        <option>Crop Variety</option>
+                        {Object.values(this.state.cropVariety).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
+                      </Form.Control>
+                    </Form.Group>
+                    <div>
                     </div>
-                  </div>
-                </div>
-                <br />
+                    <Button onClick={this.filter_reset} className="btn    w-100">Reset</Button>
+                    <br/><br/><MDBBtn color="info btn-rounded" onClick={e => this.addWatchList(e)}>Add To Watch List</MDBBtn>
+                    <br/><br/><MDBBtn color="info btn-rounded" onClick={this.toggle(8)}>Watch List</MDBBtn>
+
+                  </Form.Row>
+                </Form>
+
+
+                <MDBContainer  >
+
+                  <MDBModal isOpen={this.state.modal8} toggle={this.toggle(8)} fullHeight position="left" fade={false} animation={false} >
+                    <MDBModalHeader toggle={this.toggle(8)}>&emsp;&emsp;&emsp;&emsp;&emsp;Your Watch List</MDBModalHeader>
+                    <span className="btn  btn-rounded btn-grey  ">ADD</span>
+                    <MDBModalBody>
+                      <Card >
+                        <Card.Body>
+                          <Card.Text>
+                            <tr className="col-xl-12 w-100">
+                              <td className="col-xl-3"><span className="text-primary">Rice</span></td>
+                              <td className="col-xl-4"><span className="text-primary">Basmati</span></td>
+                              <td className="col-xl-3"><span className="text-success">100</span></td>
+                              <td className="col-xl-1"><span className="text-danger"><i class="far fa-chart-bar"></i></span></td>
+                                  
+                            </tr>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </MDBModalBody>
+                    <MDBModalFooter className="text-success"><hr />
+                    </MDBModalFooter>
+                  </MDBModal>
+                </MDBContainer>
               </div>
-              <div class="col-md-7 products-index__col">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h3 class="product-filter_header">Order Board</h3>
+              {/* #============================================Start================================================== */}
+              <div className="col-xl-9 ">
+
+                <div className="col-xl-12">
+                  {/* <Form>
+                    <Form.Row>
+                      <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                        <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
+                          <option>Crop Name</option>
+                          {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
+                        </Form.Control>
+                      </Form.Group>
+
+                      <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
+                        <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
+                          <option>Crop Variety</option>
+                          {Object.values(this.state.cropVariety).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
+                        </Form.Control>
+                      </Form.Group>
+
+                      <Button onClick={this.filter_reset} className="btn    w-100">Reset</Button>
+                    </Form.Row>
+                  </Form> */}
+
+                  {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
+                  <div>
+                    <tr className="col-xl-12">
+                      <Card style={{width:"100%"}}>
+                        <Badge>
+                          <h4>
+                            <tr className="col-xl-12">
+                              <td className="col-xl-4 text-grey">Commodity</td>
+                              <td className="col-xl-4 text-grey">Bids by Buyers<br /><small className="text-grey">(Currency per weight unit)</small></td>
+                              <td className="col-xl-4 text-grey">Make Your Bid<br /><small>(Currency per weight unit)</small></td>
+                            </tr>
+                          </h4>
+
+                        </Badge>
+                        <br />
+                        <Card.Body>
+                          <Card.Text>
+                            <h6>
+                              <b>
+                                {Object.values(this.state.orderData).map(
+                                  x => { 
+                                  return <Order 
+                                    CropName={x.CropName} 
+                                    CropVariety={x.CropVariety} 
+                                    Quantity={x.Quantity} 
+                                    ProductionMode={x.ProductionMode} 
+                                    BasePrice={x.BasePrice} 
+                                    ClosingDate={x.ClosingDate} 
+                                    SellerName={x.user} id={x.id}  
+                                    Bids={this.state.bids.filter(y => {return y.order == x.id;}).sort((a, b) =>b.price -  a.price )} 
+                                    onBidChange={this.BidChange} 
+                                    curruserbid={this.state.curruserbid.filter(y => {return y.order == x.id;})} 
+                                    accountbalance={this.state.accountbalance} 
+                                    availablebalance={this.state.availablebalance} 
+                                    onAddBalance={this.add_balance}
+                                    onDelBalance={this.del_balance}
+                                  />})}
+                              </b>
+                            </h6>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </tr>
                   </div>
-                  <div class="col-md-6 text-xs-right">
-                    <button
-                      class="btn btn-secondary"
-                      onClick={this.handleShow_Market}
-                    >
-                      New Market Order
-                    </button>
-                    &nbsp;&nbsp;
-                    <button
-                      class="btn btn-secondary"
-                      onClick={this.handleShow_Futures}
-                    >
-                      New Futures Order
-                    </button>
-                  </div>
-                </div>
+                </div>{/**extra */}
 
-                <div class="products-index__top-filter"  style={{border:'3px' , borderStyle:'groove'}}>
-                  <div class="row">
-                    <div class="col-xs-3 products-index__top-filter__count">
-                      
-                      <div class="row">
-                        
-                        {/* <div class="md-2">
-                          <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                              Crop Name
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {Object.values(this.state.cropTypes).map(x=>{ return (<Dropdown.Item href="#" onClick={e=>this.getCropVariety(e)} value={x.cropName} name={x.cropName} >{x.cropName}</Dropdown.Item>)})}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
-                        <div class="md-2">
-                          <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                              Crop Variety
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {Object.values(this.state.cropVariety).map(x=>{ return (<Dropdown.Item href="#" onClick={e=>{this.setState({selectedVariety:x.varietyName});this.filterCrop(e,this.state.selectedCrop,this.state.selectedVariety)}} value={x.varietyName} name={x.varietyName} >{x.varietyName}</Dropdown.Item>)})}
-                            </Dropdown.Menu>
-                          </Dropdown> */}
-
-                          <Form>
-                            <Form.Row>
-                            <Form.Group as={Col} controlId="formGridState" style={{width:'250px'}}>
-                              {/* <Form.Label>State</Form.Label> */}
-                              <Form.Control as="select" value={this.state.temp1} onChange={this.handle_change1}>
-                                <option>Crop Name</option>
-                                {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
-                              </Form.Control>
-                            </Form.Group>
-                            
-                            <Form.Group as={Col} controlId="formGridState" style={{width:'250px'}}>
-                              {/* <Form.Label>State</Form.Label> */}
-                              <Form.Control as="select" value={this.state.temp2} onChange={this.handle_change2} >
-                                <option>Crop Variety</option>
-                                {Object.values(this.state.cropVariety).map(x=>{ return (<option href="#"  value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>)})}
-                              </Form.Control>
-                            </Form.Group>
-
-                            <Button variant="secondary" onClick={this.filter_reset}>Reset</Button>
-                            </Form.Row>  
-                          </Form>   
-
-
-
-                      </div>
-                    </div>
-                    {/* <div class="col-xs-4 col-sm-4 form-inline products-index__top-filter__sort"></div>
-                    <div class="col-xs-5 col-sm-5 products-index__top-filter__pager">
-                      <label>Show</label>
-                      <select
-                        name="limit"
-                        id="limit"
-                        class="form-control form-select-inline limit-dropdown"
-                      >
-                        <option value="5">5</option>
-                        <option selected="selected" value="10">
-                          10
-                        </option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                      </select>
-                      <label>Lines Per Page</label>
-                    </div> */}
-                  </div>
-                </div>
-
-                <div class="products-index__list"  style={{border:'2px' ,borderStyle:'groove'}}>
-                  <div class="products-index__list__header hidden-sm-down">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <label>
-                          <span
-                            class="translation_missing"
-                            title="translation missing: en.products.filter.commodities"
-                            style={{fontSize:'20px' ,fontWeight:"bold"}}
-                          >
-                            Commodity
-                          </span>
-                        </label>
-                      </div>
-                      <div class="col-md-4">
-                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
-                          Bids by Buyers
-                          <span class="products-index__list-info">
-                            (Currency per weight unit)
-                          </span>
-                        </label>
-                      </div>
-                      <div class="col-md-4">
-                        <label style={{fontSize:'20px' ,fontWeight:"bold"}}>
-                          Make Your Bid
-                          <span class="products-index__list-info">
-                            (Currency per weight unit)
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="products-index__list__items">
-                    <div class="">
-                      <div class="col-xs-3 hidden-md-up">
-                        <div class="row">
-                          <label>
-                            <span
-                              class="translation_missing"
-                              title="translation missing: en.products.order_board.commodities"
-                            >
-                              Commodities
-                            </span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {Object.values(this.state.orderData).map(x=>{ return <Order CropName={x.CropName} CropVariety={x.CropVariety} Quantity={x.Quantity} ProductionMode={x.ProductionMode} BasePrice={x.BasePrice} ClosingDate={x.ClosingDate} SellerName={x.user} id={x.id}/>})}
-                
-                <br/>
-              </div>
-            </div>
+              </div> {/* col of 2 */}
+            </div>{/* row  */}
           </div>
+
+          
+          {/* #==================================END==================================== */}
+
 
           <Modal
             show={this.state.show_Market}
@@ -452,36 +455,24 @@ class MarketPlace extends Component {
               <div style={{ margin: "50px", width: "80%" }}>
                 <Form onSubmit={e => this.OrderCreate(e, this.state.order)}>
                   <Form.Row>
-                  <Form.Group as={Col}>
-                    <Form.Label>Crop Name</Form.Label>
-                    <Form.Control as="select"  name="CropName" value={this.state.order.CropName} onChange={this.handle_change_order1}>
-                    <option>Crop Name</option>
-                    {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
-
-                    </Form.Control>
-                  </Form.Group>
-                    {/* <Form.Group as={Col} controlId="formGridCropName" >
-                      <Form.Label style={{ align: "left" }}>
-                        <strong>Crop Name</strong>
-                      </Form.Label>
-                      <Form.Control as="select" placeholder="Enter Crop Name" name="CropName" value={this.state.order.CropName} onChange={this.handle_change}/>
-                      <option>Choose...</option>
-                      <option>...</option>
-                    </Form.Group> */}
                     <Form.Group as={Col}>
-                    <Form.Label>Crop Variety</Form.Label>
-                    <Form.Control as="select"  name="CropVariety" value={this.state.order.CropVariety} onChange={this.handle_change_order2}>
-                      <option>Crop Variety</option>
-                    {Object.values(this.state.cropVariety_order).map(x=>{ return (<option href="#"  value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>)})}
+                      <Form.Label>Crop Name</Form.Label>
+                      <Form.Control as="select" name="CropName" value={this.state.order.CropName} onChange={this.handle_change_order1}>
+                        <option>Crop Name</option>
+                        {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
 
-                    </Form.Control>
-                  </Form.Group>
-                    {/* <Form.Group as={Col} controlId="formGridCropVariety">
-                      <Form.Label>
-                        <strong>Crop Variety</strong>
-                      </Form.Label>
-                      <Form.Control placeholder="Enter Crop Variety" name="CropVariety" value={this.state.order.CropVariety} onChange={this.handle_change}/>
-                    </Form.Group> */}
+                      </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group as={Col}>
+                      <Form.Label>Crop Variety</Form.Label>
+                      <Form.Control as="select" name="CropVariety" value={this.state.order.CropVariety} onChange={this.handle_change_order2}>
+                        <option>Crop Variety</option>
+                        {Object.values(this.state.cropVariety_order).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
+
+                      </Form.Control>
+                    </Form.Group>
+
                   </Form.Row>
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridProductionMode">
@@ -500,7 +491,7 @@ class MarketPlace extends Component {
                       <Form.Label>
                         Quantity (kg)
                       </Form.Label>
-                      <Form.Control placeholder="Enter Quantity" name= "Quantity" value={this.state.order.Quantity} onChange={this.handle_change}/>
+                      <Form.Control placeholder="Enter Quantity" name="Quantity" value={this.state.order.Quantity} onChange={this.handle_change} />
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
@@ -508,13 +499,13 @@ class MarketPlace extends Component {
                       <Form.Label>
                         Expected Closing Date
                       </Form.Label>
-                      <Form.Control type="date" name= "ClosingDate" value={this.state.order.ClosingDate} onChange={this.handle_change}/>
+                      <Form.Control type="date" name="ClosingDate" value={this.state.order.ClosingDate} onChange={this.handle_change} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
                        Base Price (per kg)
                       </Form.Label>
-                      <Form.Control placeholder="Enter Base Price" name= "BasePrice" value={this.state.order.BasePrice} onChange={this.handle_change}/>
+                      <Form.Control placeholder="Enter Base Price" name="BasePrice" value={this.state.order.BasePrice} onChange={this.handle_change} />
                     </Form.Group>
                   </Form.Row>
 
@@ -533,9 +524,6 @@ class MarketPlace extends Component {
               </div>
             </div>
 
-            {/* ########################################################################################################### */}
-
-            {/* ############################################################################################################ */}
           </Modal>
 
           <Modal
@@ -556,22 +544,22 @@ class MarketPlace extends Component {
                       <Form.Label>
                         <strong>Crop Name</strong>
                       </Form.Label>
-                      <Form.Control as="select"  name="CropName" value={this.state.orderFutures.CropName} onChange={this.handle_change_futures1}>
-                    <option>Crop Name</option>
-                    {Object.values(this.state.cropTypes).map(x=>{ return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>)})}
+                      <Form.Control as="select" name="CropName" value={this.state.orderFutures.CropName} onChange={this.handle_change_futures1}>
+                        <option>Crop Name</option>
+                        {Object.values(this.state.cropTypes).map(x => { return (<option href="#" value={x.cropName} name={x.cropName} >{x.cropName}</option>) })}
 
-                    </Form.Control>                      
+                      </Form.Control>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridCropVariety">
                       <Form.Label>
                         <strong>Crop Variety</strong>
                       </Form.Label>
-                      <Form.Control as="select"  name="CropVariety" value={this.state.orderFutures.CropVariety} onChange={this.handle_change_futures2}>
-                      <option>Crop Variety</option>
-                    {Object.values(this.state.cropVariety_order).map(x=>{ return (<option href="#"  value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>)})}
+                      <Form.Control as="select" name="CropVariety" value={this.state.orderFutures.CropVariety} onChange={this.handle_change_futures2}>
+                        <option>Crop Variety</option>
+                        {Object.values(this.state.cropVariety_order).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
 
-                    </Form.Control>                    </Form.Group>
+                      </Form.Control>                    </Form.Group>
                   </Form.Row>
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridProductionMode">
@@ -600,13 +588,13 @@ class MarketPlace extends Component {
                         {" "}
                         <strong>Delivery Date </strong>
                       </Form.Label>
-                      <Form.Control type="date" name="DeliveryDate" value={this.state.orderFutures.order.DeliveryDate} onChange={this.handle_change_futures}/>
+                      <Form.Control type="date" name="DeliveryDate" value={this.state.orderFutures.order.DeliveryDate} onChange={this.handle_change_futures} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridClosingDate" >
                       <Form.Label>
                         <strong>Price (per kg)</strong>
                       </Form.Label>
-                      <Form.Control placeholder="Enter Base Price" name="ContractPrice" value={this.state.orderFutures.order.ContractPrice} onChange={this.handle_change_futures}/>
+                      <Form.Control placeholder="Enter Base Price" name="ContractPrice" value={this.state.orderFutures.order.ContractPrice} onChange={this.handle_change_futures} />
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
@@ -648,9 +636,15 @@ class MarketPlace extends Component {
             </div>
           </Modal>
         </Layout>
-      </Aux>
+      </Aux >
     );
   }
 }
 
-export default MarketPlace;
+const mapStateToProps = state =>{
+  return{
+  username:state.auth.username,
+  }
+};
+
+export default connect(mapStateToProps, null)(MarketPlace);

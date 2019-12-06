@@ -12,10 +12,10 @@ const Block2 = props => {
           <div className="col-md-8 left">
             <h1>Pricing</h1>
             <p style={style}>
-              Both buyer and seller pay a small fee to Agri Marketplace once a
+              Both buyer and seller pay a small fee to ₹Mandi once a
               transaction is made. We price transparently and keep you updated
               through all steps of the process. Our pricing is based on your
-              transaction’s value &amp; volume
+              transaction’s value &amp; volume.
             </p>
           </div>
           <div className="col-md-4">

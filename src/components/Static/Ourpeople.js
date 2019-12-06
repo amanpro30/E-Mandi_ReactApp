@@ -8,7 +8,9 @@ import amang from "../../assets/images/amang1.jpg";
 import mandi from "../../assets/images/mandi.jpg";
 
 const Ourpeople = props => (
-  <Layout><br/><br/>
+  <Layout>
+    <br />
+    <br />
     <div class="content">
       <div class="aboutUs">
         <div class="container">

@@ -1,27 +1,43 @@
-import React, {Component} from 'react'
-import {Table, Card, Button} from 'react-bootstrap'
-import {MDBBtnGroup,MDBBtn,MDBCol} from 'mdbreact';
-class Order_Card extends Component{
+import React from 'react';
+import { Card} from 'react-bootstrap';
+import { connect } from 'react-redux';
+import SmallBid from './SmallBid';
+import TrashIcon from 'react-ionicons/lib/MdTrash';
+import Button from 'react-bootstrap/Button';
 
-    render(){
-        return(
+const Order_Card = props => (
+    <Card >
+        <Card.Body>
+            <Card.Text>
+                <td className="col-md-2 align-middle">{props.CropName}</td>
+                <td className="col-md-2">{props.CropVariety}</td>
+                <td className="col-md-1">{props.Quantity}</td>
+                {Object.values(props.bids).map(x=>{return <SmallBid price={x.price}/>;})}
+                <td className="col-md-1">
+                    {props.BasePrice}
+                </td>
+                {props.bids.length ?
+                    <td className="col-md-2">
+                        &emsp;&emsp;&emsp;<Button variant="success" className="btn-sm" style={{margin:"0px"}} onClick={props.onOrderExecuted}>Sell</Button>
+                    </td>
+                    :
+                    <td className="col-md-1">
+                    </td>
+                }
+                <td className="col-md-1">
+                    <TrashIcon></TrashIcon>
+                </td>
+            </Card.Text>
+        </Card.Body>
+    </Card>
+)
 
-            <Card >
-                <Card.Body>
-                    <Card.Text>
-                        <tr className="col-xl-12">
-                            <td className= "col-xl-2">rice</td>
-                            <td className= "col-xl-2">basmati</td>
-                            <td className= "col-xl-2">100kg</td>
-                            <td className= "col-xl-4"><b>100.1&emsp;100.2&emsp;100.3&emsp;&emsp;100</b></td>
-                            <td className= "col-xl-2">&emsp;<span className="text-primary">Sell</span>&emsp;<span className="text-danger">Delete</span></td>
-                        </tr>
-                        
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-        )
+const mapStateToProps = state => {
+    return{
+        username:state.auth.username,
+        accountbalance:state.auth.accountbalance,
+        availablebalance:state.auth.availablebalance,
     }
 }
 
-export default Order_Card
+export default connect(mapStateToProps,null)(Order_Card);

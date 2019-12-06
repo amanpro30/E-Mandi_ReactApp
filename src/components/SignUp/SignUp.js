@@ -176,8 +176,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <Layout>
-        <br /><br />
+      <Layout><br/><br/>
         <div className="row">
           <div className="col-md-8 offset-md-2 user-registration__col">
           <div class="card">

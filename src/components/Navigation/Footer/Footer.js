@@ -16,17 +16,21 @@ const Footer = () => {
     <footer
       class="fixed-bottam"
       className={classes.footer}
-      style={{  bottam: "0", backgroundColor: "#343a40", }}
+      style={{ bottam: "0", backgroundColor: "#343a40" }}
     >
       <div
         className="footer-row-top"
-        style={{ backgroundColor: "#343a40", color: "#fff", paddingTop:'10px' }}
+        style={{
+          backgroundColor: "#343a40",
+          color: "#fff",
+          paddingTop: "10px"
+        }}
       >
         <div className="container">
           <div className="row">
             <div className="col-xs-6 col-md-4 offset-md-1">
               <h4 className="list-title" style={{ color: "#fff" }}>
-                About ₹ Mandi{" "}
+                About ₹Mandi{" "}
               </h4>
               <ul className="list-unstyled">
                 <li>
@@ -61,7 +65,7 @@ const Footer = () => {
                 Follow Us{" "}
               </h4>
               <ul className="list-unstyled">
-                
+                <li>
                   <img className="footer-image" src={fb} alt="Facebook logo" />
                   <a
                     style={{ color: "#fff" }}
@@ -69,19 +73,20 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    ₹Mandi
+                    &emsp;₹Mandi
                   </a>
-                
 
-                
+                 
+                </li>
+
                 <li>
                   <img
                     className="footer-image"
-                    
                     src={twitter}
                     alt="Twitter logo"
                   />
-                  <a style={{ color: "#fff" }}
+                  <a
+                    style={{ color: "#fff" }}
                     href="https://twitter.com/E-Mandi"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -99,7 +104,7 @@ const Footer = () => {
                     target="_blank"
                   >
                     {" "}
-                    ₹Mandi
+                    &emsp;₹Mandi
                   </a>
                 </li>
                 <li>
@@ -110,7 +115,7 @@ const Footer = () => {
                   />
                   <a style={{ color: "#fff" }} href=" " target="_blank">
                     {" "}
-                    ₹Mandi{" "}
+                    &emsp;₹Mandi{" "}
                   </a>
                 </li>
               </ul>
@@ -140,7 +145,7 @@ const Footer = () => {
                       data-cfemail="93fafdf5fcd3f2f4e1fafee3bdf0fcfe"
                     >
                       {/* [email&#160;protected] */}
-                      emandi@mandi.com
+                      ₹mandi@mandi.com
                     </span>{" "}
                   </a>
                 </li>
@@ -149,16 +154,16 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <div class="row ">
+          <div class="col  ">
+             <p style={{ color: "#fff" }}>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+             Copyright ©
+               <span id="year">2019</span>  ₹Mandi</p>
+           </div>
+         </div>
     </footer>
     //   <footer class="navbar navbar-expand-sm navbar-dark bg-dark text-center p-4 navbar-bottom w-100" style={{position:"relative",bottom:"0", color:'black'}}>
-    //   <div class="container">
-    //     <div class="row">
-    //       <div class="col">
-    //         <p>Copyright ©
-    //           <span id="year">2019</span> Smart HealthCare</p>
-    //       </div>
-    //     </div>
-    //   </div>
+    //   
     // </footer>
   );
 };
