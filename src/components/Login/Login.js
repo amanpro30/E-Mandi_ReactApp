@@ -37,6 +37,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     if (this.state.logged_in) {
+      
       axios
         .get(`http://localhost:8000/accounts/current_user`, {
           headers: {
@@ -48,7 +49,8 @@ class Login extends React.Component {
           console.log(this.setState({ username: res.username }));
         });
     }
-
+    console.log('**********************');
+    console.log((localStorage.getItem("token")));
   console.log(this.state.error_description);
   }
 
