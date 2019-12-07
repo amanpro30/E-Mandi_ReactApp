@@ -23,7 +23,7 @@ import PortfolioFutures from '../src/components/Portfolio/PortfolioFutures'
 import ChartComponent from "./components/Graph/ChartComponent1";
 import WatchList from './components/Marketplace/WatchList';
 import Wallet from "./components/Wallet/Wallet"
-
+import Test from "./components/Test/Test"
 
 const CLIENT = {
   sandbox: process.env.REACT_APP_sandbox,
@@ -66,6 +66,7 @@ function App() {
           <Route exact path="/pricing" component={ChartComponent}/>
           <Route exact path="/watchlist" component={WatchList}/>
           <Route exact path="/wallet" component={Wallet}/>
+          <Route exact path="/test" component={Test}/>
           <Redirect to="/404" />
         </Switch>
       </div>

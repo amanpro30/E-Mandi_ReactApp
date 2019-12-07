@@ -507,13 +507,13 @@ getCropVariety(e) {
                             <td className="col-xl-1">
                               Price
                             </td>
-                            <td className="col-xl-2">
+                            <td className="col-xl-3">
                               Seller
                             </td>
                             <td className="col-xl-2">
                               Date
                             </td>
-                            <td className="col-xl-2">Export As Pdf</td>
+                            <td className="col-xl-1">Pdf</td>
                           </b>
                         </h6>
                       </Card.Text>

@@ -1,31 +1,76 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
- 
+import { MDBPopover, MDBPopoverBody, MDBPopoverHeader, MDBBtn, MDBContainer } from "mdbreact";
 
-const GradientPage = () => {
+const PopoverPage = () => {
   return (
-    <MDBContainer className="mt-5">
-      <MDBRow className="mt-4 text-center">
-        <MDBCol md="3" className="mb-4">
-          <div className="purple-gradient color-block-5 mb-3 mx-auto rounded-circle z-depth-1"></div>
-          <h5 className="mb-0">purple-gradient</h5>
-        </MDBCol>
-        <MDBCol md="3" className="mb-4">
-          <div className="blue-gradient color-block-5 mb-3 mx-auto rounded-circle z-depth-1"></div>
-          <h5 className="mb-0">blue-gradient</h5>
-        </MDBCol>
-        <MDBCol md="3" className="mb-4">
-          <div className="aqua-gradient color-block-5 mb-3 mx-auto rounded-circle z-depth-1"></div>
-          <h5 className="mb-0">aqua-gradient</h5>
-        </MDBCol>
-        <MDBCol md="3" className="mb-4">
-          <div className="peach-gradient color-block-5 mb-3 mx-auto rounded-circle z-depth-1"></div>
-          <h5 className="mb-0">peach-gradient</h5>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer >
+    <MDBContainer>
+      <div style={{ display: "flex" }} className="m-5 p-5">
+        <MDBPopover
+          placement="top"
+          popover
+          clickable
+          id="popper1"
+        >
+          <MDBBtn>popover on top</MDBBtn>
+          <div>
+            <MDBPopoverHeader>popover on top</MDBPopoverHeader>
+            <MDBPopoverBody>
+              Sed posuere consectetur est at lobortis. Aenean eu leo quam.
+              Pellentesque ornare sem lacinia quam venenatis vestibulum.
+            </MDBPopoverBody>
+          </div>
+        </MDBPopover>
 
+        <MDBPopover
+          placement="right"
+          popover
+          clickable
+          id="popper2"
+        >
+          <MDBBtn>popover on right</MDBBtn>
+          <div>
+            <MDBPopoverHeader>popover on right</MDBPopoverHeader>
+            <MDBPopoverBody>
+              Sed posuere consectetur est at lobortis. Aenean eu leo quam.
+              Pellentesque ornare sem lacinia quam venenatis vestibulum.
+            </MDBPopoverBody>
+          </div>
+        </MDBPopover>
+
+        <MDBPopover
+          placement="bottom"
+          popover
+          clickable
+          id="popper3"
+        >
+          <MDBBtn>popover on bottom</MDBBtn>
+          <div>
+            <MDBPopoverHeader>popover on bottom</MDBPopoverHeader>
+            <MDBPopoverBody>
+              Sed posuere consectetur est at lobortis. Aenean eu leo quam.
+              Pellentesque ornare sem lacinia quam venenatis vestibulum.
+            </MDBPopoverBody>
+          </div>
+        </MDBPopover>
+
+        <MDBPopover
+          placement="left"
+          popover
+          clickable
+          id="popper4"
+        >
+          <MDBBtn>popover on left</MDBBtn>
+          <div>
+            <MDBPopoverHeader>popover on left</MDBPopoverHeader>
+            <MDBPopoverBody>
+              Sed posuere consectetur est at lobortis. Aenean eu leo quam.
+              Pellentesque ornare sem lacinia quam venenatis vestibulum.
+            </MDBPopoverBody>
+          </div>
+        </MDBPopover>
+      </div>
+    </MDBContainer>
   );
 }
 
-export default GradientPage;
+export default PopoverPage;
