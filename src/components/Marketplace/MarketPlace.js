@@ -7,6 +7,9 @@ import Order from "./Order";
 import axios from "axios";
 import {connect} from 'react-redux';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBIcon } from 'mdbreact';
+import CanvasJSReact from '../../assets/graph/canvasjs.react';
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 
 class MarketPlace extends Component {
   handleClose_Market = () => {
@@ -69,10 +72,24 @@ class MarketPlace extends Component {
     bids:[],
     curruserbid : [],
     availablebalance:0,
-    accountbalance:0
+    accountbalance:0,
+    watchlist:[],
+    modal1: false,
+    modal2: false,
+    graphcrop:"",
+    graphvariety:"",
+    graphdata:[],
+    selectedDate:[],
   };
 
   toggle = nr => () => {
+    let modalNumber = 'modal' + nr
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  }
+  togglebtm = nr => () => {
+    this.toggle(8);
     let modalNumber = 'modal' + nr
     this.setState({
       [modalNumber]: !this.state[modalNumber]
@@ -119,6 +136,7 @@ class MarketPlace extends Component {
     this.setState({ temp2: varietyName });
 
   };
+
   filter_reset = () => {
     console.log('inside filter reset');
     this.setState({ temp1: "Crop Name" });
@@ -139,6 +157,7 @@ class MarketPlace extends Component {
       .then(res => {
       })
   };
+
   OrderCreateFutures = (e, data) => {
     e.preventDefault();
     console.log('coming')
@@ -253,10 +272,20 @@ class MarketPlace extends Component {
     this.forceUpdate();
   }
 
+  watchListChange = () => {
+    axios.get('http://localhost:8000/crop/watchlist/',{headers:this.headers}).then(res => {this.setState({watchlist:res.data})});
+    this.forceUpdate();
+  }
+
   headers = {
     "Content-Type": "application/json",
     accept: "application/json",
     Authorization: `JWT ${localStorage.getItem('token')}`,
+  }
+
+  changeDate(date){
+    var date_ins = new Date(date)
+    return date_ins.getFullYear()+'-'+String(date_ins.getMonth() + 1).padStart(2, '0')+'-'+String(date_ins.getDate()).padStart(2, '0')
   }
 
   componentDidMount() {
@@ -274,6 +303,13 @@ class MarketPlace extends Component {
         this.setState({'accountbalance':res.data[0]['accountbalance']});
         this.setState({'availablebalance': res.data[0]['availablebalance']});
       });
+    axios.get('http://localhost:8000/crop/watchlist/',{headers:this.headers}).then(res => {this.setState({watchlist:res.data});});
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = yyyy+'-'+mm+'-'+dd;
+    this.setState({selectedDate:today})
   }
 
   getCropVariety_filter(e) {
@@ -299,7 +335,47 @@ class MarketPlace extends Component {
     axios.post(`http://localhost:8000/crop/watchlist/${this.state.selectedCrop}/${this.state.selectedVariety}/`,"", { headers:this.headers }).then(res => console.log(res));
   }
 
+  setgraphCrop(e,crop,variety){
+    this.setState({"graphcrop":crop});
+    this.setState({"graphvariety":variety});
+    axios.get('http://localhost:8000/crop/pricedata/'+crop+'/'+variety+'/',{headers:this.headers}).then(res => {this.setState({graphdata:res.data});});
+  }
+
+  filterGraph(e){
+    this.setState({selectedDate:e.target.value});
+    console.log(e.target.value);
+  }
+
   render() {
+    const options = {
+			theme: "light2", 
+			animationEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: ""
+			},
+			axisX: {
+				valueFormatString: "hh:mm TT"
+			},
+			axisY: {
+				includeZero:false,
+				prefix: "₹",
+				title: "Price (in INR)"
+			},
+			data: [{
+				type: "line",
+				showInLegend: true,
+        name: this.state.graphcrop + " " + this.state.graphvariety,
+				yValueFormatString: "$###0.00",
+        xValueFormatString: "hh:mm TT",
+				dataPoints: 
+            Object.values(this.state.graphdata).filter(l => {return this.changeDate(l['timestamp']) == this.state.selectedDate;}).map(k => { return ({ x: new Date(k['timestamp']) , y: k['price']}) })
+          
+        }
+		  ]
+		}
+
+
     return (
       <Aux>
         <Layout>
@@ -310,7 +386,6 @@ class MarketPlace extends Component {
             <div class="row">
 
               <div className="col-xl-3 justify-content-right ">
-
                 <Form>
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridState" style={{ width: '250px' }}>
@@ -331,28 +406,26 @@ class MarketPlace extends Component {
                     <Button onClick={this.filter_reset} className="btn    w-100">Reset</Button>
                     <br/><br/><MDBBtn color="info btn-rounded" onClick={e => this.addWatchList(e)}>Add To Watch List</MDBBtn>
                     <br/><br/><MDBBtn color="info btn-rounded" onClick={this.toggle(8)}>Watch List</MDBBtn>
-
                   </Form.Row>
                 </Form>
 
 
                 <MDBContainer  >
-
                   <MDBModal isOpen={this.state.modal8} toggle={this.toggle(8)} fullHeight position="left" fade={false} animation={false} >
                     <MDBModalHeader toggle={this.toggle(8)}>&emsp;&emsp;&emsp;&emsp;&emsp;Your Watch List</MDBModalHeader>
-                    <span className="btn  btn-rounded btn-grey  ">ADD</span>
                     <MDBModalBody>
                       <Card >
                         <Card.Body>
-                          <Card.Text>
-                            <tr className="col-xl-12 w-100">
-                              <td className="col-xl-3"><span className="text-primary">Rice</span></td>
-                              <td className="col-xl-4"><span className="text-primary">Basmati</span></td>
-                              <td className="col-xl-3"><span className="text-success">100</span></td>
-                              <td className="col-xl-1"><span className="text-danger"><i class="far fa-chart-bar"></i></span></td>
-                                  
-                            </tr>
-                          </Card.Text>
+                          {Object.values(this.state.orderData).map(x => { return (
+                              <Card.Text>
+                              <tr className="col-xl-12 w-100">
+                                <td className="col-xl-3"><span className="text-primary">{x.CropName}</span></td>
+                                <td className="col-xl-4"><span className="text-primary">{x.CropVariety}</span></td>
+                                <td className="col-xl-3"><span className="text-success">{x.BasePrice}</span></td>
+                                <td className="col-xl-1"><span className="text-danger" onClick={e => {this.setgraphCrop(e,x.CropName,x.CropVariety)}}><i class="far fa-chart-bar" onClick={this.togglebtm(1)}></i></span></td>
+                              </tr><br/>
+                              </Card.Text>
+                            )})}
                         </Card.Body>
                       </Card>
                     </MDBModalBody>
@@ -360,6 +433,24 @@ class MarketPlace extends Component {
                     </MDBModalFooter>
                   </MDBModal>
                 </MDBContainer>
+
+                <MDBContainer>
+                  <MDBModal isOpen={this.state.modal1} toggle={this.toggle(1)} halfHeight position="bottom" fade={false} animation={false}>
+                    <MDBModalBody>
+                    <div style={{textAlign:"center"}}>
+                      <input type="date" onInput={e=>{this.filterGraph(e)}}/>
+                      {/* <MDBDatePicker getValue={this.getPickerValue} /> */}
+                    </div>
+                    <div>
+                      <CanvasJSChart options = {options} />
+                    </div>
+                    </MDBModalBody>
+                    <MDBModalFooter>
+                      <MDBBtn color="secondary" onClick={this.toggle(1)}>Close</MDBBtn>
+                    </MDBModalFooter>
+                  </MDBModal>
+                </MDBContainer>
+
               </div>
               {/* #============================================Start================================================== */}
               <div className="col-xl-9 ">
@@ -397,7 +488,7 @@ class MarketPlace extends Component {
                               <td className="col-xl-4 text-grey">Make Your Bid<br /><small>(Currency per weight unit)</small></td>
                             </tr>
                           </h4>
-
+                
                         </Badge>
                         <br />
                         <Card.Body>
