@@ -13,7 +13,7 @@ const Ourcompany = props => (
             OUR <green>VISION</green>
           </h1>
           <p>
-            E-Mandi’s vision is to become the largest agricultural fair-trade
+            ₹ Mandi’s vision is to become the largest agricultural fair-trade
             platform, <br />
             connecting farmers to industrial all around the world.
           </p>
@@ -22,7 +22,7 @@ const Ourcompany = props => (
             OUR <green>MISSION</green>
           </h1>
           <p>
-            E-Mandi’s mission is to become THE global reference for DIGITAL
+            ₹ Mandi’s mission is to become THE global reference for DIGITAL
             agricultural food crop transactions <br />
             through a complete PLATFORM solution.
           </p>
@@ -33,7 +33,7 @@ const Ourcompany = props => (
             OUR <green>SOLUTION</green>
           </h1>
           <p>
-            E-Mandi provides a full-solution that operates throughout the entire
+            ₹ Mandi provides a full-solution that operates throughout the entire
             agro-industry supply chain.
           </p>
           <div class="row">
@@ -93,7 +93,7 @@ const Ourcompany = props => (
                 title="myFrame"
                 src="https://www.youtube.com/embed/FAvIa27RcyU?rel=0"
                 frameborder="0"
-                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; encrypted-media; gyroscope; pictur₹ in-picture"
                 allowfullscreen
               ></iframe>
             </div>
@@ -106,7 +106,7 @@ const Ourcompany = props => (
           </h1>
           <p>
             {" "}
-            E-Mandi is a group of experts who leverage their knowledge &amp;
+            ₹ Mandi is a group of experts who leverage their knowledge &amp;
             experience in Farming, Industry Procurement, Digital Business, and
             Disruptive Innovation at all times. We aim at redistributing value
             through the agriculture supply chain, to do so requires us to be

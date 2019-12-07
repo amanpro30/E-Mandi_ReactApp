@@ -8,19 +8,18 @@ import * as actions from "../../store/actions/auth";
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: "",
+    this.state = { username: "",
       password: "",
       logged_in: this.props.isAuthenticated,
-      error_description: localStorage.getItem("error_description_login")
-    };
+      error_description: localStorage.getItem("error_description_login")};
 
     this.handle_change = this.handle_change.bind(this);
+    
   }
-
+  
   handle_change(event) {
-    console.log("mkc");
-    this.setState({ value: event.target.value });
+    console.log('mkc')
+    this.setState({value: event.target.value});
     const name = event.target.name;
     const value = event.target.value;
     this.setState(prevstate => {
@@ -50,8 +49,9 @@ class Login extends React.Component {
         });
     }
 
-    console.log(this.state.error_description);
+  console.log(this.state.error_description);
   }
+
 
   // handle_change = e => {
   //   const name = e.target.name;
@@ -64,8 +64,11 @@ class Login extends React.Component {
   // };
 
   render() {
-    const isError = this.state.error_description;
+
+    const isError =this.state.error_description;
     return (
+
+      
       <Aux>
         <Layout>
           <br />
@@ -77,76 +80,80 @@ class Login extends React.Component {
           {/* <h2> {this.state.error_description}</h2> */}
           <div class="user-session__form">
             <div>
-              {isError ? (
-                <div class="alert alert-danger" role="alert">
-                  {this.state.error_description}
+             
+                        {isError ? (
+                  <div class="alert alert-danger" role="alert">
+                  {this.state.error_description}  
                 </div>
-              ) : (
-                <div />
-              )}
+                ) : (
+                  <div />
+                )}
+              <div class="card">
+  
+              <h5 class="card-header info-color white-text text-center py-4">
+                  Sign in
+              </h5>
+              <div class="card-body px-lg-5 pt-0">
+              <form
+                 style={{color: '#757575'}} 
+                id="new_user"
+                accept-charset="UTF-8"
+                method="post"
+                onSubmit={e => this.props.onLogin(e, this.state)}
+              >
+                <br />
+                <div class="form-group">
+                  <label for="username">
+                    UserName:
+                  </label>
+                  <input
+                    autofocus="autofocus"
+                    class="form-control"
+                    type="text"
+                    name="username"
+                    // value={this.state.username}
+                    onChange={this.handle_change}
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password:">
+                    Password:
+                  </label>
+                  <input
+                    class="form-control"
+                    type="password"
+                    name="password"
+                    // value={this.state.password}
+                    onChange={this.handle_change}
+                  />
+                </div>
+                <div class="actions">
+                  <input
+                    type="submit"
+                    name="commit"
+                    value="Login"
+                    class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" 
+                    data-disable-with="Login"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="user-session__links" style={{color:'blue'}}>
+              <a style={{color:'DodgerBlue'}} href="password/new.html">Forgot your password?</a>
+              <br />
+              <a style={{color:'DodgerBlue'}} href="/signup">Not registered yet? Sign up</a>
+              <br />
               
-
-                <br/><br/>
-
-                <h2>Login</h2>
-                <form
-                  class="new_user"
-                  id="new_user"
-                  accept-charset="UTF-8"
-                  method="post"
-                  onSubmit={e => this.props.onLogin(e, this.state)}
-                >
-                  <div class="form-group">
-                    <label for="username">
-                      <strong>Username:</strong>
-                    </label>
-                    <input
-                      autofocus="autofocus"
-                      class="form-control"
-                      type="text"
-                      name="username"
-                      // value={this.state.username}
-                      onChange={this.handle_change}
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="password:">
-                      <strong>Password:</strong>
-                    </label>
-                    <input
-                      class="form-control"
-                      type="password"
-                      name="password"
-                      // value={this.state.password}
-                      onChange={this.handle_change}
-                    />
-                  </div>
-                  <div class="actions">
-                    <input
-                      type="submit"
-                      name="commit"
-                      value="Login"
-                      class="btn btn-secondary btn--full"
-                      data-disable-with="Login"
-                    />
-                  </div>
-                </form>
+              <br />
               </div>
-            </div>
-            <div class="user-session__links">
-              <a href="http://127.0.0.1:8000/accounts/password-reset/">Forgot your password?</a>
               <br />
-              <a href="/signup">Not registered yet? Sign up</a>
-              <br />
-              <a href="confirmation/new.html">
-                Didn&#39;t receive confirmation instructions?
-              </a>
+              </div>
               <br />
               <br />
               <br />
               <br />
             </div>
-          
+          </div>
         </Layout>
       </Aux>
     );
@@ -154,10 +161,10 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated
-  };
-};
+  return{
+    isAuthenticated: state.auth.isAuthenticated,
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -165,4 +172,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

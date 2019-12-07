@@ -7,16 +7,16 @@ const Privacy_policy = props => (
     <br />
     <div class="content">
       <div class="container termsConditions">
-        <div class="termsConditions-title">PRIVACY POLICY E-MANDI</div>
+        <div class="termsConditions-title">PRIVACY POLICY ₹ MANDI</div>
         <p>
-          In order to use the E-Mandi platform (“Platform”), it is necessary to
+          In order to use the ₹ Mandi platform (“Platform”), it is necessary to
           collect information concerning the entity holding the Platform User
           account (“Account”) and the individual representing it, as well as
           their communication for the purposes expressly set out in this Privacy
           Policy.
         </p>
         <p>
-          E-Mandi privileges information on the Users and transparency in the
+          ₹ Mandi privileges information on the Users and transparency in the
           use of its platform, which is why we kindly ask you to carefully read
           the conditions contained in this document, in which we inform you not
           only how we process personal data, its purposes, means and conditions
@@ -27,7 +27,7 @@ const Privacy_policy = props => (
             INFORMATION WE COLLECT AND WHERE WE STORE IT
           </li>
           <p>
-            For us to provide our service through the E-Mandi - online platform
+            For us to provide our service through the ₹ Mandi - online platform
             for the purchasing and selling of agricultural products and
             providing quality / quality certification services and logistics and
             agricultural products transportation services - we collect, with
@@ -43,7 +43,7 @@ const Privacy_policy = props => (
             </li>
             <li class="termsConditions-list-item">Entity in which you work;</li>
             <li class="termsConditions-list-item">The position you hold;</li>
-            <li class="termsConditions-list-item">E-mail address;</li>
+            <li class="termsConditions-list-item">₹ mail address;</li>
             <li class="termsConditions-list-item">Proof of identification;</li>
             <li class="termsConditions-list-item">
               Proof of address / residence;
@@ -67,7 +67,7 @@ const Privacy_policy = props => (
               The date and time of access(es) and reference URL;
             </li>
             <li class="termsConditions-list-item">
-              The pages visited on the E-Mandi platform;
+              The pages visited on the ₹ Mandi platform;
             </li>
             <li class="termsConditions-list-item">
               Details on how services are used, including search queries;
@@ -106,13 +106,13 @@ const Privacy_policy = props => (
             </li>
             <li class="termsConditions-list-item">
               To explore, evaluate and improve the products and / or services
-              supplied and / or provided through the E-Mandi platform (in
+              supplied and / or provided through the ₹ Mandi platform (in
               particular, to analyze trends in the procurement of goods and / or
               services, and to analyze our customers database);
             </li>
             <li class="termsConditions-list-item">
               To record your preferences and habits for the products and
-              services marketed on the E-Mandi platform;
+              services marketed on the ₹ Mandi platform;
             </li>
             <li class="termsConditions-list-item">
               To conduct surveys or statistical analysis to improve our Website
@@ -153,7 +153,7 @@ const Privacy_policy = props => (
             COMMUNICATION OF THE DATA AND ITS RECIPIENTS
           </li>
           <p>
-            In order for you to enjoy the services offered by the E-Mandi
+            In order for you to enjoy the services offered by the ₹ Mandi
             platform, it is essential to communicate the Account User data to
             third parties; and Agri EM may also communicate your data namely to
             comply with any legal or contractual obligation.
@@ -237,7 +237,7 @@ const Privacy_policy = props => (
             respect to personal data processed by them, and any legal provision
             to the contrary, your personal data will be kept for the period of
             time necessary for the execution of our services through the use of
-            the E-Mandi platform, or until you exercise your right to object,
+            the ₹ Mandi platform, or until you exercise your right to object,
             withdraw your consent for the processing or request the deletion of
             the data.{" "}
           </p>
@@ -273,7 +273,7 @@ const Privacy_policy = props => (
             </li>
             <p>
               These rights may be exercised directly by accessing the User
-              account, in the E-Mandi platform, or by sending an email to{" "}
+              account, in the ₹ Mandi platform, or by sending an email to{" "}
               <a
                 href="cdn-cgi/l/email-protection.html"
                 class="__cf_email__"

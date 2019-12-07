@@ -34,6 +34,8 @@ class MarketPlace extends Component {
     x: 1,
     show_Market: false,
     show_Futures: false,
+    futureData:[],
+    marketData:[],
     orderData: [],
     orderData_copy: "",
     orderData_cropNameFilter: "",
@@ -526,6 +528,7 @@ class MarketPlace extends Component {
             </div>{/* row  */}
           </div>
 
+          
           {/* #==================================END==================================== */}
 
 
@@ -536,8 +539,8 @@ class MarketPlace extends Component {
             fade={false}
             animation={false}
           >
-            <Modal.Header closeButton style={{ background: "dimgray" }}>
-              <Modal.Title>Market Order</Modal.Title>
+            <Modal.Header class="info-color white-text" closeButton>
+              <Modal.Title  ><span>Market Order</span></Modal.Title>
             </Modal.Header>
             <div style={{ background: "#D6D3D2" }}>
               <div style={{ margin: "50px", width: "80%" }}>
@@ -565,7 +568,7 @@ class MarketPlace extends Component {
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridProductionMode">
                       <Form.Label>
-                        <strong>Production Mode</strong>
+                        Production Mode
                       </Form.Label>
 
                       <Form.Control as="select" id="exampleSelect" name="ProductionMode" value={this.state.order.ProductionMode} onChange={this.handle_change}>
@@ -577,7 +580,7 @@ class MarketPlace extends Component {
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridQuantity">
                       <Form.Label>
-                        <strong>Quantity (kg)</strong>
+                        Quantity (kg)
                       </Form.Label>
                       <Form.Control placeholder="Enter Quantity" name="Quantity" value={this.state.order.Quantity} onChange={this.handle_change} />
                     </Form.Group>
@@ -585,13 +588,13 @@ class MarketPlace extends Component {
                   <Form.Row>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
-                        <strong>Expected Closing Date</strong>
+                        Expected Closing Date
                       </Form.Label>
                       <Form.Control type="date" name="ClosingDate" value={this.state.order.ClosingDate} onChange={this.handle_change} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridClosingDate">
                       <Form.Label>
-                        <strong>Base Price (per kg)</strong>
+                       Base Price (per kg)
                       </Form.Label>
                       <Form.Control placeholder="Enter Base Price" name="BasePrice" value={this.state.order.BasePrice} onChange={this.handle_change} />
                     </Form.Group>
@@ -600,7 +603,7 @@ class MarketPlace extends Component {
                   <Form.Group id="formGridCheckbox">
                     <Form.Check
                       type="checkbox"
-                      label="I agree with the E-Mandi Terms and Conditions for buy and sell offers"
+                      label="I agree with the ₹-Mandi Terms and Conditions for buy and sell offers"
                     />
                   </Form.Group>
                   <center>
@@ -711,7 +714,7 @@ class MarketPlace extends Component {
                   <Form.Group id="formGridCheckbox">
                     <Form.Check
                       type="checkbox"
-                      label="I agree with the E-Mandi Terms and Conditions for buy and sell offers"
+                      label="I agree with the ₹-Mandi Terms and Conditions for buy and sell offers"
                     />
                   </Form.Group>
                   <center>
