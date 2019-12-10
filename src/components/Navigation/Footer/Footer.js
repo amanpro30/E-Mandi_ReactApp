@@ -13,8 +13,9 @@ import phone from "../../../assets/logos/phone_icon-d27d3ccfa4eebf5fa5c7419e3def
 import mail from "../../../assets/logos/mail_icon-4260a55e62b163f2a269cbac2b5f77089abcede1089547cc928bab6785c6902d.svg";
 const Footer = () => {
   return (
+    
     <footer
-      class="fixed-bottam"
+      // class="fixed-bottam"
       className={classes.footer}
       style={{ bottam: "0", backgroundColor: "#343a40" }}
     >

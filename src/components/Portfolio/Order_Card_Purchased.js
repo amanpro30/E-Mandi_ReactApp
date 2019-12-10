@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader, MDBBtn, MDBContainer } from "mdbreact";
 import Aux from '../../hoc/Aux'
 import { MDBInput, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBIcon, MDBRow, MDBCol } from 'mdbreact';
-
+import {connect} from 'react-redux';
 
 class Order_Card extends Component{
     state={
@@ -20,6 +20,7 @@ class Order_Card extends Component{
         stars:[{id:"1",star:"0"},{id:"2",star:"0"},{id:"3",star:"0"},{id:"4",star:"0"},{id:"5",star:"0"}],
         starValue:0,
         review:"",
+        reviewscurrent:[],
     }
     changeDate(date){
         var date_ins = new Date(date)
@@ -112,7 +113,9 @@ class Order_Card extends Component{
         axios.get('http://localhost:8000/order/marketorder/'+this.props.id+'/',{headers:this.headers}).then(res=>{this.setState({orderDetails:res.data});
         axios.get('http://localhost:8000/order/getbid/order/'+this.state.orderDetails[0]['id']+'/',{headers:this.headers}).then((res)=>{res.data.sort((a, b) =>b.price -  a.price );this.setState({bids:res.data});console.log('as');this.setState({highbids:Object.values(this.state.bids)[0]['price']})});
         axios.get('http://localhost:8000/accounts/userreview/'+this.state.orderDetails[0]['user']+'/',{headers:this.headers}).then(res=>{this.setState({reviews:res.data});console.log(res.data);})
-        axios.get('http://localhost:8000/accounts/avgrating/'+this.state.orderDetails[0]['user']+'/',{headers:this.headers}).then(res=>{this.setState({avgrating:res.data[0]['avgrating']});console.log(res.data[0]['avgrating']);})
+        axios.get('http://localhost:8000/accounts/userreviewcurrent/'+this.state.orderDetails[0]['user']+'/',{headers:this.headers}).then(res=>{this.setState({reviewscurrent:res.data});console.log(res.data);})
+        axios.get('http://localhost:8000/accounts/avgrating/'+this.state.orderDetails[0]['user']+'/',{headers:this.headers}).then(res=>{this.setState({avgrating:res.data[0]['avgrating']});})
+        
     });
     }
 
@@ -121,10 +124,19 @@ class Order_Card extends Component{
         this.setState({review:text});
     }
 
+    onChange2(){
+        console.log('changing');
+        axios.get('http://localhost:8000/accounts/userreview/'+this.state.orderDetails[0]['user']+'/',{headers:this.headers}).then(res=>{this.setState({reviews:res.data});console.log(res.data);})
+        axios.get('http://localhost:8000/accounts/userreviewcurrent/'+this.state.orderDetails[0]['user']+'/',{headers:this.headers}).then(res=>{this.setState({reviewscurrent:res.data});console.log(res.data);})
+        axios.get('http://localhost:8000/accounts/avgrating/'+this.state.orderDetails[0]['user']+'/',{headers:this.headers}).then(res=>{this.setState({avgrating:res.data[0]['avgrating']});})
+        this.forceUpdate();
+        
+    }
+
     setReview(e){
         e.preventDefault();
         console.log(this.state.review);
-        axios.post('http://localhost:8000/accounts/review/'+this.state.orderDetails[0]['user']+'/',{'review':this.state.review,'rating':this.state.starValue},{headers:this.headers})
+        axios.post('http://localhost:8000/accounts/review/'+this.state.orderDetails[0]['user']+'/',{'review':this.state.review,'rating':this.state.starValue},{headers:this.headers}).then(res=>{this.onChange2();})
     }
 
     render(){
@@ -158,19 +170,57 @@ class Order_Card extends Component{
                 <Card >
                 <Card.Body>
                 <MDBContainer>
-                    <MDBRow>
-                        <MDBCol md="6">
+                <strong><h5>Avg Farmer Rating:</h5></strong> &emsp;<strong>{Math.round(this.state.avgrating*100)/100}</strong><br/><br/>
+                    
+                    {/* <MDBRow>
+                        <MDBCol md="6"> */}
+                            {this.state.reviewscurrent.length!==0 ? "" :
                         <form onSubmit={e=>this.setReview(e)}>
+                            
                             {Object.values(this.state.stars).map(x=>{return (<i class={x.star=="1" ? this.state.classFull: this.state.classHalf} id={x.id} onClick={e=>this.setStarValue(x.id)}></i>)})}
                             <MDBInput type="textarea" label="Share Your Review" rows="5" value={this.state.review} onChange={e=>{this.changeReview(e)}}/>
                             <MDBBtn color="indigo" type="submit"  >Review</MDBBtn>
                         
                         </form>
-                        </MDBCol>
-                    </MDBRow>
+                        }
+
+                        <strong><h5>{this.state.reviewscurrent.length!==0 ? ("Your Reviews:") : ""}</h5></strong>{Object.values(this.state.reviewscurrent).map(x => { return (
+                            x.user == this.props.username ? (
+                                <Card>
+                                <Card.Body >
+                                    <Card.Text>
+                                    {x.rating=="1"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                    {x.rating=="2"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                    {x.rating=="3"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                    {x.rating=="4"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                    {x.rating=="5"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""} 
+                                    </Card.Text>
+                                </Card.Body>
+                                </Card>)
+                                : ""
+                                )
+                            })}
+
+                        {/* </MDBCol>
+                    </MDBRow> */}
                 </MDBContainer>
-                    Ratings:{this.state.avgrating}<br/>
-                    Reviews:{Object.values(this.state.reviews).map(x => { return (<p>{x.review}</p>) })}
+                    
+                <strong><h5>Other Reviews:</h5></strong>{Object.values(this.state.reviews).map(x => { return (
+                            x.user != this.props.username ?
+                            <Card>
+                            <Card.Body >
+                                <Card.Text>
+                                {x.rating=="1"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                {x.rating=="2"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                {x.rating=="3"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                {x.rating=="4"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""}
+                                {x.rating=="5"  ? <Aux><strong>{x.user}</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><i class={this.state.classFull}></i><br/><strong>Review: </strong> {x.review}</Aux>: ""} 
+                                </Card.Text>
+                            </Card.Body>
+                            </Card>
+                            : ""
+                            )
+                        })}
                 </Card.Body>
                 </Card>
             </MDBModalBody>
@@ -181,4 +231,11 @@ class Order_Card extends Component{
     }
 }
 
-export default Order_Card
+const mapStateToProps = state =>{
+    return{
+    username:state.auth.username,
+    }
+  };
+  
+  export default connect(mapStateToProps, null)(Order_Card);
+

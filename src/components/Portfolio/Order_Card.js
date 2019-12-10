@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import SmallBid from './SmallBid';
 import TrashIcon from 'react-ionicons/lib/MdTrash';
 import Button from 'react-bootstrap/Button';
+import Aux from '../../hoc/Aux'
 
 const Order_Card = props => (
     <Card >
@@ -12,20 +13,26 @@ const Order_Card = props => (
                 <td className="col-md-2 align-middle">{props.CropName}</td>
                 <td className="col-md-2">{props.CropVariety}</td>
                 <td className="col-md-1">{props.Quantity}</td>
-                {Object.values(props.bids).map(x=>{return <SmallBid price={x.price}/>;})}
+                
+                {Object.values(props.bids).map(x=>{return <td className="col-md-1"><SmallBid price={x.price}/></td>;})}
+                { Object.keys(props.bids).length == "0" ?  <Aux><td className="col-md-1"><SmallBid price="0"/></td> <td className="col-md-1"><SmallBid price="0"/></td> <td className="col-md-1"><SmallBid price="0"/></td> </Aux> : ""}
+                { Object.keys(props.bids).length == "1" ?  <Aux><td className="col-md-1"><SmallBid price="0"/></td> <td className="col-md-1"><SmallBid price="0"/></td> </Aux> : ""}
+                { Object.keys(props.bids).length == "2" ?  <Aux><td className="col-md-1"><SmallBid price="0"/></td> </Aux> : ""}
+
                 <td className="col-md-1">
                     {props.BasePrice}
                 </td>
                 {props.bids.length ?
                     <td className="col-md-2">
-                        &emsp;&emsp;&emsp;<Button variant="success" className="btn-sm" style={{margin:"0px"}} onClick={props.onOrderExecuted}>Sell</Button>
+                        <Button variant="success" className="btn-sm" style={{margin:"0px"}} onClick={props.onOrderExecuted}>Sell</Button>
                     </td>
                     :
-                    <td className="col-md-1">
+                    <td className="col-md-2">
+                        No Bid
                     </td>
                 }
                 <td className="col-md-1">
-                    <TrashIcon></TrashIcon>
+                    <TrashIcon ></TrashIcon>
                 </td>
             </Card.Text>
         </Card.Body>

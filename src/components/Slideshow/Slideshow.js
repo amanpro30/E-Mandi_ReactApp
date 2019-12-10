@@ -30,7 +30,7 @@ function Slideshow() {
             
         >
             <b className={classes.font} ><br/><br/>
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
             &#8377; Mandi</b> 
             <br/><br/><br/><br/>
             <p className={`${classes.line1} ${classes.animtypewriter} ${classes.text_body} ${classes.html1}`}>Welcome to &#8377;Mandi </p>

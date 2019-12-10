@@ -58,7 +58,7 @@ const toolbar = props => {
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="/" class="nav-link">
                     Home
                   </a>
@@ -66,6 +66,11 @@ const toolbar = props => {
                 <li class="nav-item">
                   <a class="nav-link" href="/marketplace">
                     Market
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/MarkerPlace_future">
+                    Futures
                   </a>
                 </li>
                 <li class="nav-item">
@@ -112,9 +117,9 @@ const toolbar = props => {
 
                 <li class="nav-item">
                   {props.islogged ? (
-                    <a href="/logout" onClick={() => props.onLogOut()}>
-                      <h3 style={{ height: "2px", width: "3px" }}> LogOut</h3>
-                    </a>
+                    <a href="/logout" onClick={() => props.onLogOut()} class="nav-link">
+                    Logout
+                  </a>
                   ) : (
                     <a href="/login" class="nav-link">
                       Login

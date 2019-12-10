@@ -10,13 +10,10 @@ import { MDBBtn, MDBBtnGroup, MDBIcon, MDBCol, MDBRow } from "mdbreact";
 import jsPDF from "jspdf";
 class PortfolioFutures extends Component {
   state = {
-    orderData: "",
+    orderDataFutures: "",
     name: "asa",
-    selected:"running",
-    bids:[],
-    accountbalance:0,
-    availablebalance:0,
-    modifyOrder:[]
+    selectedFutures:"running",
+    modifyOrderFutures:[]
   };
 
   headers = {
@@ -91,8 +88,8 @@ class PortfolioFutures extends Component {
     var self = this;
     axios.get("http://localhost:8000/order/myfutures/", { headers: this.headers })
       .then(res => {
-        self.setState({ orderData: res.data });
-        this.setState({ selected: "running" });
+        self.setState({ orderDataFutures: res.data });
+        this.setState({ selectedFutures: "running" });
       });
     //   axios.get(`http://localhost:8000/transaction/balance/`,
     //     {headers: 
@@ -107,40 +104,40 @@ class PortfolioFutures extends Component {
     // axios.get('http://localhost:8000/order/getbids/',{ headers: this.headers }).then(res=>{this.setState({bids:res.data});});
   }
 
-  fetchRunningOrder(e){
+  fetchRunningOrderFutures(e){
     axios
       .get("http://localhost:8000/order/myfutures/", { headers: this.headers })
       .then(res => {
-        this.setState({ orderData: res.data });
-        this.setState({ selected: "running" });
+        this.setState({ orderDataFutures: res.data });
+        this.setState({ selectedFutures: "running" });
       });
   }
-  fetchExecutedOrder(e){
+  fetchExecutedOrderFutures(e){
     axios
       .get("http://localhost:8000/order/futureexec/", { headers: this.headers })
       .then(res => {
         console.log('exec');
         console.log(res);
-        this.setState({ orderData: res.data });
-        this.setState({ selected: "executed" });
+        this.setState({ orderDataFutures: res.data });
+        this.setState({ selectedFutures: "executed" });
       });
   }
 
-  Change = () => {
+  ChangeFutures = () => {
     axios
     .get("http://localhost:8000/order/myfutures/", { headers: this.headers })
     .then(res => {
-      this.setState({ orderData: res.data });
-      this.setState({ selected: "running" });
+      this.setState({ orderDataFutures: res.data });
+      this.setState({ selectedFutures: "running" });
     });
     this.forceUpdate();
   }
 
 
   // OrderExecuted(e,price, id){
-  //   axios.get('http://localhost:8000/order/marketorder/'+id+'/',{headers:this.headers}).then(res=>{this.setState({modifyOrder:res.data});
-  //   axios.put('http://localhost:8000/order/marketorder/'+id+'/',{...this.state.modifyOrder},{headers:this.headers}).then(res=>{
-  //     this.Change();  
+  //   axios.get('http://localhost:8000/order/marketorder/'+id+'/',{headers:this.headers}).then(res=>{this.setState({modifyOrderFutures:res.data});
+  //   axios.put('http://localhost:8000/order/marketorder/'+id+'/',{...this.state.modifyOrderFutures},{headers:this.headers}).then(res=>{
+  //     this.ChangeFutures();  
   //   })
     
   // })
@@ -162,10 +159,10 @@ class PortfolioFutures extends Component {
                 <MDBRow>
                   <MDBCol xl="12" md="12" className="col-xl-12"></MDBCol>
                   <MDBBtnGroup size="lg" className="col-xl-12">
-                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e =>this.fetchRunningOrder(e)}>
+                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e =>this.fetchRunningOrderFutures(e)}>
                       Your Running Orders!
                     </MDBBtn>
-                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e=>this.fetchExecutedOrder(e)}>
+                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e=>this.fetchExecutedOrderFutures(e)}>
                       Your Executed Orders!
                     </MDBBtn>
                   </MDBBtnGroup>
@@ -174,7 +171,7 @@ class PortfolioFutures extends Component {
                 <br />
                 <br />
 
-            {this.state.selected==='running' ?
+            {this.state.selectedFutures==='running' ?
 
                 <tr className="col-xl-12">
                   <Card>
@@ -225,10 +222,10 @@ class PortfolioFutures extends Component {
                   </Card>
                 </tr>
   }
-  {this.state.selected==='running'?(
+  {this.state.selectedFutures==='running'?(
                 <tr className="col-xl-12">
                   {
-                  Object.values(this.state.orderData).map(x => {
+                  Object.values(this.state.orderDataFutures).map(x => {
                     return (
                       <Order_CardFuture
                       CropName={x.Crop} 
@@ -247,7 +244,7 @@ class PortfolioFutures extends Component {
                 :    
                 (<tr className="col-xl-12">
                 {
-                Object.values(this.state.orderData).map(x => {
+                Object.values(this.state.orderDataFutures).map(x => {
                   return (
                     <Order_Card_ExecutedFuture
                     CropName={x.Crop} 

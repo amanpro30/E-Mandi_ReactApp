@@ -98,7 +98,7 @@ class Order extends Component {
           <div style={{ marginLeft: 3, marginRight: 3 }} class="row products-index__order__row">
             <div class="col">
               <ListGroup className="list-group-flush">
-                <ListGroupItem style={{fontSize:'14px', align:'left'}}>Crop : {this.props.CropName} {this.props.CropVariety}{this.props.id}</ListGroupItem>
+                <ListGroupItem style={{fontSize:'14px', align:'left'}}>Crop : {this.props.CropName} {this.props.CropVariety}</ListGroupItem>
                 <ListGroupItem style={{fontSize:'14px', align:'left'}}>Quantity : {this.props.Quantity} Kg</ListGroupItem>
                 <ListGroupItem style={{fontSize:'14px', align:'left'}}>Mode : {this.props.ProductionMode} </ListGroupItem>
                 <ListGroupItem style={{fontSize:'14px', align:'left'}}>Base Price : ₹ {this.props.BasePrice} </ListGroupItem>

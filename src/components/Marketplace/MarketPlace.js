@@ -158,6 +158,7 @@ class MarketPlace extends Component {
     })
       .then(res => {
       })
+      this.forceUpdate();
   };
 
   OrderCreateFutures = (e, data) => {
@@ -170,6 +171,7 @@ class MarketPlace extends Component {
       .then(res => {
       })
     console.log(this.state.orderFutures)
+    this.forceUpdate();
   };
   handle_change = e => {
     const name = e.target.name;
@@ -334,7 +336,9 @@ class MarketPlace extends Component {
 
   addWatchList(e){
     console.log('hw');
-    axios.post(`http://localhost:8000/crop/watchlist/${this.state.selectedCrop}/${this.state.selectedVariety}/`,"", { headers:this.headers }).then(res => console.log(res));
+    axios.post(`http://localhost:8000/crop/watchlist/${this.state.selectedCrop}/${this.state.selectedVariety}/`,"", { headers:this.headers }).then(res => console.log(res)
+    );
+    this.forceUpdate();
   }
 
   setgraphCrop(e,crop,variety){
@@ -368,7 +372,7 @@ class MarketPlace extends Component {
 				type: "line",
 				showInLegend: true,
         name: this.state.graphcrop + " " + this.state.graphvariety,
-				yValueFormatString: "$###0.00",
+				yValueFormatString: "₹###0.00",
         xValueFormatString: "hh:mm TT",
 				dataPoints: 
             Object.values(this.state.graphdata).filter(l => {return this.changeDate(l['timestamp']) == this.state.selectedDate;}).map(k => { return ({ x: new Date(k['timestamp']) , y: k['price']}) })

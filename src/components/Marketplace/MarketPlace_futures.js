@@ -112,15 +112,7 @@ class MarketPlace_future extends Component {
                       <div>
                         <tr className="col-xl-12">
                           <Card style={{width:"100%"}}>
-                            <Badge>
-                              <h4>
-                                <tr className="col-xl-12">
-                                  <td className="col-xl-4 text-grey">Commodity</td>
-                                  <td className="col-xl-4 text-grey">But this order<br /><small className="text-grey"></small></td>
-                                </tr>
-                              </h4>
-    
-                            </Badge>
+                            
                             <br />
                             <Card.Body>
                               <Card.Text>

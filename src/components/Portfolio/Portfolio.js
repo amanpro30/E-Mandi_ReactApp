@@ -8,6 +8,9 @@ import Order_Card_Executed from './Order_Card_Executed'
 import { MDBBtn, MDBBtnGroup, MDBIcon, MDBCol, MDBRow } from "mdbreact";
 import jsPDF from "jspdf";
 import Order_Card_Purchased from './Order_Card_Purchased'
+import Order_CardFuture from "./Order_CardFuture";
+import Order_Card_ExecutedFuture from './Order_Card_ExecutedFuture'
+
 
 class Portfolio extends Component {
   state = {
@@ -49,8 +52,15 @@ class Portfolio extends Component {
         advance: "",
         AdvanceDate: "",
       },
-  }
+  },
+  orderDataFutures: "",
+  name: "asa",
+  selectedFutures:"running",
+  modifyOrderFutures:[]
 };
+
+
+
 
 
 getCropVariety(e) {
@@ -74,6 +84,7 @@ getCropVariety(e) {
     })
       .then(res => {
       })
+      this.Change();
   };
 
   OrderCreateFutures = (e, data) => {
@@ -86,6 +97,7 @@ getCropVariety(e) {
       .then(res => {
       })
     console.log(this.state.orderFutures)
+    this.Change();
   };
 
   handleClose_Market = () => {
@@ -94,14 +106,48 @@ getCropVariety(e) {
   };
 
   handleShow_Market = () => {
+    this.setState({order:
+  
+    {
+      CropName: "",
+      CropVariety: "",
+      Quantity: "",
+      OrderDate: "",
+      ClosingDate: "",
+      ProductionMode: "",
+      BasePrice: "",
+      OrderStatus: "",
+
+    }
+  })
+
     this.setState({ show_Market: true });
     console.log(this.state.show_Market);
   };
   handleClose_Futures = () => {
+
+
     this.setState({ show_Futures: false });
     console.log(this.state.show_Futures);
   };
   handleShow_Futures = () => {
+
+    this.setState({ orderFutures:
+
+      {
+        CropName: "",
+        CropVariety: "",
+        order: {
+          Quantity: "",
+          DeliveryDate: "",
+          ProductionMode: "",
+          ContractPrice: "",
+          advance: "",
+          AdvanceDate: "",
+        }
+      }
+    })
+
     this.setState({ show_Futures: true });
     console.log(this.state.show_Futures);
   };
@@ -114,6 +160,8 @@ getCropVariety(e) {
     console.log(this.state.cropVariety_order);
   }
 
+
+  
   jsPdfGenerator = () => {
     var doc = new jsPDF("p", "pt", "a4");
     var pageHeight =
@@ -273,7 +321,40 @@ getCropVariety(e) {
     axios.get('http://localhost:8000/order/getbids/',{ headers: this.headers }).then(res=>{this.setState({bids:res.data});});
     axios.get('http://localhost:8000/order/executedorder/',{headers:this.headers}).then(res=>{this.setState({purchasedOrderids:res.data});console.log('thisisit');console.log(this.state.purchasedOrderids);})
     axios.get('http://localhost:8000/crop/cropname/', { headers: this.headers }).then(res => { self.setState({ cropTypes: res.data }) });
-    
+    axios.get("http://localhost:8000/order/myfutures/", { headers: this.headers })
+    .then(res => {
+      self.setState({ orderDataFutures: res.data });
+      this.setState({ selectedFutures: "running" });
+    });
+  }
+
+  fetchRunningOrderFutures(e){
+    axios
+      .get("http://localhost:8000/order/myfutures/", { headers: this.headers })
+      .then(res => {
+        this.setState({ orderDataFutures: res.data });
+        this.setState({ selectedFutures: "running" });
+      });
+  }
+  fetchExecutedOrderFutures(e){
+    axios
+      .get("http://localhost:8000/order/futureexec/", { headers: this.headers })
+      .then(res => {
+        console.log('exec');
+        console.log(res);
+        this.setState({ orderDataFutures: res.data });
+        this.setState({ selectedFutures: "executed" });
+      });
+  }
+
+  ChangeFutures = () => {
+    axios
+    .get("http://localhost:8000/order/myfutures/", { headers: this.headers })
+    .then(res => {
+      this.setState({ orderDataFutures: res.data });
+      this.setState({ selectedFutures: "running" });
+    });
+    this.forceUpdate();
   }
 
   fetchRunningOrder(e){
@@ -541,10 +622,7 @@ getCropVariety(e) {
         <br />
         <br />
         <br />
-        <br />
-        <br />
-        <br />
-        <br />
+
 
         <Modal
             show={this.state.show_Market}
@@ -660,7 +738,7 @@ getCropVariety(e) {
                       <Form.Label>
                         <strong>Crop Variety</strong>
                       </Form.Label>
-                      <Form.Control as="select" name="CropVariety" value={this.state.order.CropVariety} onChange={this.handle_change_futures2}>
+                      <Form.Control as="select" name="CropVariety" value={this.state.orderFutures.CropVariety} onChange={this.handle_change_futures2}>
                         <option>Crop Variety</option>
                         {Object.values(this.state.cropVariety_order).map(x => { return (<option href="#" value={x.varietyName} name={x.varietyName} >{x.varietyName}</option>) })}
                       </Form.Control>
@@ -740,6 +818,137 @@ getCropVariety(e) {
               </div>
             </div>
           </Modal>
+          <div>
+
+
+          <div class="container-fluid">
+            <div className="row">
+              <div className="col-xl-9">
+                <MDBRow>
+                  <MDBCol xl="12" md="12" className="col-xl-12"></MDBCol>
+                  <MDBBtnGroup size="lg" className="col-xl-12">
+                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e =>this.fetchRunningOrderFutures(e)}>
+                      Your Running Futures!
+                    </MDBBtn>
+                    <MDBBtn color="btn tempting-azure-gradient w-100" onClick={e=>this.fetchExecutedOrderFutures(e)}>
+                      Your Executed Futures!
+                    </MDBBtn>
+                  </MDBBtnGroup>
+                </MDBRow>
+
+                <br />
+                <br />
+
+            {this.state.selectedFutures==='running' ?
+
+                <tr className="col-xl-12">
+                  <Card>
+                    <Badge>
+                      {" "}
+                      <h1 className="text-success  ">Running Futures</h1>
+                    </Badge>
+                    <Card.Body>
+                      <Card.Text>
+                        <h6>
+                          <b>
+                            <td className="col-xl-1">Crop</td>
+                            <td className="col-xl-2">Quantity</td>
+                            <td className="col-xl-2">Order Date</td>
+                            <td className="col-xl-1">Price</td>
+                            <td className="col-xl-2">Delivery Date</td>
+                            <td className="col-xl-2 ">Advance Date</td>
+                            <td className="col-xl-2">Advance(%)</td>
+                            
+                          </b>
+                        </h6>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </tr>
+            :
+                <tr className="col-xl-12">
+                  <Card>
+                    <Badge>
+                      {" "}
+                      <h1 className="text-success  ">Executed Futures</h1>
+                    </Badge>
+                    <Card.Body>
+                      <Card.Text>
+                        <h6>
+                          <b>
+                          <td className="col-xl-1">Crop</td>
+                            <td className="col-xl-2">Quantity</td>
+                            <td className="col-xl-2">Order Date</td>
+                            <td className="col-xl-1">Price</td>
+                            <td className="col-xl-2">Delivery Date</td>
+                            <td className="col-xl-2 ">Advance Date</td>
+                            <td className="col-xl-2">Advance(%)</td>
+                          </b>
+                        </h6>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </tr>
+  }
+  {this.state.selectedFutures==='running'?(
+                <tr className="col-xl-12">
+                  {
+                  Object.values(this.state.orderDataFutures).map(x => {
+                    return (
+                      <Order_CardFuture
+                      CropName={x.Crop} 
+                      // CropVariety={x.CropVariety} 
+                      Quantity={x.Quantity} 
+                      // ProductionMode={x.ProductionMode} 
+                      AdvanceDate={x.AdvanceDate} 
+                      OrderDate={x.OrderDate}
+                      DeliveryDate={x.DeliveryDate} 
+                      Price={x.ContractPrice}
+                      Advance={x.advance}
+                     />
+                    );
+                  })}
+                </tr>)
+                :    
+                (<tr className="col-xl-12">
+                {
+                Object.values(this.state.orderDataFutures).map(x => {
+                  return (
+                    <Order_Card_ExecutedFuture
+                    CropName={x.Crop} 
+                    // CropVariety={x.CropVariety} 
+                    Quantity={x.Quantity} 
+                    // ProductionMode={x.ProductionMode} 
+                    AdvanceDate={x.AdvanceDate} 
+                    OrderDate={x.OrderDate}
+                    DeliveryDate={x.DeliveryDate} 
+                    Price={x.ContractPrice}
+                    Advance={x.advance}
+                    />
+                  );
+                })}
+                </tr>)
+              }
+
+        </div>
+
+            </div>
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+
+
+
+
 
       </Layout>
     );
