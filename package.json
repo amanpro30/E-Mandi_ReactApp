@@ -40,7 +40,7 @@
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "mdbootstrap": "^4.9.0",
     "mdbreact": "^4.22.1",
     "mini-css-extract-plugin": "0.8.0",
